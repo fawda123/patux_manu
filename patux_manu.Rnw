@@ -64,9 +64,17 @@ raw <- raw[grep('^Date', raw)]
 raw <- paste('Version', raw)
 @
 
+% R libs
+<<echo = FALSE>>=
+library(httr)
+library(ggplot2)
+library(dplyr)
+library(scales)
+library(wesanderson)
+@
+
 % get online bib file
 <<echo = FALSE, cache = FALSE>>=
-library(httr)
 refs <- GET('https://raw.githubusercontent.com/fawda123/refs/master/refs.bib')
 refs <- rawToChar(refs$content)
 writeLines(refs, con = file('refs.bib'))
@@ -190,5 +198,104 @@ Similarity of flow-normalized results - simulated data, simple scatterplots, sim
 
 %%%%%%
 % figures
+%%%%%%
+<<eval = F, echo = F, cache = F>>=
+load(file = 'data/pax_data.RData')
+load(file = 'data/pax_meta.RData')
+load(file = 'data/pax_clip.RData')
+
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+
+# change default ggplot theme
+theme_mine <- function (base_size = 12, base_family = "") {
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+  theme(
+    axis.text.x = element_text(size = 8), 
+    plot.background = element_rect(fill='transparent', 
+      colour = NA),
+    panel.background = element_rect(fill='transparent', 
+      colour = NA),
+    legend.background = element_rect(fill='transparent', 
+      colour = NA),
+    strip.background = element_rect(fill = 
+        alpha(cols[length(cols)], 0.5)),
+    legend.key = element_rect(fill = 'transparent', 
+      colour = NA)
+    )   
+}
+theme_set(theme_mine())
+
+# y axis label
+y_lab <- expression(
+  paste('ln-chlorophyll  ',italic(a),' (',italic(mu),'g',l^-1,')')
+  )
+
+# color for water for continuity with last fig
+wt_col <- wes_palette('Zissou', 100, 'continuous')[10] %>% 
+  alpha(0.8)
+
+# function for color that is not linear by rank
+cRamp <- function(x, alpha_val = 0.8){
+
+  # colors to use
+  cols <- wes_palette('Zissou', 1000, 'continuous') %>% 
+    as.character %>% 
+    .[1:600]
+
+  # map the values to the colors
+  x_rang <- (x - min(x, na.rm = T))/diff(range(x, na.rm = T))
+  cols <- colorRamp(cols)(x_rang)
+  apply(cols, 1, function(val){
+    if(NaN %in% val) NA
+    else
+    rgb(val[1], val[2], val[3], alpha = alpha_val * 255, maxColorValue = 255)
+    })
+  
+  }
+
+# format pax_meta for mrg with pax_plo
+pax_meta <- select(pax_meta, STATION, LONG, LAT) %>% 
+  mutate(STATION = as.character(STATION))
+
+# add month to pax data
+pax_data <- mutate(pax_data, 
+  mo = as.numeric(strftime(date, '%m')),
+  yr = strftime(date, '%Y')
+  ) %>% 
+  mutate(STATION = as.character(STATION))
+
+# get annual medians by station, add coords
+pax_yr <- group_by(pax_data, STATION, yr) %>% 
+  summarize(lnchla = median(lnchla, na.rm = T)) %>% 
+  mutate(
+    ptsz = rescale(lnchla, c(3, 12)),
+    cols = cRamp(lnchla, alpha_val = 1)
+    ) %>% 
+  ungroup %>% 
+  left_join(., pax_meta, by = 'STATION')
+
+# do this with facet somehow...
+ggplot(pax_meta, aes(x = LONG, y = LAT)) + 
+  geom_polygon(data = pax_clip, aes(x = long, y = lat, group = group),
+    fill = wt_col) +
+  coord_map(
+    xlim = c(-76.78, -76.36),
+    ylim = c(38.27, 38.85)
+  ) +
+  # geom_text(data = yr_labs, aes(label = yr)) + 
+  geom_point(data = pax_yr, aes(group = yr, size = lnchla, fill = lnchla), 
+    pch = 21) +
+  facet_wrap(~yr) +
+  theme_mine() + 
+  scale_fill_gradientn(colours = cols) +
+  theme(axis.title = element_blank())
+
+# grid.arrange(out_yrs[[1]], out_yrs[[2]], out_yrs[[3]], out_yrs[[4]], out_yrs[[5]], out_yrs[[6]], out_yrs[[7]], out_yrs[[8]], out_yrs[[9]], out_yrs[[10]], out_yrs[[11]], out_yrs[[12]], out_yrs[[13]], out_yrs[[14]], out_yrs[[15]], out_yrs[[16]], out_yrs[[17]], out_yrs[[18]], out_yrs[[19]], out_yrs[[20]], out_yrs[[21]], out_yrs[[22]], out_yrs[[23]], out_yrs[[24]], out_yrs[[25]], out_yrs[[26]], out_yrs[[27]], out_yrs[[28]], out_yrs[[29]], ncol = 3)
+
+@
+
 
 \end{document}
