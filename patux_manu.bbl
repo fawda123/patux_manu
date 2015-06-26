@@ -1,0 +1,18 @@
+\begin{thebibliography}{}
+
+\bibitem[Byrd et~al., 1995]{Byrd95}
+Byrd RH, Lu P, adn C.~Zhu JN. 1995.
+\newblock A limited memory algorithm for bound constrained optimization.
+\newblock SIAM Journal on Scientific Computing, 16(5):1190--1208.
+
+\bibitem[Hastie and Tibshirani, 1990]{Hastie90}
+Hastie T, Tibshirani R. 1990.
+\newblock Generalized Additive Models.
+\newblock Chapman and Hall, London, New York.
+
+\bibitem[Zuur, 2012]{Zuur12}
+Zuur AF. 2012.
+\newblock A Beginner's Guide to Generalized Additive Models in R.
+\newblock Highland Statistics Ltd., Newburgh, United Kingdom.
+
+\end{thebibliography}
