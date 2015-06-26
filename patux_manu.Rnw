@@ -1,0 +1,126 @@
+\documentclass[letterpaper,12pt,oneside]{article}
+\usepackage[paperwidth=8.5in,paperheight=11in,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{setspace}
+\usepackage[colorlinks=true,allcolors=Blue]{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{rotating}
+\usepackage{tabularx}
+\usepackage{outlines}
+\usepackage{lineno}
+\usepackage{array}
+\usepackage{times}
+\usepackage{cleveref}
+\usepackage{acronym}
+\usepackage[position=t]{subfig}
+\usepackage{paralist}
+\usepackage[noae]{Sweave}
+\usepackage{natbib}
+\usepackage{array}
+\usepackage{pdflscape}
+\usepackage{bm}
+\usepackage{showlabels}
+\bibpunct{(}{)}{,}{a}{}{,}
+
+% page margins and section title formatting
+\linespread{1.5}
+\setlength{\footskip}{0.5in}
+\titleformat*{\section}{\Large\bf\em}
+\titleformat*{\subsection}{\singlespace\large\bf}
+\titleformat*{\subsubsection}{\singlespace\normalsize\bf\em}
+\titlespacing{\section}{0in}{0in}{0in}
+\titlespacing{\subsection}{0in}{0in}{0in}
+\titlespacing{\subsubsection}{0in}{0in}{0in}
+
+% cleveref options
+\crefname{table}{Table}{Tables}
+\crefname{figure}{Fig.}{Figs.}
+\renewcommand{\figurename}{Fig.}
+
+% aliased citations
+% \defcitealias{FLDEP12}{FLDEP 2012}
+
+%acronyms
+% \acrodef{DEM}{Digital Elevation Model}
+
+%knitr options
+<<setup,include=F,cache=F>>=
+library(knitr)
+opts_chunk$set(fig.path = 'figs/', fig.align = 'center', fig.show = 'hold', message = F, echo = F, results = 'asis', dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!ht', warning = F)
+options(replace.assign = TRUE, width = 90, digits = 1)
+@
+
+% get the version based on commit date
+<<echo = FALSE, cache = FALSE>>=
+raw <- system('git log -1', intern = TRUE)
+raw <- raw[grep('^Date', raw)]
+raw <- paste('Version', raw)
+@
+
+\begin{document}
+
+\raggedbottom
+\linenumbers
+\raggedright
+\urlstyle{same}
+\setlength{\parindent}{0.5in}
+\renewcommand\refname{References \vspace{12pt}}
+
+\begin{singlespace}
+\title{{\bf {\Large Title}}}
+\author{
+  {\bf {\normalsize Marcus W. Beck$^1$, Rebecca Murphy$^2$}}
+  \\\\{\textit {\normalsize $^1$ORISE Research Participation Program}}
+  \\{\textit {\normalsize USEPA National Health and Environmental Effects Research Laboratory}}
+  \\{\textit {\normalsize Gulf Ecology Division, 1 Sabine Island Drive, Gulf Breeze, FL 32561}}
+	\\{\textit {\normalsize Phone: 850-934-2480, Fax: 850-934-2401, Email: \href{mailto:beck.marcus@epa.gov}{beck.marcus@epa.gov}}}
+  \\\\{\textit {\normalsize $^2$UMCES at Chesapeake Bay Program}}
+	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
+	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
+  \vspace{1in} 
+  \\ \Sexpr{raw}
+	}
+\date{}
+\maketitle
+\end{singlespace}
+\clearpage
+
+\section*{Abstract}
+
+\noindent \textit{Key words}:
+
+\clearpage
+
+\acresetall
+
+\section{Introduction}
+
+\section{Methods}
+
+\section{Results}
+
+\section{Discussion}
+
+\subsection{Conclusions}
+
+%%%%%%
+% refs
+% \clearpage
+% \begin{singlespace}
+% \bibliographystyle{apalike_mine}
+% \bibliography{ref_sgdepth}
+% \end{singlespace}
+% \clearpage
+
+%%%%%%
+% tables
+
+%%%%%%
+% figures
+
+\end{document}
