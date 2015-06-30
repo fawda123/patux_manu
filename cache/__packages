@@ -1,0 +1,10 @@
+base
+knitr
+httr
+ggplot2
+dplyr
+scales
+wesanderson
+sp
+maps
+mapproj

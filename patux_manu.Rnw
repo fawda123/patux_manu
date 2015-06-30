@@ -55,7 +55,7 @@
 <<setup,include=F,cache=F>>=
 library(knitr)
 opts_chunk$set(fig.path = 'figs/', fig.align = 'center', fig.show = 'hold', message = F, echo = F, results = 'asis', dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!ht', warning = F)
-options(replace.assign = TRUE, width = 90, digits = 1)
+options(replace.assign = TRUE, width = 90)
 @
 
 % get the version based on commit date
@@ -211,8 +211,9 @@ Similarity of flow-normalized results - simulated data, simple scatterplots, sim
 
 %%%%%%
 % figures
+
 %%%%%%
-<<eval = F, echo = F, cache = F>>=
+<<chlyr, fig.width = 7, fig.height = 9, eval = T, echo = F, cache = T, fig.cap = 'Annual chlorophyll trends at each monitoring station in the Patuxent River Estuary.  Values are annual medians of ln-chlorophyll-a with size and color proportional between years.'>>=
 load(file = 'data/pax_data.RData')
 load(file = 'data/pax_meta.RData')
 load(file = 'data/pax_clip.RData')
@@ -241,33 +242,9 @@ theme_mine <- function (base_size = 12, base_family = "") {
 }
 theme_set(theme_mine())
 
-# y axis label
-y_lab <- expression(
-  paste('ln-chlorophyll  ',italic(a),' (',italic(mu),'g',l^-1,')')
-  )
-
 # color for water for continuity with last fig
 wt_col <- wes_palette('Zissou', 100, 'continuous')[10] %>% 
-  alpha(0.8)
-
-# function for color that is not linear by rank
-cRamp <- function(x, alpha_val = 0.8){
-
-  # colors to use
-  cols <- wes_palette('Zissou', 1000, 'continuous') %>% 
-    as.character %>% 
-    .[1:600]
-
-  # map the values to the colors
-  x_rang <- (x - min(x, na.rm = T))/diff(range(x, na.rm = T))
-  cols <- colorRamp(cols)(x_rang)
-  apply(cols, 1, function(val){
-    if(NaN %in% val) NA
-    else
-    rgb(val[1], val[2], val[3], alpha = alpha_val * 255, maxColorValue = 255)
-    })
-  
-  }
+  alpha(0.6)
 
 # format pax_meta for mrg with pax_plo
 pax_meta <- select(pax_meta, STATION, LONG, LAT) %>% 
@@ -283,14 +260,18 @@ pax_data <- mutate(pax_data,
 # get annual medians by station, add coords
 pax_yr <- group_by(pax_data, STATION, yr) %>% 
   summarize(lnchla = median(lnchla, na.rm = T)) %>% 
-  mutate(
-    ptsz = rescale(lnchla, c(3, 12)),
-    cols = cRamp(lnchla, alpha_val = 1)
-    ) %>% 
-  ungroup %>% 
   left_join(., pax_meta, by = 'STATION')
 
-# do this with facet somehow...
+# add some rows to pax_yr for station labels
+stat_add <- unique(pax_yr[, c('STATION', 'LONG', 'LAT')])
+stat_add$yr <- 'Stations'
+stat_add$lnchla <- NA
+pax_yr <- rbind(pax_yr, stat_add)
+
+# plot label
+ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+
+# plot
 ggplot(pax_meta, aes(x = LONG, y = LAT)) + 
   geom_polygon(data = pax_clip, aes(x = long, y = lat, group = group),
     fill = wt_col) +
@@ -301,14 +282,113 @@ ggplot(pax_meta, aes(x = LONG, y = LAT)) +
   # geom_text(data = yr_labs, aes(label = yr)) + 
   geom_point(data = pax_yr, aes(group = yr, size = lnchla, fill = lnchla), 
     pch = 21) +
+  geom_text(data = pax_yr[pax_yr$yr == 'Stations', ], aes(label = STATION), size = 2) + 
   facet_wrap(~yr) +
   theme_mine() + 
+  scale_size(range = c(1, 8)) + 
   scale_fill_gradientn(colours = cols) +
-  theme(axis.title = element_blank())
-
-# grid.arrange(out_yrs[[1]], out_yrs[[2]], out_yrs[[3]], out_yrs[[4]], out_yrs[[5]], out_yrs[[6]], out_yrs[[7]], out_yrs[[8]], out_yrs[[9]], out_yrs[[10]], out_yrs[[11]], out_yrs[[12]], out_yrs[[13]], out_yrs[[14]], out_yrs[[15]], out_yrs[[16]], out_yrs[[17]], out_yrs[[18]], out_yrs[[19]], out_yrs[[20]], out_yrs[[21]], out_yrs[[22]], out_yrs[[23]], out_yrs[[24]], out_yrs[[25]], out_yrs[[26]], out_yrs[[27]], out_yrs[[28]], out_yrs[[29]], ncol = 3)
+  theme(
+    legend.position = 'top', 
+    axis.title = element_blank(), 
+    axis.text.y = element_text(size = 7),
+    axis.text.x = element_text(size = 7, angle = 90, hjust = 1)
+    ) + 
+  guides(
+    fill = guide_legend(title = ylabs), 
+    size = guide_legend(title = ylabs)
+    )
 
 @
+
+<<chlmo, fig.width = 7, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Monthly chlorophyll trends at each monitoring station in the Patuxent River Estuary.  Values are monthly medians of ln-chlorophyll-a with size and color proportional between months.'>>=
+load(file = 'data/pax_data.RData')
+load(file = 'data/pax_meta.RData')
+load(file = 'data/pax_clip.RData')
+
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+
+# change default ggplot theme
+theme_mine <- function (base_size = 12, base_family = "") {
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+  theme(
+    axis.text.x = element_text(size = 8), 
+    plot.background = element_rect(fill='transparent', 
+      colour = NA),
+    panel.background = element_rect(fill='transparent', 
+      colour = NA),
+    legend.background = element_rect(fill='transparent', 
+      colour = NA),
+    strip.background = element_rect(fill = 
+        alpha(cols[length(cols)], 0.5)),
+    legend.key = element_rect(fill = 'transparent', 
+      colour = NA)
+    )   
+}
+theme_set(theme_mine())
+
+# color for water for continuity with last fig
+wt_col <- wes_palette('Zissou', 100, 'continuous')[10] %>% 
+  alpha(0.6)
+
+# format pax_meta for mrg with pax_plo
+pax_meta <- select(pax_meta, STATION, LONG, LAT) %>% 
+  mutate(STATION = as.character(STATION))
+
+# add month to pax data
+pax_data <- mutate(pax_data, 
+  mo = as.numeric(strftime(date, '%m'))
+  ) %>% 
+  mutate(STATION = as.character(STATION))
+
+# get annual medians by station, add coords
+pax_mo <- group_by(pax_data, STATION, mo) %>% 
+  summarize(lnchla = median(lnchla, na.rm = T)) %>% 
+  left_join(., pax_meta, by = 'STATION')
+
+# add some rows to pax_yr for station labels
+stat_add <- unique(pax_yr[, c('STATION', 'LONG', 'LAT')])
+stat_add$mo <- 'Stations'
+stat_add$lnchla <- NA
+pax_mo <- rbind(pax_mo, stat_add)
+
+molevs <- c('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 
+  'November', 'December', 'Stations')
+pax_mo$mo <- factor(pax_mo$mo, levels = c(1:12, 'Stations'), labels = molevs)
+
+# plot label
+ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+
+# plot
+ggplot(pax_meta, aes(x = LONG, y = LAT)) + 
+  geom_polygon(data = pax_clip, aes(x = long, y = lat, group = group),
+    fill = wt_col) +
+  coord_map(
+    xlim = c(-76.78, -76.36),
+    ylim = c(38.27, 38.85)
+  ) +
+  geom_point(data = pax_mo, aes(group = mo, size = lnchla, fill = lnchla), 
+    pch = 21) +
+  geom_text(data = pax_mo[pax_mo$mo == 'Stations', ], aes(label = STATION), size = 3) + 
+  facet_wrap(~mo, ncol = 5) +
+  theme_mine() + 
+  scale_size(range = c(1, 8)) + 
+  scale_fill_gradientn(colours = cols) +
+  theme(
+    legend.position = 'top', 
+    axis.title = element_blank(), 
+    axis.text.y = element_text(size = 7),
+    axis.text.x = element_text(size = 7, angle = 90, hjust = 1)
+    ) + 
+  guides(
+    fill = guide_legend(title = ylabs), 
+    size = guide_legend(title = ylabs)
+    )
+
+@
+
 
 
 \end{document}

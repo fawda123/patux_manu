@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  30 JUN 2015 13:58
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  30 JUN 2015 17:04
 entering extended mode
 **patux_manu.tex
 (M:\docs\manuscripts\patux_manu\patux_manu.tex
@@ -702,21 +702,33 @@ although it is yet undefined on input line 199.
 [7] (M:\docs\manuscripts\patux_manu\patux_manu.bbl) [8
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 250.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 250.
+<figs/chlyr-1.pdf, id=100, 505.89pt x 650.43pt>
+File: figs/chlyr-1.pdf Graphic file (type pdf)
+ <use figs/chlyr-1.pdf>
+Package pdftex.def Info: figs/chlyr-1.pdf used on input line 250.
+(pdftex.def)             Requested size: 469.75502pt x 603.98058pt.
 
-(M:\docs\manuscripts\patux_manu\patux_manu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 250.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 250.
+<figs/chlmo-1.pdf, id=101, 505.89pt x 505.89pt>
+File: figs/chlmo-1.pdf Graphic file (type pdf)
+ <use figs/chlmo-1.pdf>
+Package pdftex.def Info: figs/chlmo-1.pdf used on input line 261.
+(pdftex.def)             Requested size: 469.75502pt x 469.76265pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 272.
+ [9 <M:/docs/manuscripts/patux_manu/figs/chlyr-1.pdf>] [10 <M:/docs/manuscripts
+/patux_manu/figs/chlmo-1.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 272.
+ (M:\docs\manuscripts\patux_manu\patux_manu.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 272.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 272.
 Package rerunfilecheck Info: File `patux_manu.out' has not changed.
 (rerunfilecheck)             Checksum: 46DE81793B935F04A348C478A9F25AFD;534.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 250.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 272.
  ) 
 Here is how much of TeX's memory you used:
- 11548 strings out of 493921
- 182879 string characters out of 3147282
+ 11577 strings out of 493921
+ 183308 string characters out of 3147282
  297711 words of memory out of 3000000
- 14625 multiletter control sequences out of 15000+200000
+ 14646 multiletter control sequences out of 15000+200000
  27854 words of font info for 67 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  44i,7n,42p,1395b,498s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -731,9 +743,9 @@ rogram Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKT
 eX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on patux_manu.pdf (8 pages, 140682 bytes).
+Output written on patux_manu.pdf (10 pages, 3620726 bytes).
 PDF statistics:
- 144 PDF objects out of 1000 (max. 8388607)
- 26 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 178 PDF objects out of 1000 (max. 8388607)
+ 30 named destinations out of 1000 (max. 500000)
+ 83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
