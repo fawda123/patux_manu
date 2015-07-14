@@ -10,6 +10,17 @@ Hastie T, Tibshirani R. 1990.
 \newblock Generalized Additive Models.
 \newblock Chapman and Hall, London, New York.
 
+\bibitem[Hyndman and Khandakar, 2008]{Hyndman08}
+Hyndman RJ, Khandakar Y. 2008.
+\newblock Automatic time series forecasting: The forecast package for r.
+\newblock JOurnal of Statistical Software, 26(3):1--22.
+
+\bibitem[{RDCT (R Development Core Team)}, 2015]{RDCT15}
+{RDCT (R Development Core Team)}. 2015.
+\newblock {R: A language and environment for statistical computing, v3.2.0. R
+  Foundation for Statistical Computing, Vienna, Austria}.
+\newblock \url{http://www.R-project.org}.
+
 \bibitem[Zuur, 2012]{Zuur12}
 Zuur AF. 2012.
 \newblock A Beginner's Guide to Generalized Additive Models in R.
