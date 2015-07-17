@@ -122,14 +122,14 @@ writeLines(refs, con = file('refs.bib'))
 \section{Introduction}
 
 \begin{outline}
-\0 Needs
+\0 \noindent Needs
 \1 Quantitative tools that describe trends in water quality time series are needed to identify factors that influence ecosystem condition and to evaluate the effects of management activities in the context of multiple drivers
 \1 Recent adaptation of statistical models for evaluating water quality time series have shown promise for application in tidal waters, specifically \ac{GAM} and \ac{WRTDS}
 \1 These similar techniques can be used to quantify relationships between response measures and different drivers that may vary over time, in addition to an evaluation of trends independent of variation in freshwater inputs
 \1 The relative merits of each approach have not been evaluated, particularly related to accuracy of the empirical description and the desired products for trend evaluation
 \1 Such a comparison could inform the use of each model for addressing management or restoration needs or for developing more robust descriptions of long-term changes in ecosystem characteristics
-\0 Goal: Provide a description of the relative abilities of \acp{GAM} and \ac{WRTDS} to describe long-term changes in time series of response endpoints in tidal waters
-\0 Objectives:
+\0 Goal: Provide a description of the relative abilities of \acp{GAM} and \ac{WRTDS} to describe long-term changes in time series of response endpoints in tidal waters \\
+\0 \noindent Objectives:
 \1 Provide a narrative comparison of the statistical foundation of each technique, both as a general description and as a means to evaluate water quality time series
 \1 Use each technique to develop an empirical description of water quality changes in a common dataset with known historical changes in water quality drivers
 \1 Apply the models to simulated data to evaluate ability of the models to describe true changes
@@ -141,7 +141,7 @@ writeLines(refs, con = file('refs.bib'))
 
 \subsection{Study site}
 
-The Patuxent River Estuary... \\
+The Patuxent River Estuary... background, history \\
 Observed trends over time \\
 longitudinal gradient from watershed to mainstem influences, LE1.2, TF1.6\\
 Show plots of trends over time in observed data \\
@@ -150,7 +150,7 @@ Show plots of trends over time in observed data \\
 
 How, Similarities, differences, optimal smoothing
 
-The selection of optimal model parameters is a challenge that represents a tradeoff between model precision and ability to generalize to novel datasets.  Weighted regression requires identifying optimal half-window widths, whereas \ac{GAM} requires identifying the optimal degrees of freedom for the smoothing parameter.  Overfitting a model with excessively small window widths or excessive degrees of freedom will minimize prediction error but prevent extrapolation of results to different datasets. Similarly, underfitting a model with large window widths or very few degrees of freedom will reduce precision but will improve the ability to generalize results to different datasets. From a statistical perspective, the optimal model parameters provide a balance between over- and under-fitting.  Both models use a form of cross-validation to identify model parameters that maximize the precision of model predictions with a novel dataset.   
+The selection of optimal model parameters is a challenge that represents a tradeoff between model precision and ability to generalize to novel datasets.  Weighted regression requires identifying optimal half-window widths, whereas \acp{GAM} requires identifying the optimal degrees of freedom for the smoothing parameter.  Overfitting a model with excessively small window widths or excessive degrees of freedom will minimize prediction error but prevent extrapolation of results to different datasets. Similarly, underfitting a model with large window widths or very few degrees of freedom will reduce precision but will improve the ability to generalize results to different datasets. From a statistical perspective, the optimal model parameters provide a balance between over- and under-fitting.  Both models use a form of cross-validation to identify model parameters that maximize the precision of model predictions with a novel dataset.   
 
 The basic premise of cross-validation is to identify the optimal set of model parameters that minimize prediction error on a dataset that was not used to develop the model.  For \acp{GAM} \citep{Hastie90,Zuur12}...[insert GAMs methods]. Similarly, the tidal adaptation of \ac{WRTDS} used k-fold cross-validation to identify the optimal half-window widths. For a given set of half-window widhts, the dataset was separated into ten disjoint sets, such that ten models were evaluated for every combination of k - 1 training and remaining test datasets. That is, the training dataset for each fold was all k - 1 folds and the test dataset was the remaining fold, repeated k times. The average prediction error of the test datasets across k folds provided an indication of model performance for the given combination of half-window widths.  The optimum window widths were those that provided minimum errors on the test data.  Evaluating multiple combinations of window-widths can be computationally intensive. An optimization function was implemented in R  \citep{Byrd95,RDCT15} to more efficiently evaluate model parameters using a search algorithm.  Window widths were searched using the limited-memory modification of the BFGS quasi-Newton method that imposes upper and lower bounds for each parameter.  The chosen parameters were based on a selected convergence tolerance for the error minimization of the search algorithm.  
 
@@ -180,7 +180,7 @@ First, daily flow data were simulated as the additive combination of a stationar
 \end{equation}
 creating a stationary seasonal regression of flow over $i$ of $n$ days in the record.  The residuals from this regression were used to estimate the error distribution using an \ac{ARIMA} model.  Parameters of the model were chosen using stepwise estimation for nonseasonal univariate time series that minimized \ac{AIC} to identify appropriate $p$ and $q$ coefficients as described in \citet{Hyndman08}.  The resulting model was used to generate random errors from a standard normal distribution for the length of the original time series.  The random, serially-correlated errors were multiplied by the standard deviation of the residuals and added to the seasonal component in \cref{qsim} to create a simulated, daily log-flow time series.  
 
-The chlorophyll time series was created using a similar approach with minor differences.  The first step estimated the stationary seasonal component of the chlorophyll time series by fitting a \ac{WRTDS} model that explicitly included discharge using one year of data from the whole time series.  This approach was used to isolate an error structure for simulation that was independent of flow and biology, while assuming the seasonal component was stricly related to biological processes.  Although this is in invalid assumption for the true time series, the statistical properties of the resulting model were sufficient for creating simulated time series.  The error distribution was then estimated from the residuals as before using an \ac{ARIMA} estimate of the residual parameters.  Standard error estimates from the regression used at each point in the one-year time series were also retained for each residual.  Random errors using the estimated auto-regressive structures were simulated for the entire year and multiplied by the corresponding standard error estimate from the regression.  The entire year was repeated for every year in the observed time series.  All simulated errors were rescaled to the range of the original residuals that were used to estimate the distribution.  Finally, the simulated flow-component was added to the simulated chlorophyll time series to create a combined chlorophyll-flow time series in \cref{chlsim}.  
+The chlorophyll time series was created using a similar approach with minor differences.  The first step estimated the stationary seasonal component of the chlorophyll time series by fitting a \ac{WRTDS} model that explicitly included discharge using one year of data from the whole time series.  This approach was used to isolate an error structure for simulation that was independent of flow and biology, while assuming the seasonal component was strictly related to biological processes.  Although this is in invalid assumption for the true time series, the statistical properties of the resulting model were sufficient for creating simulated time series.  The error distribution was then estimated from the residuals as before using an \ac{ARIMA} estimate of the residual parameters.  Standard error estimates from the regression used at each point in the one-year time series were also retained for each residual.  Random errors using the estimated auto-regressive structures were simulated for the entire year and multiplied by the corresponding standard error estimate from the regression.  The entire year was repeated for every year in the observed time series.  All simulated errors were rescaled to the range of the original residuals that were used to estimate the distribution.  Finally, the simulated flow-component was added to the simulated chlorophyll time series to create a combined chlorophyll-flow time series in \cref{chlsim}.  
 
 A daily time series for the entire period of record was simulated using the above methods and then used to create additional time series with different sampling frequencies and varying contributions of the flow component, $Chl_{flo}$, in \cref{chlsim}.  Monthly and bimonthly (twice a month) time series were created by sampling the original time series at appropriate intervals.  Additionally, varying contributions of the flow component on observed chlorophyll were evaluated by multiplying $Chl_{flo}$ by a vector of coefficients that represented the relative effect of flow through the time series at the given sampling frequency.  For example, an effect of flow on the time series that changes from non-existent to positive throughout the period of observation can be simulated by creating a vector ranging from zero to one with an increase at a chosen intermediate date.  $Chl_{flo}$ is centered at zero, multiplied by the chosen vector, and then added to $Chl_{bio}$ to create $Chl_{obs}$ at the given sampling frequency.
 
@@ -189,14 +189,14 @@ The relative abilities of \ac{WRTDS} and \acp{GAM} to evaluate flow-normalized t
 \section{Results}
 
 \begin{outline}
-\0 Predicions with actual data
-\0 Simulations
+\0 \noindent Predictions with actual data \\
+\0 \noindent Simulations
 \end{outline}
 
 \section{Discussion}
 
 \begin{outline}
-\0 Qualitative comparison
+\0 \noindent Qualitative comparison
 \1 Computational requirements and potential limitations
 \1 Data needs or transferability of each technique to novel datasets
 \1 Products, e.g., conditional quantiles of \ac{WRTDS}, confidence intervals for \acp{GAM}, handling censored data, hypothesis testing vs description
@@ -217,10 +217,23 @@ The relative abilities of \ac{WRTDS} and \acp{GAM} to evaluate flow-normalized t
 %%%%%%
 % tables
 
+% site characteristics of TF16, LE12
+
+% trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
+
+% performance summary of predictions WRTDS/GAMs - RMSE values for each, percent differences between the two, average differences as in eqn. 10 for Moyer  
+
+% performance summary of flow-normalized predictions WRTDS/GAMs LE12, TF16 - RMSE values for each, percent differences between the two, average differences as in eqn. 10 for Moyer  
+
+% performance summary of flow-normalized predictions WRTDS/GAMS simulated data - compare between the two mods as in previous fig, but also compare with 'known' flow-independet ts
+
+% qualitative comparison of each mod, pros/cons of each, etc. to accompany discussion
+
 %%%%%%
 % figures
 
-%%%%%%
+% study site map
+
 <<chlyr, fig.width = 7, fig.height = 9, eval = T, echo = F, cache = T, fig.cap = 'Annual chlorophyll trends at each monitoring station in the Patuxent River Estuary.  Values are annual medians of ln-chlorophyll-a with size and color proportional between years.'>>=
 load(file = 'data/pax_data.RData')
 load(file = 'data/pax_meta.RData')
@@ -397,6 +410,16 @@ ggplot(pax_meta, aes(x = LONG, y = LAT)) +
 
 @
 
+% predicted trends for each mod - monthly time series of observed with predictions, RMSE in fig
 
+% dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
+
+% scatterplot comparison of predictions between each mod (as in fig. 7 Moyer et al. 2012, incl ave diffs) - whole time series, different time periods (annual, seasonal groupings)
+
+% histograms of errors for each mod, overlap with color transparencies - use period groupings as in previous fig
+
+% examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects
+
+% results of flow-normalized data for simulations
 
 \end{document}
