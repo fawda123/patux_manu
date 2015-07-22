@@ -10,6 +10,12 @@ Hastie T, Tibshirani R. 1990.
 \newblock Generalized Additive Models.
 \newblock Chapman and Hall, London, New York.
 
+\bibitem[Hirsch et~al., 2010]{Hirsch10}
+Hirsch RM, Moyer DL, Archfield SA. 2010.
+\newblock Weighted regressions on time, discharge, and season ({WRTDS}), with
+  an application to {C}hesapeake {B}ay river inputs.
+\newblock Journal of the American Water Resources Association, 46(5):857--880.
+
 \bibitem[Hyndman and Khandakar, 2008]{Hyndman08}
 Hyndman RJ, Khandakar Y. 2008.
 \newblock Automatic time series forecasting: The forecast package for r.
