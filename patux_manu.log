@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  22 JUL 2015 14:02
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  23 JUL 2015 14:00
 entering extended mode
 **patux_manu.tex
 (M:\docs\manuscripts\patux_manu\patux_manu.tex
@@ -544,7 +544,14 @@ Package: `showlabels' v1.6.6 <2013/12/06>
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
 )
-(M:\docs\manuscripts\patux_manu\patux_manu.aux)
+(M:\docs\manuscripts\patux_manu\patux_manu.aux
+
+LaTeX Warning: Label `acro:WRTDS@cref' multiply defined.
+
+
+LaTeX Warning: Label `acro:GAM@cref' multiply defined.
+
+)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
 LaTeX Font Info:    ... okay on input line 118.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 118.
@@ -562,8 +569,7 @@ LaTeX Font Info:    ... okay on input line 118.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 118.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 118.
 
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 118.
@@ -636,123 +642,23 @@ LaTeX Info: Redefining \pageref on input line 118.
 LaTeX Info: Redefining \nameref on input line 118.
 
 (M:\docs\manuscripts\patux_manu\patux_manu.out)
-(M:\docs\manuscripts\patux_manu\patux_manu.out)
-\@outlinefile=\write5
-Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: subfig package v1.3 is loaded.
-Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 143.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 143.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 143.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 143.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 143.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 143.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 143.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 143.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 143.
- [1
+(M:\docs\manuscripts\patux_manu\patux_manu.out
+! I can't write on file `patux_manu.pdf'.
+Please type another file name for output
+! Emergency stop.
+\Hy@OutlineName ...utline goto name{#2}count#3{#4}
+                                                  
+l.1 \BOOKMARK [1][-]{section.1}{Introduction}{}
+                                               % 1
+*** (job aborted, file error in nonstop mode)
 
-{C:/Users/mbeck/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 146.
- [2
-
-]
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 158.
-
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 159.
-
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-LaTeX Font Info:    Try loading font information for OMS+pcr on input line 159.
-
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\omspcr.fd"
-File: omspcr.fd 
-)
-LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 159.
-Package acronym Info: Label `acro:GAM' newly defined as it shall be overridden
-although it is yet undefined on input line 159.
-Package acronym Info: Label `acro:WRTDS' newly defined as it shall be overridde
-n
-although it is yet undefined on input line 159.
- [3
-
-] [4] [5]
-Package acronym Info: Label `acro:USGS' newly defined as it shall be overridden
-
-although it is yet undefined on input line 203.
- [6]
-Package acronym Info: Label `acro:ARMA' newly defined as it shall be overridden
-
-although it is yet undefined on input line 227.
-Package acronym Info: Label `acro:AIC' newly defined as it shall be overridden
-although it is yet undefined on input line 227.
-
-[7] [8] [9] (M:\docs\manuscripts\patux_manu\patux_manu.bbl) [10
-
-]
-<figs/chlyr-1.pdf, id=146, 505.89pt x 650.43pt>
-File: figs/chlyr-1.pdf Graphic file (type pdf)
- <use figs/chlyr-1.pdf>
-Package pdftex.def Info: figs/chlyr-1.pdf used on input line 290.
-(pdftex.def)             Requested size: 469.75502pt x 603.98058pt.
-
-<figs/chlmo-1.pdf, id=147, 505.89pt x 505.89pt>
-File: figs/chlmo-1.pdf Graphic file (type pdf)
- <use figs/chlmo-1.pdf>
-Package pdftex.def Info: figs/chlmo-1.pdf used on input line 301.
-(pdftex.def)             Requested size: 469.75502pt x 469.76265pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 322.
- [11 <M:/docs/manuscripts/patux_manu/figs/chlyr-1.pdf>] [12 <M:/docs/manuscript
-s/patux_manu/figs/chlmo-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 322.
- (M:\docs\manuscripts\patux_manu\patux_manu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 322.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 322.
-Package rerunfilecheck Info: File `patux_manu.out' has not changed.
-(rerunfilecheck)             Checksum: 46DE81793B935F04A348C478A9F25AFD;534.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 322.
- ) 
+ 
 Here is how much of TeX's memory you used:
- 11642 strings out of 493921
- 184026 string characters out of 3147282
- 299711 words of memory out of 3000000
- 14695 multiletter control sequences out of 15000+200000
- 27854 words of font info for 67 fonts, out of 3000000 for 9000
+ 10781 strings out of 493921
+ 165588 string characters out of 3147282
+ 293711 words of memory out of 3000000
+ 13933 multiletter control sequences out of 15000+200000
+ 4445 words of font info for 16 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 44i,7n,42p,1473b,498s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
-sfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program F
-iles/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/t
-imes/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-
-Output written on patux_manu.pdf (12 pages, 3646548 bytes).
-PDF statistics:
- 232 PDF objects out of 1000 (max. 8388607)
- 46 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 44i,0n,42p,314b,79s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

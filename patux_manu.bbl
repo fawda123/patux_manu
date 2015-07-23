@@ -1,5 +1,11 @@
 \begin{thebibliography}{}
 
+\bibitem[Beck and {Hagy III}, 2015]{Beck15}
+Beck MW, {Hagy III} JD. 2015.
+\newblock Adaptation of a weighted regression approach to evaluate water
+  quality trends in an estuary.
+\newblock Environmental Modelling and Assessment, pages 1--19.
+
 \bibitem[Byrd et~al., 1995]{Byrd95}
 Byrd RH, Lu P, adn C.~Zhu JN. 1995.
 \newblock A limited memory algorithm for bound constrained optimization.
@@ -9,6 +15,14 @@ Byrd RH, Lu P, adn C.~Zhu JN. 1995.
 Hastie T, Tibshirani R. 1990.
 \newblock Generalized Additive Models.
 \newblock Chapman and Hall, London, New York.
+
+\bibitem[Hirsch and {De Cicco}, 2014]{Hirsch14}
+Hirsch RM, {De Cicco} L. 2014.
+\newblock User guide to {E}xploration and {G}raphics for {R}iv{E}r {T}rends
+  ({EGRET}) and data{R}etrieval: {R} packages for hydrologic data.
+\newblock Technical Report Techniques and Methods book 4, ch. A10, US
+  Geological Survey, Reston, Virginia.
+\newblock \url{http://pubs.usgs.gov/tm/04/a10/}.
 
 \bibitem[Hirsch et~al., 2010]{Hirsch10}
 Hirsch RM, Moyer DL, Archfield SA. 2010.
@@ -21,11 +35,42 @@ Hyndman RJ, Khandakar Y. 2008.
 \newblock Automatic time series forecasting: The forecast package for r.
 \newblock JOurnal of Statistical Software, 26(3):1--22.
 
+\bibitem[Medalie et~al., 2012]{Medalie12}
+Medalie L, Hirsch RM, Archfield SA. 2012.
+\newblock Use of flow-normalization to evaluate nutrient concentration and flux
+  changes in {L}ake {C}hamplain tributaries, 1990-2009.
+\newblock Journal of Great Lakes Research, 38(SI):58--67.
+
+\bibitem[Moyer et~al., 2012]{Moyer12}
+Moyer DL, Hirsch RM, Hyer KE. 2012.
+\newblock Comparison of two regression-based approaches for determining
+  nutrient and sediment fluxes and trends in the {C}hesapeake {B}ay watershed.
+\newblock Technical Report Scientific Investigations Report 2012-544, US
+  Geological Survey, US Department of the Interior, Reston, Virginia.
+
 \bibitem[{RDCT (R Development Core Team)}, 2015]{RDCT15}
 {RDCT (R Development Core Team)}. 2015.
 \newblock {R: A language and environment for statistical computing, v3.2.0. R
   Foundation for Statistical Computing, Vienna, Austria}.
 \newblock \url{http://www.R-project.org}.
+
+\bibitem[Sprague et~al., 2011]{Sprague11}
+Sprague LA, Hirsch RM, Aulenbach BT. 2011.
+\newblock Nitrate in the {M}ississippi {R}iver and its tributaries, 1980 to
+  2008: Are we making progress?
+\newblock Environmental Science and Technology, 45(17):7209--7216.
+
+\bibitem[Wood, 2006]{Wood06}
+Wood SN. 2006.
+\newblock Generalized Additive Models: An Introduction with R.
+\newblock Chapman and Hall, CRC Press, London, United Kingdom.
+
+\bibitem[Zhang et~al., 2013]{Zhang13}
+Zhang Q, Brady DC, Ball WP. 2013.
+\newblock Long-term seasonal trends of nitrogen, phosphorus, and suspended
+  sediment load from the non-tidal {S}usquehanna {R}iver {B}asin to
+  {C}hesapeake {B}ay.
+\newblock Science of the Total Environment, 452-453:208--221.
 
 \bibitem[Zuur, 2012]{Zuur12}
 Zuur AF. 2012.

@@ -113,7 +113,9 @@ writeLines(refs, con = file('refs.bib'))
 
 \section*{Abstract}
 
-\noindent \textit{Key words}:
+\noindent Long-term monitoring datasets that describe water quality in coastal systems can provide a means of interpreting the effects of environmental changes or management actions on ecosystem condition.  The ability to link causal effects with potential changes is highly dependent on the chosen method of interpreting trends in the observed data.  Two statistical approaches, \ac{WRTDS} and \acp{GAM}, have recently been used to evaluate long-term trends in chlorophyll time series in estuarine systems.  Both models provide a similar approach to trend analysis by using context-dependent parameters or smoothing functions that vary continuously and are responsive to multiple drivers throughout the time series.  However, the quantitative capabilities of each model, including descriptions of observed and flow-normalized trends, have not been rigorously compared to determine most appropriate use of each model.  We evaluated \ac{WRTDS} and \acp{GAM} using thirty years of data for a monthly time series of chlorophyll in the Patuxent River Estuary, a well-studied tributary to Chesapeake Bay.  Each model was evaluated based on goodness of fit to the observed data and ability to reproduce flow-normalized trends with simulated data that had statistical properties that were comparable to the original dataset.  Each model was also evaluated based on concordance between conclusions of water quality changes, and causes thereof, in different time periods.  This information will provide researchers with valuable guidance for trend evaluation using statistical models, with particular relevance for computational requirements, desired products, and future data needs.  
+
+\noindent \textit{Key words}: chlorophyll, estuary, generalized additive models, Patuxent River Estuary, trend analysis, weighted regression
 
 \clearpage
 
@@ -122,20 +124,28 @@ writeLines(refs, con = file('refs.bib'))
 \section{Introduction}
 
 \begin{outline}
-\0 \noindent Needs
+The interpretation of enviromental trends can have far-reaching implications for the management of evironmental resources and developing an improved understanding of ecological factors that mediate system dynamics.  An accurate interpretaion of observed data can depend on the chosen method of analysis, and more importantly, the ability of the analysis method to consider the effects of multiple drivers on response endpoints.  For coastal environments....   
+
+\0 \noindent Challenges for trend analysis in tidal waters
+\1 Duarte neverland
+\1 Challenges inherent in any system
+\1 tidal flux
+\1 freshwater inflow
+\1 need to distinguish between environmental and management changes
 \1 Quantitative tools that describe trends in water quality time series are needed to identify factors that influence ecosystem condition and to evaluate the effects of management activities in the context of multiple drivers
-\1 Recent adaptation of statistical models for evaluating water quality time series have shown promise for application in tidal waters, specifically \ac{GAM} and \ac{WRTDS}
-\1 These similar techniques can be used to quantify relationships between response measures and different drivers that may vary over time, in addition to an evaluation of trends independent of variation in freshwater inputs
-\1 The relative merits of each approach have not been evaluated, particularly related to accuracy of the empirical description and the desired products for trend evaluation
-\1 Such a comparison could inform the use of each model for addressing management or restoration needs or for developing more robust descriptions of long-term changes in ecosystem characteristics
-\0 Goal: Provide a description of the relative abilities of \acp{GAM} and \ac{WRTDS} to describe long-term changes in time series of response endpoints in tidal waters \\
-\0 \noindent Objectives:
-\1 Provide a narrative comparison of the statistical foundation of each technique, both as a general description and as a means to evaluate water quality time series
-\1 Use each technique to develop an empirical description of water quality changes in a common dataset with known historical changes in water quality drivers
-\1 Apply the models to simulated data to evaluate ability of the models to describe true changes
-\1 Compare each technique's ability to describe changes, as well as the differences in the information provided by each
-\1 Provide recommendations on the most appropriate context for using each method
 \end{outline}
+
+% WRTDS and GAMs as novel methods
+Recent applications of statistical models for water quality time series have shown promise in tidal waters, specifically \ac{WRTDS} and \acp{GAM}.  The \ac{WRTDS} method was initially developed to describe water quality trends in rivers \citep{Hirsch10,Hirsch14} and has recently been adapted to describe chlorophyll trends in estuaries \citep{Beck15}.  A defining characteristic of the \ac{WRTDS} model is a weighting scheme that fits a continuous set of parameters to the time series by considering the relative influence of location in the record and contextual flow inputs to the period of interest.  To date, the \ac{WRTDS} model has been used to model pollutant delivery from tributary sources to Chesapeake Bay \citep{Hirsch10,Moyer12,Zhang13}, Lake Champlain \citep{Medalie12}, and the Mississippi River \citep{Sprague11}.  A comparison to an alternative regression-based model for evaluating nutrient flux, ESTIMATOR, suggested that \ac{WRTDS} can produce more accurate trend estimates \citep{Moyer12}. \acp{GAM} are a more generic statistical model that can describe variation in a response variable as a sum of smoothing functions for different predictor variables \citep{Hastie90,Wood06}.  In application to water quality time series, \acp{GAM} are similar to \ac{WRTDS} in that variable effects through time of different drivers can be described in the context of seasonal or annual changes.  Application of \acp{GAM} to describe eutrophication endpoints in tidal waters have not been as extensive as \ac{WRTDS}, although exploratory analyses have suggested that results are comparable.  Moreoever, \acp{GAM} are particularly appealing because they are less computationally intense and provide more accessible estimates of model uncertainty than \ac{WRTDS}.  Despite the potential for both approaches to guide management applications, the relative merits of each have not been rigorously evaluated.  Quantitative comparisons that describe the accuracy of the empirical description and the desired products could inform the use of each model to describe long-term changes in ecosystem characteristics.
+
+% goals/objectives
+The goal of this study is to provide an empirical description of the relative abilities of \ac{WRTDS} and \acp{GAM} to describe long-term changes in time series of eutrophication response endpoints in tidal waters.  A long-term time series of monthly chlorophyll observations from the Patuxent River Estuary is used as a common dataset for evaluating each model.  The Patuxent Estuary is a well-studied tributary of the Chesapeake Bay system that has been monitored for thirty years with fixed stations along the longitudinal axis.  Two stations were chosen as representative time series that differed in the relative contributions of watershed inputs and influences from the mainstem of the Chesapeake.  This provided a unique opportunity to evaluate each model's ability to interpret effects of different drivers on primary production.  The specific objectives of the analysis were to \begin{inparaenum}[1\upshape)]
+\item provide a narrative comparison of the statistical foundation of each model, both as a general description and as a means to evaluate water quality time series,
+\item use each model to develop an empirical description of water quality changes at each monitoring station in the context of known historical changes in water quality drivers,
+\item apply the models to simulated data to evaluate descriptions of flow-normalized trends, and
+\item compare each technique's ability to describe changes, as well as the differences in the information provided by each. 
+\end{inparaenum}
+We conclude with recommendations on the most appropriate context for using each method, with particular attention given to computational requirements, uncertainty assessment, and potential needs for additional monitoring data.
 
 \section{Methods}
 
