@@ -440,6 +440,69 @@ ggplot(pax_meta, aes(x = LONG, y = LAT)) +
 @
 
 % predicted trends for each mod - monthly time series of observed with predictions, RMSE in fig
+<<eval = F>>=
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+data(bestLE12)
+data(bestTF16)
+
+# rmse of each
+getperf <- function(dat_in, obs_nm, prd_nm){
+  
+  res <- dat_in[, obs_nm] - dat_in[, prd_nm]
+  rmse <- sqrt(mean(res^2, na.rm = TRUE))
+  
+  return(rmse)
+  
+}
+
+getperf(bestLE12, 'chla', 'fits_wrtds')
+getperf(bestLE12, 'chla', 'fits_gams')
+getperf(bestTF16, 'chla', 'fits_wrtds')
+getperf(bestTF16, 'chla', 'fits_gams')
+
+# some plots
+bestTF16$site <- 'TF16'
+bestLE12$site <- 'LE12'
+bestLE12 <- select(bestLE12, -sal, -dec_time)
+bestTF16 <- select(bestTF16, -Q, -dec_time)
+toplo <- rbind(bestTF16, bestLE12) %>% 
+  gather(variable, value, fits_wrtds:res_gams) %>% 
+  separate(variable, c('output', 'model'), sep = '_') %>% 
+  mutate(output = factor(output, levels = c('fits', 'norm', 'res'), labels = c('Pred', 'Norm', 'Res')))
+
+p1 <- ggplot(toplo[toplo$output != 'Res', ], aes(x = date, y = value, colour = output)) + 
+  geom_point(aes(y = chla, shape = 'Observed'), colour = 'black', size = 1.5, alpha = 0.3) +
+  geom_line(size = 0.8) + 
+  facet_wrap(site ~ model) + 
+  theme_classic()+
+  ylab(expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))) + 
+  theme(
+    axis.title.x = element_blank(), 
+    legend.title = element_blank()
+    ) +
+  guides(color=guide_legend(override.aes=list(shape=c(NA,NA),linetype=c(1,1))))
+
+toplo2 <- mutate(toplo, year = as.numeric(strftime(date, '%Y'))) %>% 
+  group_by(year, site, output, model) %>% 
+  summarize(value = mean(value, na.rm = TRUE)) %>% 
+  filter(output != 'Res') %>% 
+  spread(output, value) 
+
+p2 <- ggplot(toplo2, aes(x = year, y = Pred, colour = 'Pred')) + 
+  geom_point() + 
+  geom_line(aes(x = year, y = Norm, colour = 'Norm'), size = 1) + 
+  facet_wrap(site ~ model) + 
+  theme_classic() +
+  theme(
+    axis.title.x = element_blank(), 
+    legend.title = element_blank()
+    ) +
+  ylab(expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))) +
+  guides(color=guide_legend(override.aes=list(shape=c(NA,16),linetype=c(1,0))))
+@
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
 
