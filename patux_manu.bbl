@@ -11,6 +11,25 @@ Byrd RH, Lu P, adn C.~Zhu JN. 1995.
 \newblock A limited memory algorithm for bound constrained optimization.
 \newblock SIAM Journal on Scientific Computing, 16(5):1190--1208.
 
+\bibitem[Cloern, 1996]{Cloern96}
+Cloern JE. 1996.
+\newblock Phytoplankton bloom dynamics in coastal ecosystems: {A} review with
+  some general lessons from sustained investigation of {S}an {F}rancisco {B}ay,
+  {C}alifornia.
+\newblock Review of Geophysics, 34(2):127--168.
+
+\bibitem[Cloern and Jassby, 2010]{Cloern10}
+Cloern JE, Jassby AD. 2010.
+\newblock Patterns and scales of phytoplankton variability in estuarine-coastal
+  ecosystems.
+\newblock Estuaries and Coasts, 33(2):230--241.
+
+\bibitem[Harding, 1994]{Harding94}
+Harding LW. 1994.
+\newblock Long-term trends in the distribution of phytoplankton in {C}hesapeake
+  {B}ay - roles of light, nutrients, and streamflow.
+\newblock Marine Ecology Progress Series, 104:267--291.
+
 \bibitem[Hastie and Tibshirani, 1990]{Hastie90}
 Hastie T, Tibshirani R. 1990.
 \newblock Generalized Additive Models.
@@ -41,12 +60,43 @@ Medalie L, Hirsch RM, Archfield SA. 2012.
   changes in {L}ake {C}hamplain tributaries, 1990-2009.
 \newblock Journal of Great Lakes Research, 38(SI):58--67.
 
+\bibitem[Monbet, 1992]{Monbet92}
+Monbet Y. 1992.
+\newblock Control of phytoplankton biomass in estuaries: A comparative analysis
+  of microtidal and macrotidal estuaries.
+\newblock Estuaries, 15(4):563--571.
+
 \bibitem[Moyer et~al., 2012]{Moyer12}
 Moyer DL, Hirsch RM, Hyer KE. 2012.
 \newblock Comparison of two regression-based approaches for determining
   nutrient and sediment fluxes and trends in the {C}hesapeake {B}ay watershed.
 \newblock Technical Report Scientific Investigations Report 2012-544, US
   Geological Survey, US Department of the Interior, Reston, Virginia.
+
+\bibitem[Nixon, 1995]{Nixon95}
+Nixon SW. 1995.
+\newblock Coastal marine eutrophication: A definition, social causes, and
+  future concerns.
+\newblock Ophelia, 41:199--219.
+
+\bibitem[Paerl, 2006]{Paerl06}
+Paerl HW. 2006.
+\newblock Assessing and managing nutrient-enhanced eutrophication in estuarine
+  and coastal waters: Interacive effects of human and climatic perturbations.
+\newblock Ecological Engineering, 26(1):40--54.
+
+\bibitem[Paerl et~al., 2014]{Paerl14}
+Paerl HW, Hall NS, Peierls BL, Rossignol KL. 2014.
+\newblock Evolving paradigms and challenges in estuarine and coastal
+  eutrophication dynamics in a culturally and climatically stressed world.
+\newblock Estuaries and Coasts, 37(2):243--258.
+
+\bibitem[Powers et~al., 2005]{Powers05}
+Powers SP, Peterson CH, Christian RR, Sullivan E, Powers MJ, Bishop MJ,
+  Buzzelli CP. 2005.
+\newblock Effects of eutrophication on bottom habitat and prey resources of
+  demersal fishes.
+\newblock Marine Ecology Progress Series, 302:233--243.
 
 \bibitem[{RDCT (R Development Core Team)}, 2015]{RDCT15}
 {RDCT (R Development Core Team)}. 2015.
@@ -59,6 +109,18 @@ Sprague LA, Hirsch RM, Aulenbach BT. 2011.
 \newblock Nitrate in the {M}ississippi {R}iver and its tributaries, 1980 to
   2008: Are we making progress?
 \newblock Environmental Science and Technology, 45(17):7209--7216.
+
+\bibitem[Steward and Green, 2007]{Steward07}
+Steward JS, Green WC. 2007.
+\newblock Setting load limits for nutrients and suspended solids based upon
+  seagrass depth-limit targets.
+\newblock Estuaries and Coasts, 30(4):657--670.
+
+\bibitem[{TBEP (Tampa Bay Estuary Program)}, 2011]{TBEP11}
+{TBEP (Tampa Bay Estuary Program)}. 2011.
+\newblock {Tampa Bay Water Atlas}.
+\newblock \url{http://www.tampabay.wateratlas.usf.edu/}. (Accessed October,
+  2013).
 
 \bibitem[Wood, 2006]{Wood06}
 Wood SN. 2006.

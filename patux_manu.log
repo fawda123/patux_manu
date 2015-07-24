@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  24 JUL 2015 09:15
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  24 JUL 2015 15:26
 entering extended mode
 **patux_manu.tex
 (M:\docs\manuscripts\patux_manu\patux_manu.tex
@@ -692,64 +692,64 @@ although it is yet undefined on input line 148.
  [2
 
 ]
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 162.
-
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
-Package acronym Info: Label `acro:WRTDS' overridden on input line 171.
-Package acronym Info: Label `acro:GAM' overridden on input line 171.
+Package acronym Info: Label `acro:WRTDS' overridden on input line 161.
+Package acronym Info: Label `acro:GAM' overridden on input line 161.
  [3
 
-] [4] [5] [6]
+] [4] [5]
+[6]
 Package acronym Info: Label `acro:USGS' newly defined as it shall be overridden
 
-although it is yet undefined on input line 213.
-
-[7]
+although it is yet undefined on input line 203.
+ [7]
 Package acronym Info: Label `acro:ARMA' newly defined as it shall be overridden
 
-although it is yet undefined on input line 237.
+although it is yet undefined on input line 227.
 Package acronym Info: Label `acro:AIC' newly defined as it shall be overridden
-although it is yet undefined on input line 237.
- [8] [9] [10] (M:\docs\manuscripts\patux_manu\patux_manu.bbl) [11
+although it is yet undefined on input line 227.
+ [8] [9]
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 251.
 
-]
-<figs/chlyr-1.pdf, id=187, 505.89pt x 650.43pt>
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+[10] (M:\docs\manuscripts\patux_manu\patux_manu.bbl [11
+
+]) [12]
+<figs/chlyr-1.pdf, id=222, 505.89pt x 650.43pt>
 File: figs/chlyr-1.pdf Graphic file (type pdf)
  <use figs/chlyr-1.pdf>
-Package pdftex.def Info: figs/chlyr-1.pdf used on input line 300.
+Package pdftex.def Info: figs/chlyr-1.pdf used on input line 290.
 (pdftex.def)             Requested size: 469.75502pt x 603.98058pt.
 
-<figs/chlmo-1.pdf, id=188, 505.89pt x 505.89pt>
+<figs/chlmo-1.pdf, id=223, 505.89pt x 505.89pt>
 File: figs/chlmo-1.pdf Graphic file (type pdf)
  <use figs/chlmo-1.pdf>
-Package pdftex.def Info: figs/chlmo-1.pdf used on input line 311.
+Package pdftex.def Info: figs/chlmo-1.pdf used on input line 301.
 (pdftex.def)             Requested size: 469.75502pt x 469.76265pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 333.
- [12 <M:/docs/manuscripts/patux_manu/figs/chlyr-1.pdf>] [13 <M:/docs/manuscript
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 323.
+ [13 <M:/docs/manuscripts/patux_manu/figs/chlyr-1.pdf>] [14 <M:/docs/manuscript
 s/patux_manu/figs/chlmo-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 333.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 323.
  (M:\docs\manuscripts\patux_manu\patux_manu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 333.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 333.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 323.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 323.
 Package rerunfilecheck Info: File `patux_manu.out' has not changed.
 (rerunfilecheck)             Checksum: 46DE81793B935F04A348C478A9F25AFD;534.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 333.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 323.
  ) 
 Here is how much of TeX's memory you used:
- 11677 strings out of 493921
- 184488 string characters out of 3147282
- 299711 words of memory out of 3000000
- 14716 multiletter control sequences out of 15000+200000
+ 11718 strings out of 493921
+ 185093 string characters out of 3147282
+ 300711 words of memory out of 3000000
+ 14746 multiletter control sequences out of 15000+200000
  27854 words of font info for 67 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 44i,7n,42p,2164b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,7n,42p,2281b,524s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fon
@@ -761,9 +761,9 @@ b><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program F
 iles/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/f
 onts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/t
 imes/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on patux_manu.pdf (13 pages, 3657133 bytes).
+Output written on patux_manu.pdf (14 pages, 3665153 bytes).
 PDF statistics:
- 276 PDF objects out of 1000 (max. 8388607)
- 60 named destinations out of 1000 (max. 500000)
+ 313 PDF objects out of 1000 (max. 8388607)
+ 71 named destinations out of 1000 (max. 500000)
  83 words of extra memory for PDF output out of 10000 (max. 10000000)
 
