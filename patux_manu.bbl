@@ -6,10 +6,20 @@ Beck MW, {Hagy III} JD. 2015.
   quality trends in an estuary.
 \newblock Environmental Modelling and Assessment, pages 1--19.
 
+\bibitem[Borsuk et~al., 2004]{Borsuk04b}
+Borsuk ME, Stow CA, Reckhow KH. 2004.
+\newblock Confounding effect of flow on estuarine response to nitrogen loading.
+\newblock Journal of Environmental Engineering-ASCE, 130(6):605--614.
+
 \bibitem[Byrd et~al., 1995]{Byrd95}
 Byrd RH, Lu P, adn C.~Zhu JN. 1995.
 \newblock A limited memory algorithm for bound constrained optimization.
 \newblock SIAM Journal on Scientific Computing, 16(5):1190--1208.
+
+\bibitem[Cade and Noon, 2003]{Cade03}
+Cade BS, Noon BR. 2003.
+\newblock A gentle introduction to quantile regression for ecologists.
+\newblock Frontiers in Ecology and the Environment, 1(8):412--420.
 
 \bibitem[Cloern, 1996]{Cloern96}
 Cloern JE. 1996.
@@ -34,6 +44,13 @@ Harding LW. 1994.
 Hastie T, Tibshirani R. 1990.
 \newblock Generalized Additive Models.
 \newblock Chapman and Hall, London, New York.
+
+\bibitem[Hirsch, 2014]{Hirsch14b}
+Hirsch RM. 2014.
+\newblock Large biases in regression-based constituent flux estimates: causes
+  and diagnostic tools.
+\newblock Journal of the American Water Resources Association,
+  50(6):1401--1424.
 
 \bibitem[Hirsch and {De Cicco}, 2014]{Hirsch14}
 Hirsch RM, {De Cicco} L. 2014.
@@ -121,6 +138,11 @@ Steward JS, Green WC. 2007.
 \newblock {Tampa Bay Water Atlas}.
 \newblock \url{http://www.tampabay.wateratlas.usf.edu/}. (Accessed October,
   2013).
+
+\bibitem[Tobin, 1958]{Tobin58}
+Tobin J. 1958.
+\newblock Estimation of relationships for limited dependent variables.
+\newblock Econometrica, 26(1):24--36.
 
 \bibitem[Wood, 2006]{Wood06}
 Wood SN. 2006.
