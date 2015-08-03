@@ -273,6 +273,7 @@ A daily time series for the entire period of record was simulated using the abov
 
 # load data
 data(cb_poly)
+data(usa_poly)
 data(patux_poly)
 data(pax_meta)
 
@@ -286,6 +287,7 @@ cols <- cols[round(seq(1, length(cols), length = 3))]
 
 # prep for plots
 cb_poly <- fortify(cb_poly)
+usa_poly <- fortify(usa_poly)
 patux_poly <- fortify(patux_poly) %>% 
   mutate(id = factor(id, levels = c('60', '74', '88'), labels = c('TF', 'OH', 'MH')))
 
@@ -311,15 +313,19 @@ p1 <- ggplot(patux_poly, aes(x = long, y = lat)) +
 # simplify cb_poly
 
 p2 <- ggplot(patux_poly, aes(x = long, y = lat)) + 
-  geom_polygon(data = cb_poly, aes(x = long, y = lat, group = group), 
-    fill = 'grey90', colour = NA) +
+  geom_polygon(data = usa_poly, aes(x = long, y = lat, group = group), 
+    fill = 'white', colour = 'grey50') +
+#   geom_polygon(data = cb_poly, aes(x = long, y = lat, group = group), 
+#     fill = 'grey90', colour = NA) +
   geom_polygon(aes(group = group), colour = 'black', fill = 'black') +
   theme(axis.title =element_blank(), axis.text = element_text(colour = 'black'), 
-          panel.background=element_rect(fill = 'white', colour = 'black'),
+          panel.background=element_rect(fill = 'grey90'),
           panel.grid.major=element_blank(),
-          panel.grid.minor=element_blank(),plot.background=element_blank()
+          panel.grid.minor=element_blank(),
+          plot.background=element_blank(),
+          panel.border = element_rect(colour = "black", fill = NA, size = 1)
     ) +
-  coord_fixed(ratio = 1)
+  coord_fixed(ratio = 1, xlim = c(-77.5, -75.5), ylim = c(36.7, 39.7))
 
 grid.newpage()
 v1 <- viewport(width = 1, height = 1, x = 0.5, y = 0.5) 
@@ -329,6 +335,7 @@ print(p2, vp = v2)
 
 @
 
+% chlorophyll trends by year
 <<chlyr, fig.width = 7, fig.height = 9, eval = T, echo = F, cache = T, fig.cap = 'Annual chlorophyll trends at each monitoring station in the Patuxent River Estuary.  Values are annual medians of ln-chlorophyll-a with size and color proportional between years.'>>=
 load(file = 'data/pax_data.RData')
 load(file = 'data/pax_meta.RData')
@@ -416,6 +423,7 @@ ggplot(pax_meta, aes(x = LONG, y = LAT)) +
 
 @
 
+% chlorophyll trends by month
 <<chlmo, fig.width = 7, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Monthly chlorophyll trends at each monitoring station in the Patuxent River Estuary.  Values are monthly medians of ln-chlorophyll-a with size and color proportional between months.'>>=
 load(file = 'data/pax_data.RData')
 load(file = 'data/pax_meta.RData')
