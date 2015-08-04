@@ -49,6 +49,7 @@
 %acronyms
 \acrodef{AIC}{Akaike Information Criterion}
 \acrodef{ARMA}{Autoregressive Moving Average}
+\acrodef{chla}[chla-\textit{a}]{chlorophyll \textit{a}}
 \acrodef{GAM}{generalized additive models}
 \acrodef{USGS}{US Geological Survey}
 \acrodef{WRTDS}{weighted regression on time, discharge, and season}
@@ -140,12 +141,21 @@ We conclude with recommendations on the most appropriate use of each method, wit
 
 \section{Methods}
 
-\subsection{Study site}
+\subsection{Study site and monitoring data}
 
-The Patuxent River Estuary... background, history \\
-Observed trends over time \\
-longitudinal gradient from watershed to mainstem influences, LE1.2, TF1.6\\
-Show plots of trends over time in observed data \\
+% flow data from Bowie, MD gage
+<<echo = FALSE>>=
+data(bowie_flow)
+fl_mean <- format(round(mean(bowie_flow$cms), 1), nsmall = 1)
+fl_aggs <- aggregate(cms ~ year, bowie_flow, mean, na.rm = T)
+fl_aggs$cms <- format(round(fl_aggs$cms, 1), nsmall = 1)
+@
+
+The Patuxent River estuary, Maryland, is a tributary to Chesapeake Bay on the Atlantic coast of the United States (\Cref{fig:map}). The longitudinal axis extends 65 km landward from the confluence with the mesohaline portion of Chesapeake Bay.  Estimated total volume at mean low water is 577 x 10$^6$ m$^3$ and a surface area of 126 x 10$^6$ m$^2$.  The lower estuary (below 45 km from the confluence) has a mean width of 2.2 km and depth of 6 m \citep{Cronin75}, whereas the upper estuary has a a mean width of 0.4 km and mean depth of 2.5 m \citep{Hagythes}.  The lower estuary is seasonally stratified and vertically-mixed in the upper estuary.  A two-layer circulation pattern occurs in the lower estuary characterized by an upper seaward-flowing layer and a lower landward-flowing layer.  A mixed diurnal tide dominates with mean range varying from 0.8 m in the upper estuary to 0.4 m near the mouth \citep{Boicourt98}.  The estuary drains a 2300 km$^2$ watershed that is 49\% forest, 28\% grassland, 12\% developed, and 10\% cropland \citep{Jordan03}.  The \ac{USGS} stream gage on the Patuxent River at Bowie, Maryland measures discharge from 39\% of the watershed.  Daily mean discharge from 1985 to 2014 was \Sexpr{fl_mean} m$^3$ s$^{-1}$, with abnormally high years occuring in 1996 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 1996, 'cms']} m$^3$ s$^{-1}$) and 2003 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 2003, 'cms']}  m$^3$ s$^{-1}$). 
+
+The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from tidal fresh to estuarine (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmo}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Stations TF1.6 and LE1.2 were chosen as representative time series to evaluate the water quality models.  Observations at each station describe a longitudinal gradient from watershed (TF1.6) to mainstem influences from the Chesapeake Bay (LE1.2).  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
+
+Observed trends over time \cref{fig:chlyrmo}\\
 
 \subsection{Model descriptions}
 
@@ -269,7 +279,7 @@ A daily time series for the entire period of record was simulated using the abov
 % figures
 
 % study site map
-<<map, fig.height = 8, fig.width = 5, out.width = '0.7\\textwidth', fig.cap = 'Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).', echo = FALSE>>=
+<<map, fig.height = 8, fig.width = 5, out.width = '0.7\\textwidth', fig.cap = 'Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km). Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).', echo = FALSE>>=
 
 # load data
 data(cb_poly)
@@ -291,13 +301,16 @@ usa_poly <- fortify(usa_poly)
 patux_poly <- fortify(patux_poly) %>% 
   mutate(id = factor(id, levels = c('60', '74', '88'), labels = c('TF', 'OH', 'MH')))
 
+pax_meta$lab <- with(pax_meta, paste0(STATION, ' (', round(dist_km, 1), ')'))
+
+# base map
 p1 <- ggplot(patux_poly, aes(x = long, y = lat)) + 
   geom_polygon(data = cb_poly, aes(x = long, y = lat, group = group), 
     fill = 'grey90', colour = 'grey50') +
   geom_polygon(aes(fill = factor(id), group = group), colour = NA) +
   scale_fill_manual(values = rev(cols)) +
   geom_point(data = pax_meta, aes(x = LONG, y = LAT), size = 5, alpha = 0.8) +
-  geom_text(data = pax_meta, aes(x = LONG * 1.0008, y = LAT, label = STATION), size = 5) +
+  geom_text(data = pax_meta, aes(x = LONG * 1.001, y = LAT, label = lab), size = 5) +
   theme_classic() + 
   theme(axis.line=element_blank(), axis.text.x=element_blank(),
           axis.text.y=element_blank(), axis.ticks=element_blank(),
@@ -308,17 +321,17 @@ p1 <- ggplot(patux_poly, aes(x = long, y = lat)) +
           legend.position = 'top', 
           legend.title = element_blank()
     ) +
-  coord_fixed(ratio = 1, xlim = c(-76.8, -76.38), ylim = c(38.27, 38.88))
+  coord_fixed(ratio = 1, xlim = c(-76.84, -76.38), ylim = c(38.27, 38.88))
 
-# simplify cb_poly
 
+# inset
 p2 <- ggplot(patux_poly, aes(x = long, y = lat)) + 
   geom_polygon(data = usa_poly, aes(x = long, y = lat, group = group), 
     fill = 'white', colour = 'grey50') +
-#   geom_polygon(data = cb_poly, aes(x = long, y = lat, group = group), 
-#     fill = 'grey90', colour = NA) +
   geom_polygon(aes(group = group), colour = 'black', fill = 'black') +
-  theme(axis.title =element_blank(), axis.text = element_text(colour = 'black'), 
+  theme(axis.title =element_blank(), 
+          axis.text.y = element_text(colour = 'black'), 
+          axis.text.x = element_text(colour = 'black', angle = 90, vjust = 0.5), 
           panel.background=element_rect(fill = 'grey90'),
           panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),
@@ -329,14 +342,14 @@ p2 <- ggplot(patux_poly, aes(x = long, y = lat)) +
 
 grid.newpage()
 v1 <- viewport(width = 1, height = 1, x = 0.5, y = 0.5) 
-v2 <- viewport(width = 0.55, height = 0.55, x = 0.725, y = 0.68)
+v2 <- viewport(width = 0.55, height = 0.55, x = 0.725, y = 0.62)
 print(p1, vp = v1) 
 print(p2, vp = v2)
 
 @
 
 % chlorophyll trends by year and month, combined
-<<chlyrmo, fig.width = 6, fig.height = 8, eval = T, echo = F, cache = T, fig.cap = 'Annual and seasonal chlorophyll trends at each monitoring station in the Patuxent River Estuary.  Size and color are proportional medians of ln-chlorophyll-a by year and season categories. See \\cref{fig:map} for station numbers.'>>=
+<<chlyrmo, fig.width = 5, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Annual and seasonal chlorophyll trends at each monitoring station in the Patuxent River Estuary.  Size and color are proportional medians of ln-chlorophyll-a by year and season categories. See \\cref{fig:map} for station numbers.'>>=
 load(file = 'data/pax_data.RData')
 load(file = 'data/pax_meta.RData')
 load(file = 'data/pax_clip.RData')

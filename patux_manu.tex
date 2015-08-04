@@ -98,6 +98,7 @@
 %acronyms
 \acrodef{AIC}{Akaike Information Criterion}
 \acrodef{ARMA}{Autoregressive Moving Average}
+\acrodef{chla}[chla-\textit{a}]{chlorophyll \textit{a}}
 \acrodef{GAM}{generalized additive models}
 \acrodef{USGS}{US Geological Survey}
 \acrodef{WRTDS}{weighted regression on time, discharge, and season}
@@ -136,7 +137,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Mon Aug 3 18:35:02 2015 -0500
+  \\ Version Date:   Mon Aug 3 19:10:12 2015 -0500
 	}
 \date{}
 \maketitle
@@ -171,12 +172,16 @@ We conclude with recommendations on the most appropriate use of each method, wit
 
 \section{Methods}
 
-\subsection{Study site}
+\subsection{Study site and monitoring data}
 
-The Patuxent River Estuary... background, history \\
-Observed trends over time \\
-longitudinal gradient from watershed to mainstem influences, LE1.2, TF1.6\\
-Show plots of trends over time in observed data \\
+% flow data from Bowie, MD gage
+
+
+The Patuxent River estuary, Maryland, is a tributary to Chesapeake Bay on the Atlantic coast of the United States (\Cref{fig:map}). The longitudinal axis extends 65 km landward from the confluence with the mesohaline portion of Chesapeake Bay.  Estimated total volume at mean low water is 577 x 10$^6$ m$^3$ and a surface area of 126 x 10$^6$ m$^2$.  The lower estuary (below 45 km from the confluence) has a mean width of 2.2 km and depth of 6 m \citep{Cronin75}, whereas the upper estuary has a a mean width of 0.4 km and mean depth of 2.5 m \citep{Hagythes}.  The lower estuary is seasonally stratified and vertically-mixed in the upper estuary.  A two-layer circulation pattern occurs in the lower estuary characterized by an upper seaward-flowing layer and a lower landward-flowing layer.  A mixed diurnal tide dominates with mean range varying from 0.8 m in the upper estuary to 0.4 m near the mouth \citep{Boicourt98}.  The estuary drains a 2300 km$^2$ watershed that is 49\% forest, 28\% grassland, 12\% developed, and 10\% cropland \citep{Jordan03}.  The \ac{USGS} stream gage on the Patuxent River at Bowie, Maryland measures discharge from 39\% of the watershed.  Daily mean discharge from 1985 to 2014 was 11.0 m$^3$ s$^{-1}$, with abnormally high years occuring in 1996 (annual mean 20.0 m$^3$ s$^{-1}$) and 2003 (annual mean 22.5  m$^3$ s$^{-1}$). 
+
+The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from tidal fresh to estuarine (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmo}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Stations TF1.6 and LE1.2 were chosen as representative time series to evaluate the water quality models.  Observations at each station describe a longitudinal gradient from watershed (TF1.6) to mainstem influences from the Chesapeake Bay (LE1.2).  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
+
+Observed trends over time \cref{fig:chlyrmo}\\
 
 \subsection{Model descriptions}
 
@@ -306,7 +311,7 @@ A daily time series for the entire period of record was simulated using the abov
 
 }
 
-\caption[Patuxent River estuary with Chesapeake Bay inset]{Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).}\label{fig:map}
+\caption[Patuxent River estuary with Chesapeake Bay inset]{Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km). Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).}\label{fig:map}
 \end{figure}
 
 

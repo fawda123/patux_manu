@@ -6,6 +6,12 @@ Beck MW, {Hagy III} JD. 2015.
   quality trends in an estuary.
 \newblock Environmental Modelling and Assessment, pages 1--19.
 
+\bibitem[Boicourt and Sanford, 1998]{Boicourt98}
+Boicourt WC, Sanford LP. 1998.
+\newblock A hydrodynamic study of the {P}atuxent {R}iver estuary.
+\newblock Technical report, Maryland Department of the Environment, Baltimore,
+  Maryland.
+
 \bibitem[Borsuk et~al., 2004]{Borsuk04b}
 Borsuk ME, Stow CA, Reckhow KH. 2004.
 \newblock Confounding effect of flow on estuarine response to nitrogen loading.
@@ -33,6 +39,19 @@ Cloern JE, Jassby AD. 2010.
 \newblock Patterns and scales of phytoplankton variability in estuarine-coastal
   ecosystems.
 \newblock Estuaries and Coasts, 33(2):230--241.
+
+\bibitem[Cronin and Pritchard, 1975]{Cronin75}
+Cronin WB, Pritchard DW. 1975.
+\newblock Additional statistics on the dimensions of the {C}hesapeake {B}ay and
+  its tributaries: Cross-section widths and segment volumes per meter depth.
+\newblock Technical Report 42, Reference 75-3, Chesapeak Bay Institute, The
+  Johns Hopkins University, Baltimore, Maryland.
+
+\bibitem[Hagy, 1996]{Hagythes}
+Hagy JD. 1996.
+\newblock Residence times and net ecosystem processes in {P}atuxent {R}iver
+  estuary.
+\newblock Master's thesis, University of Maryland, College Park, Maryland.
 
 \bibitem[Harding, 1994]{Harding94}
 Harding LW. 1994.
@@ -70,6 +89,11 @@ Hirsch RM, Moyer DL, Archfield SA. 2010.
 Hyndman RJ, Khandakar Y. 2008.
 \newblock Automatic time series forecasting: The forecast package for r.
 \newblock JOurnal of Statistical Software, 26(3):1--22.
+
+\bibitem[Jordan et~al., 2003]{Jordan03}
+Jordan TE, Weller DE, Correll DL. 2003.
+\newblock Sources of nutrient inputs to the {P}atuxent {R}iver estuary.
+\newblock Estuaries and Coasts, 26(2A):226--243.
 
 \bibitem[Medalie et~al., 2012]{Medalie12}
 Medalie L, Hirsch RM, Archfield SA. 2012.
