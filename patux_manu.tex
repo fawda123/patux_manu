@@ -95,13 +95,17 @@
 % aliased citations
 % \defcitealias{FLDEP12}{FLDEP 2012}
 
-%acronyms
+% acronyms
 \acrodef{AIC}{Akaike Information Criterion}
 \acrodef{ARMA}{Autoregressive Moving Average}
 \acrodef{chla}[chla-\textit{a}]{chlorophyll \textit{a}}
 \acrodef{GAM}{generalized additive models}
 \acrodef{USGS}{US Geological Survey}
 \acrodef{WRTDS}{weighted regression on time, discharge, and season}
+
+% macros
+% for micrograms per litre
+\newcommand{\mugl}{$\mu$g L$^{-1}$}
 
 %knitr options
 
@@ -137,7 +141,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Mon Aug 3 19:10:12 2015 -0500
+  \\ Version Date:   Tue Aug 4 18:29:30 2015 -0500
 	}
 \date{}
 \maketitle
@@ -329,7 +333,27 @@ A daily time series for the entire period of record was simulated using the abov
 
 
 % predicted trends for each mod - monthly time series of observed with predictions, RMSE in fig
+pdf 
+  2 
+pdf 
+  2 
 
+
+\begin{figure}
+\centering
+\subfloat[Monthly]{
+\includegraphics[width=\textwidth]{figs/predmo.pdf}
+\label{fig:predmo}
+}
+
+\subfloat[Annual]{
+\includegraphics[width=\textwidth]{figs/predann.pdf}
+\label{fig:predann}
+}
+
+\caption{Predicted chlorophyll from generalized additive models and weighted regression for LE1.2 and TF1.6 stations on the Patuxent River estuary.  \cref{fig:predmo} shows results at monthly time steps and \cref{fig:predann} shows results averaged by year.  Values in blue are model predictions and values in yellow are flow-normalized predictions.}
+\label{fig:pred}
+\end{figure}
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
 

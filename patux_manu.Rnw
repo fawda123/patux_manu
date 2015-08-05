@@ -46,13 +46,17 @@
 % aliased citations
 % \defcitealias{FLDEP12}{FLDEP 2012}
 
-%acronyms
+% acronyms
 \acrodef{AIC}{Akaike Information Criterion}
 \acrodef{ARMA}{Autoregressive Moving Average}
 \acrodef{chla}[chla-\textit{a}]{chlorophyll \textit{a}}
 \acrodef{GAM}{generalized additive models}
 \acrodef{USGS}{US Geological Survey}
 \acrodef{WRTDS}{weighted regression on time, discharge, and season}
+
+% macros
+% for micrograms per litre
+\newcommand{\mugl}{$\mu$g L$^{-1}$}
 
 %knitr options
 <<setup,include=F,cache=F>>=
@@ -76,6 +80,7 @@ library(dplyr)
 library(scales)
 library(wesanderson)
 library(grid)
+library(gridExtra)
 @
 
 % get online bib file
@@ -444,13 +449,18 @@ p1
 @
 
 % predicted trends for each mod - monthly time series of observed with predictions, RMSE in fig
-<<eval = F, echo = F>>=
+<<eval = T, echo = F>>=
 library(dplyr)
 library(ggplot2)
 library(tidyr)
 
 data(bestLE12)
 data(bestTF16)
+
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
 
 # rmse of each
 getperf <- function(dat_in, obs_nm, prd_nm){
@@ -462,31 +472,39 @@ getperf <- function(dat_in, obs_nm, prd_nm){
   
 }
 
-getperf(bestLE12, 'chla', 'fits_wrtds')
-getperf(bestLE12, 'chla', 'fits_gams')
-getperf(bestTF16, 'chla', 'fits_wrtds')
-getperf(bestTF16, 'chla', 'fits_gams')
+# getperf(bestLE12, 'chla', 'fits_wrtds')
+# getperf(bestLE12, 'chla', 'fits_gams')
+# getperf(bestTF16, 'chla', 'fits_wrtds')
+# getperf(bestTF16, 'chla', 'fits_gams')
 
 # some plots
-bestTF16$site <- 'TF16'
-bestLE12$site <- 'LE12'
+bestTF16$site <- 'TF1.6'
+bestLE12$site <- 'LE1.2'
+names(bestLE12) <- gsub('gams$', 'GAM', names(bestLE12))
+names(bestLE12) <- gsub('wrtds$', 'WRTDS', names(bestLE12))
+names(bestTF16) <- gsub('gams$', 'GAM', names(bestTF16))
+names(bestTF16) <- gsub('wrtds$', 'WRTDS', names(bestTF16))
+
 bestLE12 <- select(bestLE12, -sal, -dec_time)
 bestTF16 <- select(bestTF16, -Q, -dec_time)
 toplo <- rbind(bestTF16, bestLE12) %>% 
-  gather(variable, value, fits_wrtds:res_gams) %>% 
+  gather(variable, value, fits_WRTDS:res_GAM) %>% 
   separate(variable, c('output', 'model'), sep = '_') %>% 
   mutate(output = factor(output, levels = c('fits', 'norm', 'res'), labels = c('Pred', 'Norm', 'Res')))
 
 p1 <- ggplot(toplo[toplo$output != 'Res', ], aes(x = date, y = value, colour = output)) + 
-  geom_point(aes(y = chla, shape = 'Observed'), colour = 'black', size = 1.5, alpha = 0.3) +
+  geom_point(aes(y = chla, shape = 'Obs'), colour = 'black', size = 1.5, alpha = 0.3) +
   geom_line(size = 0.8) + 
   facet_wrap(site ~ model) + 
   theme_classic()+
   ylab(expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))) + 
   theme(
+    axis.text.x = element_text(size = 8, angle = 90, vjust = 0.5),
     axis.title.x = element_blank(), 
     legend.title = element_blank()
     ) +
+  scale_y_continuous(limits = c(0, 4.5), breaks = c(0.5, 1.5, 2.5, 3.5, 4.5)) + 
+  scale_colour_manual(values = cols[c(1, length(cols))]) + 
   guides(color=guide_legend(override.aes=list(shape=c(NA,NA),linetype=c(1,1))))
 
 toplo2 <- mutate(toplo, year = as.numeric(strftime(date, '%Y'))) %>% 
@@ -496,17 +514,45 @@ toplo2 <- mutate(toplo, year = as.numeric(strftime(date, '%Y'))) %>%
   spread(output, value) 
 
 p2 <- ggplot(toplo2, aes(x = year, y = Pred, colour = 'Pred')) + 
-  geom_point() + 
   geom_line(aes(x = year, y = Norm, colour = 'Norm'), size = 1) + 
+  geom_point() + 
   facet_wrap(site ~ model) + 
   theme_classic() +
   theme(
+    axis.text.x = element_text(size = 8, angle = 90, vjust = 0.5),
     axis.title.x = element_blank(), 
     legend.title = element_blank()
     ) +
+  scale_y_continuous(limits = c(1.5, 3), breaks = seq(1.5, 3, 0.5)) + 
+  scale_colour_manual(values = cols[c(length(cols), 1)]) + 
   ylab(expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))) +
   guides(color=guide_legend(override.aes=list(shape=c(NA,16),linetype=c(1,0))))
+
+pdf('figs/predmo.pdf', height = 4, width = 9, family = 'serif')
+print(p1)
+dev.off()
+
+pdf('figs/predann.pdf', height = 4, width = 9, family = 'serif')
+print(p2)
+dev.off()
+
 @
+
+\begin{figure}
+\centering
+\subfloat[Monthly]{
+\includegraphics[width=\textwidth]{figs/predmo.pdf}
+\label{fig:predmo}
+}
+
+\subfloat[Annual]{
+\includegraphics[width=\textwidth]{figs/predann.pdf}
+\label{fig:predann}
+}
+
+\caption{Predicted chlorophyll from generalized additive models and weighted regression for LE1.2 and TF1.6 stations on the Patuxent River estuary.  \cref{fig:predmo} shows results at monthly time steps and \cref{fig:predann} shows results averaged by year.  Values in blue are model predictions and values in yellow are flow-normalized predictions.}
+\label{fig:pred}
+\end{figure}
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
 
