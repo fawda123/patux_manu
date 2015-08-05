@@ -98,8 +98,9 @@
 % acronyms
 \acrodef{AIC}{Akaike Information Criterion}
 \acrodef{ARMA}{Autoregressive Moving Average}
-\acrodef{chla}[chla-\textit{a}]{chlorophyll \textit{a}}
+\acrodef{chla}[chl-\textit{a}]{chlorophyll \textit{a}}
 \acrodef{GAM}{generalized additive models}
+\acrodef{RMSE}{root mean square error}
 \acrodef{USGS}{US Geological Survey}
 \acrodef{WRTDS}{weighted regression on time, discharge, and season}
 
@@ -141,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Tue Aug 4 18:29:30 2015 -0500
+  \\ Version Date:   Wed Aug 5 10:25:40 2015 -0500
 	}
 \date{}
 \maketitle
@@ -176,16 +177,16 @@ We conclude with recommendations on the most appropriate use of each method, wit
 
 \section{Methods}
 
-\subsection{Study site and monitoring data}
+\subsection{Study site and water quality data}
 
 % flow data from Bowie, MD gage
 
 
 The Patuxent River estuary, Maryland, is a tributary to Chesapeake Bay on the Atlantic coast of the United States (\Cref{fig:map}). The longitudinal axis extends 65 km landward from the confluence with the mesohaline portion of Chesapeake Bay.  Estimated total volume at mean low water is 577 x 10$^6$ m$^3$ and a surface area of 126 x 10$^6$ m$^2$.  The lower estuary (below 45 km from the confluence) has a mean width of 2.2 km and depth of 6 m \citep{Cronin75}, whereas the upper estuary has a a mean width of 0.4 km and mean depth of 2.5 m \citep{Hagythes}.  The lower estuary is seasonally stratified and vertically-mixed in the upper estuary.  A two-layer circulation pattern occurs in the lower estuary characterized by an upper seaward-flowing layer and a lower landward-flowing layer.  A mixed diurnal tide dominates with mean range varying from 0.8 m in the upper estuary to 0.4 m near the mouth \citep{Boicourt98}.  The estuary drains a 2300 km$^2$ watershed that is 49\% forest, 28\% grassland, 12\% developed, and 10\% cropland \citep{Jordan03}.  The \ac{USGS} stream gage on the Patuxent River at Bowie, Maryland measures discharge from 39\% of the watershed.  Daily mean discharge from 1985 to 2014 was 11.0 m$^3$ s$^{-1}$, with abnormally high years occuring in 1996 (annual mean 20.0 m$^3$ s$^{-1}$) and 2003 (annual mean 22.5  m$^3$ s$^{-1}$). 
 
-The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from tidal fresh to estuarine (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmo}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Stations TF1.6 and LE1.2 were chosen as representative time series to evaluate the water quality models.  Observations at each station describe a longitudinal gradient from watershed (TF1.6) to mainstem influences from the Chesapeake Bay (LE1.2).  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
+The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from estuarine to tidal fresh (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmo}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Stations TF1.6 and LE1.2 were chosen as representative time series from different salinity regions to evaluate the water quality models.  Observations at each station capture a longitudinal gradient of watershed influences at TF1.6 to mainstem influences from the Chesapeake Bay at LE1.2.  Long-term changes in chlorophyll have also been related to historical reductions in nutrient inputs following a statewide ban on phosphorus-based detergents in 1984 and wastewater treatment improvements in the early 1990s that reduced point sources of nitrogen \citep{Lung03,Testa08a}.  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
 
-Observed trends over time \cref{fig:chlyrmo}\\
+Thirty years of monthly chlorophyll and salinity data from 1986 to 2014 were obtained for stations TF1.6 and LE1.2 from the Chesapeake Bay Program data hub.  All data were vertically integrated throughout the water column for each date to create a representative sample of water quality.  The integration averaged all values after interpolating from the surface to the maximum depth. Observations at the most shallow and deepest sampling depth were repeated for zero depth and maximum depths, respectively, to bound the interpolations within the range of the data.  Daily flow data were also obtained from the \ac{USGS} stream gage station at Bowie, Maryland and merged with the nearest date in the chorophyll and salinity time series.  Initial analyses suggested that a moving-window average of discharge for the preceding five days provided a better fit to the observed data.  Both chlorophyll and discharge data were log-transformed.  Censored data were not present in any of the data sets.  Initial quality assurance checks for all monitoring data were conducted following standard protocols adopted by the Chesapeake Bay Program.        
 
 \subsection{Model descriptions}
 
@@ -193,7 +194,7 @@ Observed trends over time \cref{fig:chlyrmo}\\
 
 \subsubsection{Weighted Regression on Time, Discharge, and Season}
 
-The \ac{WRTDS} method relates a response endpoint, typically a nutrient concentration, to flow and time to evaluate trends in long-term water quality \citep{Hirsch10,Hirsch14}. Recent adaptation of \ac{WRTDS} to tidal waters is similar in that the model relates chlorophyll concentration to salinity and time \citep{Beck15}.  The functional form of the model is a simple regression that relates the natural log of chlorophyll ($Chl$) to decimal time ($T$) and salinity ($Sal$) on a sinuisoidal annual time scale (i.e., cyclical variation by year). 
+The \ac{WRTDS} method relates a response endpoint, typically a nutrient concentration, to flow and time to evaluate trends in long-term water quality \citep{Hirsch10,Hirsch14}. Recent adaptation of \ac{WRTDS} to tidal waters relates chlorophyll concentration to salinity and time \citep{Beck15}.  The functional form of the model is a simple regression that relates the natural log of chlorophyll ($Chl$) to decimal time ($T$) and salinity ($Sal$) on a sinuisoidal annual time scale (i.e., cyclical variation by year). 
 \begin{equation} \label{eqn:funform}
 \ln\left(Chl\right) = \beta_0 + \beta_1 T + \beta_2 Sal + \beta_3 \sin\left(2\pi T\right) + \beta_4 \cos\left(2\pi t\right) + \epsilon
 \end{equation}
@@ -213,9 +214,20 @@ The basic premise of cross-validation is to identify the optimal set of model pa
 
 \subsection{Comparison of modelled trends}
 
-Explanatory power of each method - explained variance/fit in the response, histograms of errors (see page 14 in Moyer) - we can test for significant differences in the errors using a two-sided t-test.  Also see page 24/25 in Moyer for average difference comparisons between methods. \\
-Similarity of predictions - observed data, simple scatterplots, similarity coefficients, similarity by time periods, etc.\\
-Indications of change - direction/magnitude of trends by different time periods
+Separate \ac{WRTDS} and \acp{GAM} were created using the above methods for the chlorophyll time series at TF1.6 and LE1.2.  Initial analyses indicated that model performance could be improved using the flow record to model \ac{chla} at TF1.6 and the salinity record to model \ac{chla} at LE1.2.  For each model and station, a predicted and flow-normalized (hereafter flow-normalized refers to both flow and salinity) time series was obtained for comparison.  The results were compared using several summary statistics that evaluated both the predictive performance to describe observed chlorophyll and direct comparisons between the models.  Emphasis was placed on agreement between predictions and observed values, rather than uncertainy associated with parameter estimates.  As of writing, methods for estimating confidence intervals of \ac{WRTDS} have not been fully developed for application to \ac{WRTDS} in tidal waters.  In addition to simple visual evaluation of trends over time and bivariate scatterplot comparisons, summary statistics used to compare model predictions to observed \ac{chla} included explained variance ($R^2$) and \ac{RMSE}.  Model results were compared directly using average differences and evaluation of a regression fit for the results comparing each model to a line with intercept of zero and slope of one.  Deviation of the slope of the regression either greater or less than one indicated potential bias for a particular model as under- or over-predicting relative to the other.  For all comparisons, \ac{RMSE} comparing each model's predictions to observed \ac{chla} was defined as:
+\begin{equation}
+RMSE = \sqrt {{\frac{{\sum\limits_{{i = 1}}^n {{{\left( {{Chl_i} - {{\hat{Chl}}_i}} \right)}^2}} }}{{n}}}}
+\end{equation}
+where $n$ is the number of observations for a given evaluation, $Chl_i$ is the observed value of \ac{chla} for observation $i$, and ${\hat{Chl}}_i$ is the predicted value of \ac{chla} for observation $i$.  \ac{RMSE} values closer to zero represent model predictions closer to observed.  Similarly, average difference between models as a percentage was defined as:
+\begin{equation}
+\textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i}}\right) * 100
+\end{equation}
+where $\hat{Chl}_{WRTDS,\,i}$ and $\hat{Chl}_{GAM,\,i}$ are the predicted values of \ac{chla} for each model at observation $i$.
+
+Statistical comparisons were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations between models were evaluated as shown \cref{fig:chlyrmo}, whereas models were evaluated at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) of either observed flow (TF1.6) or salinity (LE1.2).  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of the flow-normalized data was primarily accomplished using simulated datasets with known components that were independent of discharge.  
+
+% Error histograms (see page 14 in Moyer) - we can test for significant differences in the errors using a two-sided t-test. \\
+% Indications of change - direction/magnitude of trends by different time periods
 
 \subsection{Comparison of flow-normalized trends}
 
@@ -267,7 +279,7 @@ A daily time series for the entire period of record was simulated using the abov
 \begin{outline}
 \0 \noindent Predictions with actual data \\
 \0 \noindent Simulations
-\end{outline}
+\end{outline} 
 
 \section{Discussion}
 
@@ -315,7 +327,7 @@ A daily time series for the entire period of record was simulated using the abov
 
 }
 
-\caption[Patuxent River estuary with Chesapeake Bay inset]{Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km). Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).}\label{fig:map}
+\caption[Patuxent River estuary with Chesapeake Bay inset]{Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km).  Study sites are in bold. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).}\label{fig:map}
 \end{figure}
 
 
@@ -333,10 +345,6 @@ A daily time series for the entire period of record was simulated using the abov
 
 
 % predicted trends for each mod - monthly time series of observed with predictions, RMSE in fig
-pdf 
-  2 
-pdf 
-  2 
 
 
 \begin{figure}
