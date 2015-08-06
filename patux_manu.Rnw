@@ -78,10 +78,14 @@ raw <- paste('Version', raw)
 library(httr)
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 library(scales)
 library(wesanderson)
 library(grid)
 library(gridExtra)
+library(Hmisc)
+
+source('R/funcs.R')
 @
 
 % get online bib file
@@ -159,7 +163,7 @@ fl_aggs$cms <- format(round(fl_aggs$cms, 1), nsmall = 1)
 
 The Patuxent River estuary, Maryland, is a tributary to Chesapeake Bay on the Atlantic coast of the United States (\Cref{fig:map}). The longitudinal axis extends 65 km landward from the confluence with the mesohaline portion of Chesapeake Bay.  Estimated total volume at mean low water is 577 x 10$^6$ m$^3$ and a surface area of 126 x 10$^6$ m$^2$.  The lower estuary (below 45 km from the confluence) has a mean width of 2.2 km and depth of 6 m \citep{Cronin75}, whereas the upper estuary has a a mean width of 0.4 km and mean depth of 2.5 m \citep{Hagythes}.  The lower estuary is seasonally stratified and vertically-mixed in the upper estuary.  A two-layer circulation pattern occurs in the lower estuary characterized by an upper seaward-flowing layer and a lower landward-flowing layer.  A mixed diurnal tide dominates with mean range varying from 0.8 m in the upper estuary to 0.4 m near the mouth \citep{Boicourt98}.  The estuary drains a 2300 km$^2$ watershed that is 49\% forest, 28\% grassland, 12\% developed, and 10\% cropland \citep{Jordan03}.  The \ac{USGS} stream gage on the Patuxent River at Bowie, Maryland measures discharge from 39\% of the watershed.  Daily mean discharge from 1985 to 2014 was \Sexpr{fl_mean} m$^3$ s$^{-1}$, with abnormally high years occuring in 1996 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 1996, 'cms']} m$^3$ s$^{-1}$) and 2003 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 2003, 'cms']}  m$^3$ s$^{-1}$). 
 
-The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from estuarine to tidal fresh (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmo}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Periods of low flow are associated with higher chlorophyll concentrations in the upper estuary, whereas the opposite is observed for high flow.  Stations TF1.6 and LE1.2 were chosen as representative time series from different salinity regions to evaluate the water quality models.  Observations at each station capture a longitudinal gradient of watershed influences at TF1.6 to mainstem influences from the Chesapeake Bay at LE1.2.  Long-term changes in chlorophyll have also been related to historical reductions in nutrient inputs following a statewide ban on phosphorus-based detergents in 1984 and wastewater treatment improvements in the early 1990s that reduced point sources of nitrogen \citep{Lung03,Testa08a}.  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
+The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from estuarine to tidal fresh (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmofl}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Periods of low flow are associated with higher chlorophyll concentrations in the upper estuary, whereas the opposite is observed for high flow.  Stations TF1.6 and LE1.2 were chosen as representative time series from different salinity regions to evaluate the water quality models.  Observations at each station capture a longitudinal gradient of watershed influences at TF1.6 to mainstem influences from the Chesapeake Bay at LE1.2.  Long-term changes in chlorophyll have also been related to historical reductions in nutrient inputs following a statewide ban on phosphorus-based detergents in 1984 and wastewater treatment improvements in the early 1990s that reduced point sources of nitrogen \citep{Lung03,Testa08a}.  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
 
 Thirty years of monthly chlorophyll and salinity data from 1986 to 2014 were obtained for stations TF1.6 and LE1.2 from the Chesapeake Bay Program data hub.  All data were vertically integrated throughout the water column for each date to create a representative sample of water quality.  The integration averaged all values after interpolating from the surface to the maximum depth. Observations at the most shallow and deepest sampling depth were repeated for zero depth and maximum depths, respectively, to bound the interpolations within the range of the data.  Daily flow data were also obtained from the \ac{USGS} stream gage station at Bowie, Maryland and merged with the nearest date in the chorophyll and salinity time series.  Initial analyses suggested that a moving-window average of discharge for the preceding five days of each observation provided a better fit to the chlorophyll data.  Both chlorophyll and discharge data were log-transformed.  Censored data were not present in any of the data sets.  Initial quality assurance checks for all monitoring data were conducted following standard protocols adopted by the Chesapeake Bay Program.        
 
@@ -199,7 +203,7 @@ where $n$ is the number of observations for a given evaluation, $Chl_i$ is the o
 \end{equation}
 where $\hat{Chl}_{WRTDS,\,i}$ and $\hat{Chl}_{GAM,\,i}$ are the predicted values of \ac{chla} for each model at observation $i$.
 
-The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmo} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of the flow-normalized data was primarily accomplished using simulated datasets with known components that were independent of discharge.  
+The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of the flow-normalized data was primarily accomplished using simulated datasets with known components that were independent of discharge.  
 
 % Error histograms (see page 14 in Moyer) - we can test for significant differences in the errors using a two-sided t-test. \\
 % Indications of change - direction/magnitude of trends by different time periods
@@ -284,66 +288,185 @@ A daily time series for the entire period of record was simulated using the abov
 
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
-% performance summary of predictions WRTDS/GAMs - RMSE values for each, percent differences between the two, average differences as in eqn. 10 for Moyer  
-<<eval = T, echo = F, cache = T, fig.cap = ''>>=
+% performance summary of predictions WRTDS/GAMs, LE12, tab:perfLE12
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+
+# summarize by categories, then combine with overall summary
+perfLE12 <- mutate(bestLE12, 
+  mo = as.numeric(strftime(date, '%m')), 
+  yr = as.numeric(strftime(date, '%Y')), 
+  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
+  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
+  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
+    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+  ) %>% 
+  select(chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, 
+    levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )
+  ) %>% 
+  group_by(cat) %>% 
+  summarise(
+    wrtds_rmse = rmse.fun(res_wrtds),
+    gam_rmse = rmse.fun(res_gams),
+    wrtds_rsq = rsq.fun(res_wrtds, chla),
+    gam_rsq = rsq.fun(res_gams, chla)
+  )
+perfLE12 <- rbind(
+  with(bestLE12, data.frame(
+    cat = '', 
+    wrtds_rmse = rmse.fun(res_wrtds),
+    gam_rmse = rmse.fun(res_gams),
+    wrtds_rsq = rsq.fun(res_wrtds, chla),
+    gam_rsq = rsq.fun(res_gams, chla)
+  )), 
+  perfLE12
+)
+
+# latex table
+tab <- form_fun(perfLE12[, -1])
+rows <- perfLE12[, 1]
+cap.val<-'Summary statistics of model performance at LE1.2 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('RMSE', '{\\bf \\textit{R}\\textsuperscript{2}}'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('WRTDS', 'GAM'), 2),
+  label = 'tab:perfLE12'
+  )
+
+
+@
+
+% performance summary of predictions WRTDS/GAMs, TF16, tab:perfTF16
+<<eval = T, echo = F, cache = T>>=
+data(bestTF16)
+
+# summarize by categories, then combine with overall summary
+perfTF16 <- mutate(bestTF16, 
+  mo = as.numeric(strftime(date, '%m')), 
+  yr = as.numeric(strftime(date, '%Y')), 
+  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
+  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
+  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
+    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+  ) %>% 
+  select(chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, 
+    levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )
+  ) %>% 
+  group_by(cat) %>% 
+  summarise(
+    wrtds_rmse = rmse.fun(res_wrtds),
+    gam_rmse = rmse.fun(res_gams),
+    wrtds_rsq = rsq.fun(res_wrtds, chla),
+    gam_rsq = rsq.fun(res_gams, chla)
+  )
+perfTF16 <- rbind(
+  with(bestTF16, data.frame(
+    cat = '', 
+    wrtds_rmse = rmse.fun(res_wrtds),
+    gam_rmse = rmse.fun(res_gams),
+    wrtds_rsq = rsq.fun(res_wrtds, chla),
+    gam_rsq = rsq.fun(res_gams, chla)
+  )), 
+  perfTF16
+)
+
+# latex table
+tab <- form_fun(perfTF16[, -1])
+rows <- perfTF16[, 1]
+cap.val<-'Summary statistics of model performance at TF1.6 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('RMSE', '{\\bf \\textit{R}\\textsuperscript{2}}'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('WRTDS', 'GAM'), 2),
+  label = 'tab:perfTF16'
+  )
+
+@
+
+% average differences between WRTDS, GAMs
+<<eval = F, echo = F, cache = T>>=
 data(bestLE12)
 data(bestTF16)
 
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-
-# change default ggplot theme
-theme_mine <- function (base_size = 12, base_family = "") {
-  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
-  theme(
-    axis.text.x = element_text(size = 8), 
-    axis.text.y = element_text(size = 8),
-    plot.background = element_rect(fill='transparent', 
-      colour = NA),
-    panel.background = element_rect(fill='transparent', 
-      colour = NA),
-    legend.background = element_rect(fill='transparent', 
-      colour = NA),
-    strip.background = element_rect(fill = 
-        alpha(cols[length(cols)], 0.5)),
-    legend.key = element_rect(fill = 'transparent', 
-      colour = NA),
-    plot.margin = unit(c(0, 1, 0, 0), "cm")
-    )   
-}
-theme_set(theme_mine())
-
-bestLE12 <- mutate(bestLE12, 
+# summarize by categories, then combine with overall summary
+avediff <- mutate(bestLE12, 
   mo = as.numeric(strftime(date, '%m')), 
   yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(sal, breaks = c(-Inf, quantile(sal, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
+  flcat = cut(Q, breaks = c(-Inf, quantile(sal, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
   mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
   yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
     labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
   ) %>% 
-  select(fits_wrtds, fits_gams, flcat, mocat, yrcat) %>% 
+  select(chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'LE1.2'
-  )
-
-bestTF16 <- mutate(bestTF16, 
-  mo = as.numeric(strftime(date, '%m')), 
-  yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(Q, breaks = c(-Inf, quantile(Q, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
-  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
-  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+  mutate(cat = factor(cat, 
+    levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )
   ) %>% 
-  select(fits_wrtds, fits_gams, flcat, mocat, yrcat) %>% 
-  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'TF1.6'
+  group_by(cat) %>% 
+  summarise(
+    wrtds_rmse = rmse.fun(res_wrtds),
+    gam_rmse = rmse.fun(res_gams),
+    wrtds_rsq = rsq.fun(res_wrtds, chla),
+    gam_rsq = rsq.fun(res_gams, chla)
   )
+perfLE12 <- rbind(
+  with(bestLE12, data.frame(
+    cat = '', 
+    wrtds_rmse = rmse.fun(res_wrtds),
+    gam_rmse = rmse.fun(res_gams),
+    wrtds_rsq = rsq.fun(res_wrtds, chla),
+    gam_rsq = rsq.fun(res_gams, chla)
+  )), 
+  perfLE12
+)
 
-toplo <- rbind(bestTF16, bestLE12)
+# latex table
+tab <- form_fun(perfLE12[, -1])
+rows <- perfLE12[, 1]
+cap.val<-'Summary statistics of model performance at LE1.2 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of salinity (labelled as flow where low implies high salinity).'
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('RMSE', '{\\bf \\textit{R}\\textsuperscript{2}}'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('WRTDS', 'GAM'), 2),
+  label = 'tab:perfLE12'
+  )
 
 
 @
@@ -483,19 +606,19 @@ pax_data <- mutate(pax_data,
   
 # get yrcat medians by station, add coords
 pax_yr <- group_by(pax_data, STATION, yrcat) %>% 
-  summarize(lnchla = median(lnchla, na.rm = T)) %>% 
+  summarise(lnchla = median(lnchla, na.rm = T)) %>% 
   left_join(., pax_meta, by = 'STATION') %>% 
   rename(cat = yrcat)
 
 # get mocat medians by station, add coords
 pax_mo <- group_by(pax_data, STATION, mocat) %>% 
-  summarize(lnchla = median(lnchla, na.rm = T)) %>% 
+  summarise(lnchla = median(lnchla, na.rm = T)) %>% 
   left_join(., pax_meta, by = 'STATION') %>% 
   rename(cat = mocat)
 
 # get flocat medians by station, add coords
 pax_fl <- group_by(pax_data, STATION, flcat) %>% 
-  summarize(lnchla = median(lnchla, na.rm = T)) %>% 
+  summarise(lnchla = median(lnchla, na.rm = T)) %>% 
   left_join(., pax_meta, by = 'STATION') %>% 
   rename(cat = flcat)
 
@@ -564,21 +687,6 @@ theme_mine <- function (base_size = 12, base_family = "") {
 }
 theme_set(theme_mine())
 
-# rmse of each
-getperf <- function(dat_in, obs_nm, prd_nm){
-  
-  res <- dat_in[, obs_nm] - dat_in[, prd_nm]
-  rmse <- sqrt(mean(res^2, na.rm = TRUE))
-  
-  return(rmse)
-  
-}
-
-# getperf(bestLE12, 'chla', 'fits_wrtds')
-# getperf(bestLE12, 'chla', 'fits_gams')
-# getperf(bestTF16, 'chla', 'fits_wrtds')
-# getperf(bestTF16, 'chla', 'fits_gams')
-
 # some plots
 bestTF16$site <- 'TF1.6'
 bestLE12$site <- 'LE1.2'
@@ -587,8 +695,8 @@ names(bestLE12) <- gsub('wrtds$', 'WRTDS', names(bestLE12))
 names(bestTF16) <- gsub('gams$', 'GAM', names(bestTF16))
 names(bestTF16) <- gsub('wrtds$', 'WRTDS', names(bestTF16))
 
-bestLE12 <- select(bestLE12, -sal, -dec_time)
-bestTF16 <- select(bestTF16, -Q, -dec_time)
+bestLE12 <- select(bestLE12, -sal, -lnQ, -dec_time)
+bestTF16 <- select(bestTF16, -lnQ, -sal, -dec_time)
 toplo <- rbind(bestTF16, bestLE12) %>% 
   gather(variable, value, fits_WRTDS:res_GAM) %>% 
   separate(variable, c('output', 'model'), sep = '_') %>% 
@@ -610,7 +718,7 @@ p1 <- ggplot(toplo[toplo$output != 'Res', ], aes(x = date, y = value, colour = o
 
 toplo2 <- mutate(toplo, year = as.numeric(strftime(date, '%Y'))) %>% 
   group_by(year, site, output, model) %>% 
-  summarize(value = mean(value, na.rm = TRUE)) %>% 
+  summarise(value = mean(value, na.rm = TRUE)) %>% 
   filter(output != 'Res') %>% 
   spread(output, value) 
 
@@ -655,7 +763,7 @@ dev.off()
 \end{figure}
 
 % wrtds v gam predicions by periods
-<<wrtdsvgam, fig.width = 6, fig.height = 6.5, eval = T, echo = F, cache = T, fig.cap = 'Comparison of \\ac{WRTDS} and \\acp{GAM} predictions of \\ac{chla} by different time periods and station (LE1.2, TF1.6).  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions at each site (low).  Regression lines (thick) and 1:1 replacement lines (thin) are also shown.'>>=
+<<wrtdsvgam, fig.width = 6, fig.height = 6.5, eval = T, echo = F, cache = T, fig.cap = 'Comparison of \\ac{WRTDS} and \\acp{GAM} predictions of \\ac{chla} by different time periods and station (LE1.2, TF1.6).  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.'>>=
 
 data(bestLE12)
 data(bestTF16)
@@ -689,7 +797,7 @@ theme_set(theme_mine())
 bestLE12 <- mutate(bestLE12, 
   mo = as.numeric(strftime(date, '%m')), 
   yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(sal, breaks = c(-Inf, quantile(sal, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
+  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
   mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
   yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
     labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
@@ -703,7 +811,7 @@ bestLE12 <- mutate(bestLE12,
 bestTF16 <- mutate(bestTF16, 
   mo = as.numeric(strftime(date, '%m')), 
   yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(Q, breaks = c(-Inf, quantile(Q, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
+  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
   mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
   yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
     labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
@@ -717,29 +825,29 @@ bestTF16 <- mutate(bestTF16,
 toplo <- rbind(bestTF16, bestLE12)
 
 p1 <- ggplot(toplo[toplo$cats %in% 'yrcat', ], aes(x = fits_wrtds, y = fits_gams)) + 
+  geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
   geom_point(alpha = 0.7, colour = cols[1]) + 
   facet_grid(stat ~ cat) +
   scale_x_continuous(limits = c(0, 4)) + 
   scale_y_continuous(limits = c(0, 4)) + 
-  geom_abline(intercept = 0, slope = 1) + 
   stat_smooth(method = 'lm', se = F, colour = 'black', size = 1) + 
   theme(axis.title.x = element_blank(), axis.title.y = element_blank())
 
 p2 <- ggplot(toplo[toplo$cats %in% 'mocat', ], aes(x = fits_wrtds, y = fits_gams)) + 
+  geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
   geom_point(alpha = 0.7, colour = cols[1]) + 
   scale_x_continuous(limits = c(0, 4)) + 
   scale_y_continuous(limits = c(0, 4)) + 
   facet_grid(stat ~ cat) +
-  geom_abline(intercept = 0, slope = 1) + 
   stat_smooth(method = 'lm', se = F, colour = 'black', size = 1) + 
   theme(axis.title.x = element_blank(), axis.title.y = element_blank())
 
 p3 <- ggplot(toplo[toplo$cats %in% 'flcat', ], aes(x = fits_wrtds, y = fits_gams)) + 
+  geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
   geom_point(alpha = 0.7, colour = cols[1]) + 
   scale_x_continuous(limits = c(0, 4)) + 
   scale_y_continuous(limits = c(0, 4)) + 
   facet_grid(stat ~ cat) +
-  geom_abline(intercept = 0, slope = 1) + 
   stat_smooth(method = 'lm', se = F, colour = 'black', size = 1) + 
   theme(axis.title.x = element_blank(), axis.title.y = element_blank())
 

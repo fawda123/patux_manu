@@ -10,3 +10,8 @@ maps
 mapproj
 gridExtra
 tidyr
+Metrics
+lattice
+survival
+Formula
+Hmisc

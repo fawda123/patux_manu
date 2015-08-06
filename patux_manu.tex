@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Wed Aug 5 15:56:00 2015 -0500
+  \\ Version Date:   Thu Aug 6 13:47:09 2015 -0500
 	}
 \date{}
 \maketitle
@@ -184,7 +184,7 @@ We conclude with recommendations on the most appropriate use of each method, wit
 
 The Patuxent River estuary, Maryland, is a tributary to Chesapeake Bay on the Atlantic coast of the United States (\Cref{fig:map}). The longitudinal axis extends 65 km landward from the confluence with the mesohaline portion of Chesapeake Bay.  Estimated total volume at mean low water is 577 x 10$^6$ m$^3$ and a surface area of 126 x 10$^6$ m$^2$.  The lower estuary (below 45 km from the confluence) has a mean width of 2.2 km and depth of 6 m \citep{Cronin75}, whereas the upper estuary has a a mean width of 0.4 km and mean depth of 2.5 m \citep{Hagythes}.  The lower estuary is seasonally stratified and vertically-mixed in the upper estuary.  A two-layer circulation pattern occurs in the lower estuary characterized by an upper seaward-flowing layer and a lower landward-flowing layer.  A mixed diurnal tide dominates with mean range varying from 0.8 m in the upper estuary to 0.4 m near the mouth \citep{Boicourt98}.  The estuary drains a 2300 km$^2$ watershed that is 49\% forest, 28\% grassland, 12\% developed, and 10\% cropland \citep{Jordan03}.  The \ac{USGS} stream gage on the Patuxent River at Bowie, Maryland measures discharge from 39\% of the watershed.  Daily mean discharge from 1985 to 2014 was 11.0 m$^3$ s$^{-1}$, with abnormally high years occuring in 1996 (annual mean 20.0 m$^3$ s$^{-1}$) and 2003 (annual mean 22.5  m$^3$ s$^{-1}$). 
 
-The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from estuarine to tidal fresh (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmo}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Periods of low flow are associated with higher chlorophyll concentrations in the upper estuary, whereas the opposite is observed for high flow.  Stations TF1.6 and LE1.2 were chosen as representative time series from different salinity regions to evaluate the water quality models.  Observations at each station capture a longitudinal gradient of watershed influences at TF1.6 to mainstem influences from the Chesapeake Bay at LE1.2.  Long-term changes in chlorophyll have also been related to historical reductions in nutrient inputs following a statewide ban on phosphorus-based detergents in 1984 and wastewater treatment improvements in the early 1990s that reduced point sources of nitrogen \citep{Lung03,Testa08a}.  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
+The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at ten fixed stations that cover the salinity gradient from estuarine to tidal fresh (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmofl}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Periods of low flow are associated with higher chlorophyll concentrations in the upper estuary, whereas the opposite is observed for high flow.  Stations TF1.6 and LE1.2 were chosen as representative time series from different salinity regions to evaluate the water quality models.  Observations at each station capture a longitudinal gradient of watershed influences at TF1.6 to mainstem influences from the Chesapeake Bay at LE1.2.  Long-term changes in chlorophyll have also been related to historical reductions in nutrient inputs following a statewide ban on phosphorus-based detergents in 1984 and wastewater treatment improvements in the early 1990s that reduced point sources of nitrogen \citep{Lung03,Testa08a}.  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
 
 Thirty years of monthly chlorophyll and salinity data from 1986 to 2014 were obtained for stations TF1.6 and LE1.2 from the Chesapeake Bay Program data hub.  All data were vertically integrated throughout the water column for each date to create a representative sample of water quality.  The integration averaged all values after interpolating from the surface to the maximum depth. Observations at the most shallow and deepest sampling depth were repeated for zero depth and maximum depths, respectively, to bound the interpolations within the range of the data.  Daily flow data were also obtained from the \ac{USGS} stream gage station at Bowie, Maryland and merged with the nearest date in the chorophyll and salinity time series.  Initial analyses suggested that a moving-window average of discharge for the preceding five days of each observation provided a better fit to the chlorophyll data.  Both chlorophyll and discharge data were log-transformed.  Censored data were not present in any of the data sets.  Initial quality assurance checks for all monitoring data were conducted following standard protocols adopted by the Chesapeake Bay Program.        
 
@@ -224,7 +224,7 @@ where $n$ is the number of observations for a given evaluation, $Chl_i$ is the o
 \end{equation}
 where $\hat{Chl}_{WRTDS,\,i}$ and $\hat{Chl}_{GAM,\,i}$ are the predicted values of \ac{chla} for each model at observation $i$.
 
-The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmo} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of the flow-normalized data was primarily accomplished using simulated datasets with known components that were independent of discharge.  
+The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of the flow-normalized data was primarily accomplished using simulated datasets with known components that were independent of discharge.  
 
 % Error histograms (see page 14 in Moyer) - we can test for significant differences in the errors using a two-sided t-test. \\
 % Indications of change - direction/magnitude of trends by different time periods
@@ -309,7 +309,81 @@ A daily time series for the entire period of record was simulated using the abov
 
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
-% performance summary of predictions WRTDS/GAMs - RMSE values for each, percent differences between the two, average differences as in eqn. 10 for Moyer  
+% performance summary of predictions WRTDS/GAMs, LE12, tab:perfLE12
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("RMSE",         "{\\bf \\textit{R}\\textsuperscript{2}}"), n.cgroup = c(2,         2), rowname = rows, colheads = rep(c("WRTDS", "GAM"),         2), label = "tab:perfLE12")%
+\begin{table}[!tbp]
+\caption{Summary statistics of model performance at LE1.2 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfLE12}} 
+\begin{center}
+\begin{tabular}{lllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries RMSE}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries {\bf \textit{R}\textsuperscript{2}}}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}\tabularnewline
+\hline
+{\bfseries All}&&&&&\tabularnewline
+~~&0.51&0.56&&0.48&0.36\tabularnewline
+\hline
+{\bfseries Annual}&&&&&\tabularnewline
+~~1986-1993&0.50&0.57&&0.53&0.40\tabularnewline
+~~1994-2000&0.50&0.57&&0.42&0.24\tabularnewline
+~~2001-2007&0.60&0.65&&0.34&0.23\tabularnewline
+~~2008-2014&0.35&0.38&&0.60&0.55\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&\tabularnewline
+~~JFM&0.58&0.67&&0.33&0.09\tabularnewline
+~~AMJ&0.64&0.71&&0.41&0.28\tabularnewline
+~~JAS&0.35&0.37&&0.31&0.21\tabularnewline
+~~OND&0.38&0.41&&0.44&0.36\tabularnewline
+\hline
+{\bfseries Flow}&&&&&\tabularnewline
+~~1 (Low)&0.36&0.39&&0.33&0.19\tabularnewline
+~~2&0.42&0.46&&0.40&0.27\tabularnewline
+~~3&0.58&0.62&&0.47&0.38\tabularnewline
+~~4 (High)&0.63&0.72&&0.34&0.14\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% performance summary of predictions WRTDS/GAMs, TF16, tab:perfTF16
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("RMSE",         "{\\bf \\textit{R}\\textsuperscript{2}}"), n.cgroup = c(2,         2), rowname = rows, colheads = rep(c("WRTDS", "GAM"),         2), label = "tab:perfTF16")%
+\begin{table}[!tbp]
+\caption{Summary statistics of model performance at TF1.6 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfTF16}} 
+\begin{center}
+\begin{tabular}{lllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries RMSE}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries {\bf \textit{R}\textsuperscript{2}}}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}\tabularnewline
+\hline
+{\bfseries All}&&&&&\tabularnewline
+~~&0.52&0.57&&0.71&0.65\tabularnewline
+\hline
+{\bfseries Annual}&&&&&\tabularnewline
+~~1986-1993&0.49&0.53&&0.71&0.67\tabularnewline
+~~1994-2000&0.58&0.65&&0.67&0.58\tabularnewline
+~~2001-2007&0.53&0.57&&0.65&0.59\tabularnewline
+~~2008-2014&0.44&0.52&&0.77&0.68\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&\tabularnewline
+~~JFM&0.48&0.54&&0.38&0.24\tabularnewline
+~~AMJ&0.58&0.59&&0.48&0.46\tabularnewline
+~~JAS&0.46&0.50&&0.49&0.40\tabularnewline
+~~OND&0.54&0.67&&0.75&0.61\tabularnewline
+\hline
+{\bfseries Flow}&&&&&\tabularnewline
+~~1 (Low)&0.46&0.51&&0.43&0.30\tabularnewline
+~~2&0.54&0.57&&0.67&0.64\tabularnewline
+~~3&0.52&0.58&&0.69&0.62\tabularnewline
+~~4 (High)&0.54&0.63&&0.72&0.62\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% average differences between WRTDS, GAMs
 
 
 
@@ -372,7 +446,7 @@ A daily time series for the entire period of record was simulated using the abov
 
 }
 
-\caption[Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} by different time periods and station (LE1]{Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} by different time periods and station (LE1.2, TF1.6).  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions at each site (low).  Regression lines (thick) and 1:1 replacement lines (thin) are also shown.}\label{fig:wrtdsvgam}
+\caption[Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} by different time periods and station (LE1]{Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} by different time periods and station (LE1.2, TF1.6).  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.}\label{fig:wrtdsvgam}
 \end{figure}
 
 
