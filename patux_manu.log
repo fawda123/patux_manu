@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  5 AUG 2015 15:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  6 AUG 2015 13:46
 entering extended mode
 **patux_manu.tex
 (M:\docs\manuscripts\patux_manu\patux_manu.tex
@@ -703,15 +703,22 @@ although it is yet undefined on input line 185.
 Package acronym Info: Label `acro:chla' newly defined as it shall be overridden
 
 although it is yet undefined on input line 187.
- [5]
+
+
+LaTeX Warning: Reference `fig:chlyrmo' on page 1 undefined on input line 187.
+
+[5]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 195.
-
-[6] [7] [8]
+ [6] [7] [8]
 Package acronym Info: Label `acro:RMSE' newly defined as it shall be overridden
 
 although it is yet undefined on input line 217.
- [9] [10] [11]
+ [9]
+
+LaTeX Warning: Reference `fig:chlyrmo' on page 1 undefined on input line 227.
+
+[10] [11]
 Package acronym Info: Label `acro:ARMA' newly defined as it shall be overridden
 
 although it is yet undefined on input line 264.
@@ -720,69 +727,82 @@ although it is yet undefined on input line 264.
  [12] [13]
 LaTeX Font Info:    Try loading font information for TS1+ptm on input line 288.
 
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [14]
-(M:\docs\manuscripts\patux_manu\patux_manu.bbl [15
+)
+[14] (M:\docs\manuscripts\patux_manu\patux_manu.bbl [15
 
 ] [16]) [17]
-<figs/map-1.pdf, id=313, 361.35pt x 505.89pt>
+<figs/map-1.pdf, id=312, 361.35pt x 505.89pt>
 File: figs/map-1.pdf Graphic file (type pdf)
  <use figs/map-1.pdf>
-Package pdftex.def Info: figs/map-1.pdf used on input line 326.
+Package pdftex.def Info: figs/map-1.pdf used on input line 328.
 (pdftex.def)             Requested size: 328.82707pt x 460.36061pt.
 
-<figs/chlyrmo-1.pdf, id=314, 361.35pt x 397.485pt>
-File: figs/chlyrmo-1.pdf Graphic file (type pdf)
- <use figs/chlyrmo-1.pdf>
-Package pdftex.def Info: figs/chlyrmo-1.pdf used on input line 338.
-(pdftex.def)             Requested size: 361.34912pt x 397.48402pt.
+<figs/chlyrmofl-1.pdf, id=313, 361.35pt x 560.0925pt>
+File: figs/chlyrmofl-1.pdf Graphic file (type pdf)
 
-<figs/predmo.pdf, id=317, 650.43pt x 289.08pt>
+<use figs/chlyrmofl-1.pdf>
+Package pdftex.def Info: figs/chlyrmofl-1.pdf used on input line 340.
+(pdftex.def)             Requested size: 361.34912pt x 560.09113pt.
+ <figs/predmo.pdf, id=316, 650.43pt x 289.08pt>
 File: figs/predmo.pdf Graphic file (type pdf)
- <use figs/predmo.pdf>
-Package pdftex.def Info: figs/predmo.pdf used on input line 355.
+
+<use figs/predmo.pdf>
+Package pdftex.def Info: figs/predmo.pdf used on input line 357.
 (pdftex.def)             Requested size: 469.75502pt x 208.78584pt.
 
-Overfull \hbox (6.00002pt too wide) in paragraph at lines 355--356
+Overfull \hbox (6.00002pt too wide) in paragraph at lines 357--358
  [][] 
  []
 
-<figs/predann.pdf, id=318, 650.43pt x 289.08pt>
+<figs/predann.pdf, id=317, 650.43pt x 289.08pt>
 File: figs/predann.pdf Graphic file (type pdf)
  <use figs/predann.pdf>
-Package pdftex.def Info: figs/predann.pdf used on input line 360.
+Package pdftex.def Info: figs/predann.pdf used on input line 362.
 (pdftex.def)             Requested size: 469.75502pt x 208.78584pt.
 
-Overfull \hbox (6.00002pt too wide) in paragraph at lines 360--361
+Overfull \hbox (6.00002pt too wide) in paragraph at lines 362--363
  [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 376.
-[18
+<figs/wrtdsvgam-1.pdf, id=322, 433.62pt x 469.755pt>
+File: figs/wrtdsvgam-1.pdf Graphic file (type pdf)
 
- <M:/docs/manuscripts/patux_manu/figs/map-1.pdf>] [19 <M:/docs/manuscripts/patu
-x_manu/figs/chlyrmo-1.pdf>] [20 <M:/docs/manuscripts/patux_manu/figs/predmo.pdf
-> <M:/docs/manuscripts/patux_manu/figs/predann.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 376.
+<use figs/wrtdsvgam-1.pdf>
+Package pdftex.def Info: figs/wrtdsvgam-1.pdf used on input line 371.
+(pdftex.def)             Requested size: 433.61894pt x 469.77536pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 388.
+ [18
+
+ <M:/docs/manuscripts/patux_manu/figs/map-1.pdf>]
+
+LaTeX Warning: Text page 19 contains only floats.
+
+[19 <M:/docs/manuscripts/patux_manu/figs/chlyrmofl-1.pdf>] [20 <M:/docs/manuscr
+ipts/patux_manu/figs/predmo.pdf> <M:/docs/manuscripts/patux_manu/figs/predann.p
+df>] [21 <M:/docs/manuscripts/patux_manu/figs/wrtdsvgam-1.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 388.
 
 (M:\docs\manuscripts\patux_manu\patux_manu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 376.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 376.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 388.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 388.
 Package rerunfilecheck Info: File `patux_manu.out' has not changed.
 (rerunfilecheck)             Checksum: 55BB2EFCB5BC2A57A6EA8CDC80C675CA;846.
 
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 376.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 388.
  ) 
 Here is how much of TeX's memory you used:
- 11840 strings out of 493921
- 186913 string characters out of 3147282
+ 11852 strings out of 493921
+ 187157 string characters out of 3147282
  300711 words of memory out of 3000000
- 14837 multiletter control sequences out of 15000+200000
+ 14846 multiletter control sequences out of 15000+200000
  31068 words of font info for 71 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  44i,12n,47p,2138b,554s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -798,9 +818,9 @@ iles/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/f
 onts/type1/urw/times/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/t
 imes/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
 
-Output written on patux_manu.pdf (20 pages, 1972932 bytes).
+Output written on patux_manu.pdf (21 pages, 2513581 bytes).
 PDF statistics:
- 442 PDF objects out of 1000 (max. 8388607)
- 98 named destinations out of 1000 (max. 500000)
- 117 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 459 PDF objects out of 1000 (max. 8388607)
+ 100 named destinations out of 1000 (max. 500000)
+ 122 words of extra memory for PDF output out of 10000 (max. 10000000)
 
