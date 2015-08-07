@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Thu Aug 6 13:47:09 2015 -0500
+  \\ Version Date:   Thu Aug 6 16:30:59 2015 -0500
 	}
 \date{}
 \maketitle
@@ -220,9 +220,9 @@ RMSE = \sqrt {{\frac{{\sum\limits_{{i = 1}}^n {{{\left( {{Chl_i} - {{\hat{Chl}}_
 \end{equation}
 where $n$ is the number of observations for a given evaluation, $Chl_i$ is the observed value of \ac{chla} for observation $i$, and ${\hat{Chl}}_i$ is the predicted value of \ac{chla} for observation $i$.  \ac{RMSE} values closer to zero represent model predictions closer to observed.  Similarly, average difference between models as a percentage was defined as:
 \begin{equation}
-\textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i}}\right) * 100
+\textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}\right) * 100
 \end{equation}
-where $\hat{Chl}_{WRTDS,\,i}$ and $\hat{Chl}_{GAM,\,i}$ are the predicted values of \ac{chla} for each model at observation $i$.
+where $\hat{Chl}_{WRTDS,\,i}$ and $\hat{Chl}_{GAM,\,i}$ are the predicted values of \ac{chla} for each model at observation $i$.  Positive values indicate that \ac{WRTDS} provided larger predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}. 
 
 The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of the flow-normalized data was primarily accomplished using simulated datasets with known components that were independent of discharge.  
 
@@ -312,7 +312,7 @@ A daily time series for the entire period of record was simulated using the abov
 % performance summary of predictions WRTDS/GAMs, LE12, tab:perfLE12
 %latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("RMSE",         "{\\bf \\textit{R}\\textsuperscript{2}}"), n.cgroup = c(2,         2), rowname = rows, colheads = rep(c("WRTDS", "GAM"),         2), label = "tab:perfLE12")%
 \begin{table}[!tbp]
-\caption{Summary statistics of model performance at LE1.2 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfLE12}} 
+\caption{Summary of model performances at LE1.2 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfLE12}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
@@ -349,7 +349,7 @@ A daily time series for the entire period of record was simulated using the abov
 % performance summary of predictions WRTDS/GAMs, TF16, tab:perfTF16
 %latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("RMSE",         "{\\bf \\textit{R}\\textsuperscript{2}}"), n.cgroup = c(2,         2), rowname = rows, colheads = rep(c("WRTDS", "GAM"),         2), label = "tab:perfTF16")%
 \begin{table}[!tbp]
-\caption{Summary statistics of model performance at TF1.6 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfTF16}} 
+\caption{Summary of model performances at TF1.6 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfTF16}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
@@ -384,6 +384,40 @@ A daily time series for the entire period of record was simulated using the abov
 
 
 % average differences between WRTDS, GAMs
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Pred",         "Norm"), 2), label = "tab:avediff")%
+\begin{table}[!tbp]
+\caption{Average differences (\%) between \ac{WRTDS} and \acp{GAM} at each station during different time periods.  Differences for predicted and flow-normalized results from each model are provided.  Overall differences for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:avediff}} 
+\begin{center}
+\begin{tabular}{lllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries LE1.2}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries TF1.6}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Pred}&\multicolumn{1}{c}{Norm}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Pred}&\multicolumn{1}{c}{Norm}\tabularnewline
+\hline
+{\bfseries All}&&&&&\tabularnewline
+~~&-0.17&-0.03&& 0.23& 0.18\tabularnewline
+\hline
+{\bfseries Annual}&&&&&\tabularnewline
+~~1986-1993& 0.71&-1.04&& 1.09&-0.53\tabularnewline
+~~1994-2000&-0.44&-1.37&&-0.44&-2.51\tabularnewline
+~~2001-2007&-1.47& 1.86&&-0.11& 3.08\tabularnewline
+~~2008-2014& 0.81& 1.87&& 0.31& 2.43\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&\tabularnewline
+~~JFM& 0.21&-2.11&&-0.80&-1.54\tabularnewline
+~~AMJ&-0.37&-0.68&& 0.40&-1.37\tabularnewline
+~~JAS& 0.50& 0.55&& 1.36& 0.64\tabularnewline
+~~OND&-1.35& 1.31&&-0.42& 3.23\tabularnewline
+\hline
+{\bfseries Flow}&&&&&\tabularnewline
+~~Flow 1 (Low)&-1.13& 0.58&& 1.72& 1.80\tabularnewline
+~~Flow 2& 0.06& 2.01&& 0.09&-0.66\tabularnewline
+~~Flow 3& 1.52&-0.09&&-0.21&-0.18\tabularnewline
+~~Flow 4 (High)&-1.23&-3.27&&-0.42&-0.64\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
 
 
 
@@ -446,7 +480,7 @@ A daily time series for the entire period of record was simulated using the abov
 
 }
 
-\caption[Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} by different time periods and station (LE1]{Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} by different time periods and station (LE1.2, TF1.6).  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.}\label{fig:wrtdsvgam}
+\caption[Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} at each station (LE1]{Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} at each station (LE1.2, TF1.6) and different time periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.}\label{fig:wrtdsvgam}
 \end{figure}
 
 

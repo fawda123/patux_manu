@@ -32,6 +32,19 @@ rmse.fun<-function(resid){
 }
 
 ######
+# average difference
+ave.fun <- function(ts1, ts2){
+  
+  ts1 <- sum(ts1, na.rm = TRUE)
+  ts2 <- sum(ts2, na.rm = TRUE)
+  
+  out <- 100 * (ts1 - ts2)/ts2 
+  
+  return(out)
+  
+}
+
+######
 # formatting of values in S expressions
 form_fun <- function(x, rnd_val = 2, dig_val = 2, nsm_val = 2) {
   format(round(x, rnd_val), digits = dig_val, nsmall = nsm_val)

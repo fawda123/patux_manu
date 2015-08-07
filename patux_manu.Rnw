@@ -199,9 +199,9 @@ RMSE = \sqrt {{\frac{{\sum\limits_{{i = 1}}^n {{{\left( {{Chl_i} - {{\hat{Chl}}_
 \end{equation}
 where $n$ is the number of observations for a given evaluation, $Chl_i$ is the observed value of \ac{chla} for observation $i$, and ${\hat{Chl}}_i$ is the predicted value of \ac{chla} for observation $i$.  \ac{RMSE} values closer to zero represent model predictions closer to observed.  Similarly, average difference between models as a percentage was defined as:
 \begin{equation}
-\textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i}}\right) * 100
+\textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}\right) * 100
 \end{equation}
-where $\hat{Chl}_{WRTDS,\,i}$ and $\hat{Chl}_{GAM,\,i}$ are the predicted values of \ac{chla} for each model at observation $i$.
+where $\hat{Chl}_{WRTDS,\,i}$ and $\hat{Chl}_{GAM,\,i}$ are the predicted values of \ac{chla} for each model at observation $i$.  Positive values indicate that \ac{WRTDS} provided larger predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}. 
 
 The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of the flow-normalized data was primarily accomplished using simulated datasets with known components that were independent of discharge.  
 
@@ -329,7 +329,7 @@ perfLE12 <- rbind(
 # latex table
 tab <- form_fun(perfLE12[, -1])
 rows <- perfLE12[, 1]
-cap.val<-'Summary statistics of model performance at LE1.2 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+cap.val<-'Summary of model performances at LE1.2 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
 
 latex( 
   tab,
@@ -390,7 +390,7 @@ perfTF16 <- rbind(
 # latex table
 tab <- form_fun(perfTF16[, -1])
 rows <- perfTF16[, 1]
-cap.val<-'Summary statistics of model performance at TF1.6 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+cap.val<-'Summary of model performances at TF1.6 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
 
 latex( 
   tab,
@@ -410,48 +410,82 @@ latex(
 @
 
 % average differences between WRTDS, GAMs
-<<eval = F, echo = F, cache = T>>=
+<<eval = T, echo = F, cache = T>>=
 data(bestLE12)
 data(bestTF16)
 
-# summarize by categories, then combine with overall summary
-avediff <- mutate(bestLE12, 
+diffLE12 <- mutate(bestLE12, 
   mo = as.numeric(strftime(date, '%m')), 
   yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(Q, breaks = c(-Inf, quantile(sal, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
+  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
   mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
   yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
     labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
   ) %>% 
-  select(chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat) %>% 
+  select(fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, 
-    levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
-    )
-  ) %>% 
-  group_by(cat) %>% 
-  summarise(
-    wrtds_rmse = rmse.fun(res_wrtds),
-    gam_rmse = rmse.fun(res_gams),
-    wrtds_rsq = rsq.fun(res_wrtds, chla),
-    gam_rsq = rsq.fun(res_gams, chla)
+  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+    stat = 'LE1.2'
   )
-perfLE12 <- rbind(
-  with(bestLE12, data.frame(
+
+diffTF16 <- mutate(bestTF16, 
+  mo = as.numeric(strftime(date, '%m')), 
+  yr = as.numeric(strftime(date, '%Y')), 
+  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
+  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
+  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
+    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+  ) %>% 
+  select(fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+    stat = 'TF1.6'
+  )
+
+# summmarize by categories, predictions
+summpred <- rbind(diffTF16, diffLE12) %>% 
+  group_by(cat, stat) %>% 
+  summarise(
+    aved = ave.fun(fits_wrtds, fits_gams)
+  ) %>%
+  mutate(stat = paste0('pred', stat)) %>% 
+  spread('stat', 'aved')
+
+# add summary for whole time series, predictions
+summpred <- rbind(
+  data.frame(
     cat = '', 
-    wrtds_rmse = rmse.fun(res_wrtds),
-    gam_rmse = rmse.fun(res_gams),
-    wrtds_rsq = rsq.fun(res_wrtds, chla),
-    gam_rsq = rsq.fun(res_gams, chla)
-  )), 
-  perfLE12
+    predLE1.2 = with(bestLE12, ave.fun(fits_wrtds, fits_gams)), 
+    predTF1.6 = with(bestTF16, ave.fun(fits_wrtds, fits_gams))
+    ),
+  summpred
 )
 
+# summmarize by categories, normalized 
+summnorm <- rbind(diffTF16, diffLE12) %>% 
+  group_by(cat, stat) %>% 
+  summarise(
+    aved = ave.fun(norm_wrtds, norm_gams)
+  ) %>% 
+  mutate(stat = paste0('norm', stat)) %>% 
+  spread('stat', 'aved') 
+
+# add summary for whole time series, normalized
+summnorm <- rbind(
+  data.frame(
+    cat = '', 
+    normLE1.2 = with(bestLE12, ave.fun(norm_wrtds, norm_gams)), 
+    normTF1.6 = with(bestTF16, ave.fun(norm_wrtds, norm_gams))
+    ),
+  summnorm
+)
+
+totab <- left_join(summpred, summnorm, by = 'cat')
+
 # latex table
-tab <- form_fun(perfLE12[, -1])
-rows <- perfLE12[, 1]
-cap.val<-'Summary statistics of model performance at LE1.2 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of salinity (labelled as flow where low implies high salinity).'
+tab <- form_fun(totab[, -1])
+rows <- totab[, 1]
+cap.val <- 'Average differences (\\%) between \\ac{WRTDS} and \\acp{GAM} at each station during different time periods.  Differences for predicted and flow-normalized results from each model are provided.  Overall differences for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
 
 latex( 
   tab,
@@ -461,13 +495,12 @@ latex(
   caption.loc = 'top',
   rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
   n.rgroup = c(1, rep(4, 3)),
-  cgroup = c('RMSE', '{\\bf \\textit{R}\\textsuperscript{2}}'),
+  cgroup = c('LE1.2', 'TF1.6'),
   n.cgroup = c(2, 2),
   rowname = rows,
-  colheads = rep(c('WRTDS', 'GAM'), 2),
-  label = 'tab:perfLE12'
+  colheads = rep(c('Pred', 'Norm'), 2),
+  label = 'tab:avediff'
   )
-
 
 @
 
@@ -763,7 +796,7 @@ dev.off()
 \end{figure}
 
 % wrtds v gam predicions by periods
-<<wrtdsvgam, fig.width = 6, fig.height = 6.5, eval = T, echo = F, cache = T, fig.cap = 'Comparison of \\ac{WRTDS} and \\acp{GAM} predictions of \\ac{chla} by different time periods and station (LE1.2, TF1.6).  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.'>>=
+<<wrtdsvgam, fig.width = 6, fig.height = 6.5, eval = T, echo = F, cache = T, fig.cap = 'Comparison of \\ac{WRTDS} and \\acp{GAM} predictions of \\ac{chla} at each station (LE1.2, TF1.6) and different time periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.'>>=
 
 data(bestLE12)
 data(bestTF16)
