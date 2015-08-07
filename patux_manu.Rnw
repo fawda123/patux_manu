@@ -293,15 +293,9 @@ A daily time series for the entire period of record was simulated using the abov
 data(bestLE12)
 
 # summarize by categories, then combine with overall summary
-perfLE12 <- mutate(bestLE12, 
-  mo = as.numeric(strftime(date, '%m')), 
-  yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
-  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
-  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+perfLE12 <- select(bestLE12, 
+    chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
   ) %>% 
-  select(chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, 
     levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
@@ -354,15 +348,9 @@ latex(
 data(bestTF16)
 
 # summarize by categories, then combine with overall summary
-perfTF16 <- mutate(bestTF16, 
-  mo = as.numeric(strftime(date, '%m')), 
-  yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
-  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
-  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+perfTF16 <- select(bestTF16, 
+    chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
   ) %>% 
-  select(chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, 
     levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
@@ -414,29 +402,17 @@ latex(
 data(bestLE12)
 data(bestTF16)
 
-diffLE12 <- mutate(bestLE12, 
-  mo = as.numeric(strftime(date, '%m')), 
-  yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
-  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
-  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+diffLE12 <-select(bestLE12, 
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
   ) %>% 
-  select(fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
     stat = 'LE1.2'
   )
 
-diffTF16 <- mutate(bestTF16, 
-  mo = as.numeric(strftime(date, '%m')), 
-  yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
-  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
-  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+diffTF16 <- select(bestTF16, 
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
   ) %>% 
-  select(fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
     stat = 'TF1.6'
@@ -500,6 +476,170 @@ latex(
   rowname = rows,
   colheads = rep(c('Pred', 'Norm'), 2),
   label = 'tab:avediff'
+  )
+
+@
+
+% regression fit between WRTDS, GAMs, predictions
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+data(bestTF16)
+
+diffLE12 <- select(bestLE12, 
+    fits_wrtds, fits_gams, flcat, mocat, yrcat
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+    stat = 'LE1.2'
+  )
+
+diffTF16 <- select(bestTF16, 
+    fits_wrtds, fits_gams, flcat, mocat, yrcat
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+    stat = 'TF1.6'
+  )
+
+# summmarize by categories, predictions
+pred <- rbind(diffTF16, diffLE12) %>% 
+  group_by(cat, stat)
+
+intpred <- summarise(pred,
+    int = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[1]
+  ) %>%
+  mutate(stat = paste0('int', stat)) %>% 
+  spread('stat', 'int')
+
+slopred <- summarise(pred,
+    slo = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[2]
+  ) %>%
+  mutate(stat = paste0('slo', stat)) %>% 
+  spread('stat', 'slo')
+
+sloorgpred <- summarise(pred,
+    sloorg = lm.fun(fits_wrtds, fits_gams, origin = TRUE)
+  ) %>%
+  mutate(stat = paste0('sloorg', stat)) %>% 
+  spread('stat', 'sloorg')
+
+pred <- left_join(intpred, slopred, by = 'cat') %>% 
+  left_join(., sloorgpred,  by = 'cat')
+
+# add summary for whole time series, predictions
+totab <- rbind(
+  data.frame(
+    cat = '', 
+    intLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1], 
+    intTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1],
+    sloLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2], 
+    sloTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2],
+    sloorgLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = TRUE)), 
+    sloorgTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin =TRUE))
+    ),
+  pred
+)
+
+# latex table
+tab <- totab[, -1]
+rows <- totab[, 1]
+cap.val <- "Regression fits comparing \\ac{WRTDS} and \\acp{GAM} predictions at each station during different time periods.  Fits for the entire time series are shown at the top.  The second slope column (Slope$'$) describes a regression that was forced through the origin.  Values in bold-italic are those where the intercept estimate was significantly different from zero or the slope estimate was significantly different from one.   Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge."
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('Intercept', 'Slope', "Slope$'$"),
+  n.cgroup = rep(2, 3),
+  rowname = rows,
+  colheads = rep(c('LE1.2', 'TF1.6'), 3),
+  label = 'tab:regpred'
+  )
+
+@
+
+% regression fit between WRTDS, GAMs, flow-normalized predictions
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+data(bestTF16)
+
+diffLE12 <- select(bestLE12, 
+    norm_wrtds, norm_gams, flcat, mocat, yrcat
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+    stat = 'LE1.2'
+  )
+
+diffTF16 <- select(bestTF16, 
+    norm_wrtds, norm_gams, flcat, mocat, yrcat
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+    stat = 'TF1.6'
+  )
+
+# summmarize by categories, predictions
+norm <- rbind(diffTF16, diffLE12) %>% 
+  group_by(cat, stat)
+
+intnorm <- summarise(norm,
+    int = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[1]
+  ) %>%
+  mutate(stat = paste0('int', stat)) %>% 
+  spread('stat', 'int')
+
+slonorm <- summarise(norm,
+    slo = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[2]
+  ) %>%
+  mutate(stat = paste0('slo', stat)) %>% 
+  spread('stat', 'slo')
+
+sloorgnorm <- summarise(norm,
+    sloorg = lm.fun(norm_wrtds, norm_gams, origin = TRUE)
+  ) %>%
+  mutate(stat = paste0('sloorg', stat)) %>% 
+  spread('stat', 'sloorg')
+
+norm <- left_join(intnorm, slonorm, by = 'cat') %>% 
+  left_join(., sloorgnorm,  by = 'cat')
+
+# add summary for whole time series, flow-normalized predictions
+totab <- rbind(
+  data.frame(
+    cat = '', 
+    intLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1], 
+    intTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1],
+    sloLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2], 
+    sloTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2],
+    sloorgLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = TRUE)), 
+    sloorgTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin =TRUE))
+    ),
+  norm
+)
+
+# latex table
+tab <- totab[, -1]
+rows <- totab[, 1]
+cap.val <- "Regression fits comparing \\ac{WRTDS} and \\acp{GAM} flow-normalized predictions at each station during different time periods.  Fits for the entire time series are shown at the top.  The second slope column (Slope$'$) describes a regression that was forced through the origin.  Values in bold-italic are those where the intercept estimate was significantly different from zero or the slope estimate was significantly different from one.   Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge."
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('Intercept', 'Slope', "Slope$'$"),
+  n.cgroup = rep(2, 3),
+  rowname = rows,
+  colheads = rep(c('LE1.2', 'TF1.6'), 3),
+  label = 'tab:regnorm'
   )
 
 @
@@ -827,29 +967,17 @@ theme_mine <- function (base_size = 12, base_family = "") {
 }
 theme_set(theme_mine())
 
-bestLE12 <- mutate(bestLE12, 
-  mo = as.numeric(strftime(date, '%m')), 
-  yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
-  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
-  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+bestLE12 <- select(bestLE12, 
+    fits_wrtds, fits_gams, flcat, mocat, yrcat
   ) %>% 
-  select(fits_wrtds, fits_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
     stat = 'LE1.2'
   )
 
-bestTF16 <- mutate(bestTF16, 
-  mo = as.numeric(strftime(date, '%m')), 
-  yr = as.numeric(strftime(date, '%Y')), 
-  flcat = cut(lnQ, breaks = c(-Inf, quantile(lnQ, c(0.25, 0.5, 0.75)), Inf), labels = c('Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')), 
-  mocat = cut(mo, breaks = c(-Inf, 3, 6, 9, Inf), labels = c('JFM', 'AMJ', 'JAS', 'OND')), 
-  yrcat = cut(yr, breaks = c(-Inf, 1993, 2000, 2007, Inf), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014'))
+bestTF16 <- select(bestTF16, 
+    fits_wrtds, fits_gams, flcat, mocat, yrcat
   ) %>% 
-  select(fits_wrtds, fits_gams, flcat, mocat, yrcat) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
     stat = 'TF1.6'
