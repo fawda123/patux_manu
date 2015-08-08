@@ -285,6 +285,57 @@ A daily time series for the entire period of record was simulated using the abov
 % tables
 
 % site characteristics of TF16, LE12
+<<eval = T, echo = F, cache = T>>=
+data(pax_meta)
+data(pax_data)
+
+# summarize pax_data
+totab <- group_by(pax_data, STATION) %>% 
+  summarise(
+    lnchla = mean(lnchla, na.rm = TRUE), 
+    sal = mean(sal, na.rm = TRUE)
+  ) %>% 
+  left_join(pax_meta, ., by = 'STATION') %>% 
+  rename(
+    Station = STATION, 
+    Lat = LAT, 
+    Long = LONG,
+    Segment = CBSEG_2003_DESCRIPTION, 
+    `Distance (km)` = dist_km, 
+    `Depth (m)` = depth_m, 
+    `Chl (\\mugl)` = lnchla, 
+    `Sal (ppt)` = sal
+  ) %>% 
+  mutate(Segment = tolower(gsub('^PATUXENT RIVER-|[[:space:]]REGION$', '', Segment))) %>% 
+  select(-CBSEG_2003) %>% 
+  mutate(
+    Lat = form_fun(Lat), 
+    Long = form_fun(Long),
+    `Distance (km)` = form_fun(`Distance (km)`, 1),
+    `Chl (\\mugl)` = form_fun(`Chl (\\mugl)`), 
+    `Sal (ppt)` = form_fun(`Sal (ppt)`), 
+    Segment = factor(Segment, levels = c('tidal fresh', 'oligohaline', 'mesohaline'), labels = c('TF', 'OH', 'MH')),
+    Station = gsub('LE1.2', '{\\\\bf LE1.2}', Station),
+    Station = gsub('TF1.6', '{\\\\bf TF1.6}', Station)
+  )
+    
+cap.val <- 'Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).  See \\cref{fig:map} for a map.'
+
+# table
+latex(
+  totab[, -1],
+  file = '',
+  caption.loc = 'top',
+  caption = cap.val,
+  rowname = totab[, 1],
+  rowlabel = 'Station',
+  label = 'tab:statsum',
+  col.just = rep('l', ncol(totab[, -1]))
+  )
+  
+@
+
+
 
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
@@ -644,9 +695,6 @@ latex(
 
 @
 
-
-% performance summary of flow-normalized predictions WRTDS/GAMs LE12, TF16 - RMSE values for each, percent differences between the two, average differences as in eqn. 10 for Moyer  
-
 % performance summary of flow-normalized predictions WRTDS/GAMS simulated data - compare between the two mods as in previous fig, but also compare with 'known' flow-independet ts
 
 % qualitative comparison of each mod, pros/cons of each, etc. to accompany discussion
@@ -655,7 +703,7 @@ latex(
 % figures
 
 % study site map
-<<map, fig.height = 7, fig.width = 5, out.width = '0.7\\textwidth', fig.cap = 'Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km).  Study sites are in bold. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).', echo = FALSE>>=
+<<map, fig.height = 7, fig.width = 5, out.width = '0.7\\textwidth', fig.cap = 'Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km).  Study sites are in bold. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline). See \\cref{tab:statsum} for a numeric summary of station characteristics.', echo = FALSE>>=
 
 # load data
 data(cb_poly)

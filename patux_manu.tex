@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Fri Aug 7 15:46:40 2015 -0500
+  \\ Version Date:   Fri Aug 7 18:15:06 2015 -0500
 	}
 \date{}
 \maketitle
@@ -306,6 +306,31 @@ A daily time series for the entire period of record was simulated using the abov
 % tables
 
 % site characteristics of TF16, LE12
+%latex.default(totab[, -1], file = "", caption.loc = "top", caption = cap.val,     rowname = totab[, 1], rowlabel = "Station", label = "tab:statsum",     col.just = rep("l", ncol(totab[, -1])))%
+\begin{table}[!tbp]
+\caption{Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).  See \cref{fig:map} for a map.\label{tab:statsum}} 
+\begin{center}
+\begin{tabular}{llllllll}
+\hline\hline
+\multicolumn{1}{l}{Station}&\multicolumn{1}{c}{Lat}&\multicolumn{1}{c}{Long}&\multicolumn{1}{c}{Segment}&\multicolumn{1}{c}{Distance (km)}&\multicolumn{1}{c}{Depth (m)}&\multicolumn{1}{c}{Chl (\mugl)}&\multicolumn{1}{c}{Sal (ppt)}\tabularnewline
+\hline
+TF1.3&38.81&-76.71&TF&74.90&$ 2.9$&1.52& 0.00\tabularnewline
+TF1.4&38.77&-76.71&TF&69.50&$ 2.0$&2.31& 0.02\tabularnewline
+TF1.5&38.71&-76.70&TF&60.30&$10.6$&2.88& 0.27\tabularnewline
+{\bf TF1.6}&38.66&-76.68&OH&52.20&$ 6.2$&2.44& 0.90\tabularnewline
+TF1.7&38.58&-76.68&OH&42.50&$ 3.0$&2.09& 4.09\tabularnewline
+RET1.1&38.49&-76.66&MH&32.20&$11.2$&2.47&10.25\tabularnewline
+LE1.1&38.43&-76.60&MH&22.90&$12.1$&2.31&12.04\tabularnewline
+{\bf LE1.2}&38.38&-76.51&MH&13.40&$17.1$&2.16&12.73\tabularnewline
+LE1.3&38.34&-76.48&MH& 8.30&$23.4$&2.12&12.89\tabularnewline
+LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+
 
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
@@ -494,9 +519,6 @@ A daily time series for the entire period of record was simulated using the abov
 \end{table}
 
 
-
-% performance summary of flow-normalized predictions WRTDS/GAMs LE12, TF16 - RMSE values for each, percent differences between the two, average differences as in eqn. 10 for Moyer  
-
 % performance summary of flow-normalized predictions WRTDS/GAMS simulated data - compare between the two mods as in previous fig, but also compare with 'known' flow-independet ts
 
 % qualitative comparison of each mod, pros/cons of each, etc. to accompany discussion
@@ -511,7 +533,7 @@ A daily time series for the entire period of record was simulated using the abov
 
 }
 
-\caption[Patuxent River estuary with Chesapeake Bay inset]{Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km).  Study sites are in bold. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline).}\label{fig:map}
+\caption{Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km).  Study sites are in bold. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline). See \cref{tab:statsum} for a numeric summary of station characteristics.}\label{fig:map}
 \end{figure}
 
 
