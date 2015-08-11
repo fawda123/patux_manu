@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Fri Aug 7 18:15:06 2015 -0500
+  \\ Version Date:   Fri Aug 7 19:26:32 2015 -0500
 	}
 \date{}
 \maketitle
@@ -283,6 +283,10 @@ A daily time series for the entire period of record was simulated using the abov
 
 \section{Discussion}
 
+% optimal model parameters - similarities and differences with GAMs/WRTDS - see my email to Rebecca on 8/10/15
+
+% why we used the simulated data w/o a trend in biological chlorophyll - wanted to eval ability of each model to remove flow, but must emphasize that the real value of either model is to look at flow-independent trends - i.e., are there other things besides flow that are causing changes.
+
 \begin{outline}
 \0 \noindent Qualitative comparison
 \1 Computational requirements and potential limitations
@@ -330,8 +334,6 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \end{table}
 
 
-
-
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
 % performance summary of predictions WRTDS/GAMs, LE12, tab:perfLE12
@@ -346,25 +348,25 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&0.51&0.56&&0.48&0.36\tabularnewline
+~~&0.51&0.55&&0.48&0.39\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993&0.50&0.57&&0.53&0.40\tabularnewline
-~~1994-2000&0.50&0.57&&0.42&0.24\tabularnewline
-~~2001-2007&0.60&0.65&&0.34&0.23\tabularnewline
+~~1986-1993&0.50&0.56&&0.53&0.42\tabularnewline
+~~1994-2000&0.50&0.56&&0.42&0.26\tabularnewline
+~~2001-2007&0.60&0.62&&0.34&0.30\tabularnewline
 ~~2008-2014&0.35&0.38&&0.60&0.55\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&0.58&0.67&&0.33&0.09\tabularnewline
-~~AMJ&0.64&0.71&&0.41&0.28\tabularnewline
-~~JAS&0.35&0.37&&0.31&0.21\tabularnewline
-~~OND&0.38&0.41&&0.44&0.36\tabularnewline
+~~JFM&0.58&0.65&&0.33&0.16\tabularnewline
+~~AMJ&0.64&0.69&&0.41&0.33\tabularnewline
+~~JAS&0.35&0.38&&0.31&0.18\tabularnewline
+~~OND&0.38&0.41&&0.44&0.37\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~1 (Low)&0.36&0.39&&0.33&0.19\tabularnewline
-~~2&0.42&0.46&&0.40&0.27\tabularnewline
-~~3&0.58&0.62&&0.47&0.38\tabularnewline
-~~4 (High)&0.63&0.72&&0.34&0.14\tabularnewline
+~~1 (Low)&0.36&0.40&&0.33&0.16\tabularnewline
+~~2&0.42&0.47&&0.40&0.26\tabularnewline
+~~3&0.58&0.59&&0.47&0.44\tabularnewline
+~~4 (High)&0.63&0.69&&0.34&0.19\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -383,25 +385,25 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&0.52&0.57&&0.71&0.65\tabularnewline
+~~&0.52&0.56&&0.71&0.66\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993&0.49&0.53&&0.71&0.67\tabularnewline
-~~1994-2000&0.58&0.65&&0.67&0.58\tabularnewline
-~~2001-2007&0.53&0.57&&0.65&0.59\tabularnewline
-~~2008-2014&0.44&0.52&&0.77&0.68\tabularnewline
+~~1986-1993&0.49&0.52&&0.71&0.67\tabularnewline
+~~1994-2000&0.58&0.65&&0.67&0.59\tabularnewline
+~~2001-2007&0.53&0.54&&0.65&0.64\tabularnewline
+~~2008-2014&0.44&0.53&&0.77&0.67\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&0.48&0.54&&0.38&0.24\tabularnewline
-~~AMJ&0.58&0.59&&0.48&0.46\tabularnewline
-~~JAS&0.46&0.50&&0.49&0.40\tabularnewline
-~~OND&0.54&0.67&&0.75&0.61\tabularnewline
+~~JFM&0.48&0.54&&0.38&0.22\tabularnewline
+~~AMJ&0.58&0.58&&0.48&0.47\tabularnewline
+~~JAS&0.46&0.49&&0.49&0.42\tabularnewline
+~~OND&0.54&0.64&&0.75&0.64\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~1 (Low)&0.46&0.51&&0.43&0.30\tabularnewline
-~~2&0.54&0.57&&0.67&0.64\tabularnewline
-~~3&0.52&0.58&&0.69&0.62\tabularnewline
-~~4 (High)&0.54&0.63&&0.72&0.62\tabularnewline
+~~1 (Low)&0.46&0.48&&0.43&0.38\tabularnewline
+~~2&0.54&0.56&&0.67&0.65\tabularnewline
+~~3&0.52&0.56&&0.69&0.64\tabularnewline
+~~4 (High)&0.54&0.64&&0.72&0.60\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -420,25 +422,25 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{Pred}&\multicolumn{1}{c}{Norm}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Pred}&\multicolumn{1}{c}{Norm}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&-0.17&-0.03&& 0.23& 0.18\tabularnewline
+~~&-0.12&-0.05&& 0.03& 0.16\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993& 0.71&-1.04&& 1.09&-0.53\tabularnewline
-~~1994-2000&-0.44&-1.37&&-0.44&-2.51\tabularnewline
-~~2001-2007&-1.47& 1.86&&-0.11& 3.08\tabularnewline
-~~2008-2014& 0.81& 1.87&& 0.31& 2.43\tabularnewline
+~~1986-1993& 0.59&-1.07&& 0.45&-0.45\tabularnewline
+~~1994-2000& 0.36&-1.43&&-0.14&-2.39\tabularnewline
+~~2001-2007&-0.61& 2.37&& 0.50& 3.61\tabularnewline
+~~2008-2014&-1.13& 1.18&&-1.05& 1.19\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM& 0.21&-2.11&&-0.80&-1.54\tabularnewline
-~~AMJ&-0.37&-0.68&& 0.40&-1.37\tabularnewline
-~~JAS& 0.50& 0.55&& 1.36& 0.64\tabularnewline
-~~OND&-1.35& 1.31&&-0.42& 3.23\tabularnewline
+~~JFM&-0.15&-1.94&&-1.56&-2.08\tabularnewline
+~~AMJ&-0.11&-0.82&& 0.39&-1.67\tabularnewline
+~~JAS&-0.20& 0.79&& 0.43& 0.84\tabularnewline
+~~OND& 0.01& 0.87&& 0.97& 3.66\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~Flow 1 (Low)&-1.13& 0.58&& 1.72& 1.80\tabularnewline
-~~Flow 2& 0.06& 2.01&& 0.09&-0.66\tabularnewline
-~~Flow 3& 1.52&-0.09&&-0.21&-0.18\tabularnewline
-~~Flow 4 (High)&-1.23&-3.27&&-0.42&-0.64\tabularnewline
+~~Flow 1 (Low)&-0.20&-0.85&& 0.86& 2.20\tabularnewline
+~~Flow 2&-0.60& 2.58&&-0.69&-0.81\tabularnewline
+~~Flow 3& 1.35& 0.81&&-0.14&-0.30\tabularnewline
+~~Flow 4 (High)&-1.03&-2.92&& 0.20&-0.93\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -457,25 +459,25 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}\tabularnewline
 \hline
 {\bfseries All}&&&&&&&&\tabularnewline
-~~&-0.04&{\bf \textit{0.09}}&&1.02&{\bf \textit{0.96}}&&1.00&0.99\tabularnewline
+~~&{\bf \textit{0.08}}&{\bf \textit{0.15}}&&{\bf \textit{0.96}}&{\bf \textit{0.93}}&&1.00&{\bf \textit{0.99}}\tabularnewline
 \hline
 {\bfseries Annual}&&&&&&&&\tabularnewline
-~~1986-1993&{\bf \textit{-0.36}}&{\bf \textit{-0.38}}&&{\bf \textit{1.19}}&{\bf \textit{1.13}}&&1.01&1.00\tabularnewline
-~~1994-2000&{\bf \textit{0.31}}&-0.01&&{\bf \textit{0.85}}&0.98&&0.99&{\bf \textit{0.98}}\tabularnewline
-~~2001-2007&0.05&{\bf \textit{0.37}}&&0.96&{\bf \textit{0.84}}&&{\bf \textit{0.98}}&1.00\tabularnewline
-~~2008-2014&{\bf \textit{-0.22}}&0.16&&{\bf \textit{1.10}}&0.94&&{\bf \textit{1.01}}&1.01\tabularnewline
+~~1986-1993&{\bf \textit{-0.24}}&{\bf \textit{-0.29}}&&{\bf \textit{1.13}}&{\bf \textit{1.10}}&&1.01&1.00\tabularnewline
+~~1994-2000&{\bf \textit{0.42}}&0.03&&{\bf \textit{0.81}}&0.97&&1.00&{\bf \textit{0.98}}\tabularnewline
+~~2001-2007&0.17&{\bf \textit{0.44}}&&{\bf \textit{0.92}}&{\bf \textit{0.81}}&&0.99&1.00\tabularnewline
+~~2008-2014&0.03&{\bf \textit{0.25}}&&0.97&{\bf \textit{0.90}}&&{\bf \textit{0.99}}&1.00\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&&&&\tabularnewline
-~~JFM&0.09&{\bf \textit{0.43}}&&0.97&{\bf \textit{0.69}}&&1.00&{\bf \textit{0.96}}\tabularnewline
-~~AMJ&-0.03&{\bf \textit{0.28}}&&1.01&{\bf \textit{0.89}}&&1.00&0.99\tabularnewline
-~~JAS&0.10&{\bf \textit{0.44}}&&0.96&{\bf \textit{0.85}}&&1.00&1.00\tabularnewline
-~~OND&{\bf \textit{-0.26}}&0.01&&{\bf \textit{1.13}}&1.01&&0.99&1.01\tabularnewline
+~~JFM&0.06&{\bf \textit{0.50}}&&0.98&{\bf \textit{0.65}}&&1.00&{\bf \textit{0.96}}\tabularnewline
+~~AMJ&0.13&{\bf \textit{0.47}}&&0.94&{\bf \textit{0.82}}&&1.00&{\bf \textit{0.99}}\tabularnewline
+~~JAS&{\bf \textit{0.40}}&{\bf \textit{0.57}}&&{\bf \textit{0.79}}&{\bf \textit{0.81}}&&1.00&1.00\tabularnewline
+~~OND&0.04&0.14&&0.98&0.94&&1.00&1.00\tabularnewline
 \hline
 {\bfseries Flow}&&&&&&&&\tabularnewline
-~~Flow 1 (Low)&{\bf \textit{-0.16}}&{\bf \textit{0.55}}&&1.08&{\bf \textit{0.82}}&&0.99&1.00\tabularnewline
-~~Flow 2&{\bf \textit{-0.26}}&0.14&&{\bf \textit{1.12}}&0.96&&1.00&1.02\tabularnewline
-~~Flow 3&-0.05&0.07&&1.04&0.96&&{\bf \textit{1.02}}&0.98\tabularnewline
-~~Flow 4 (High)&0.20&0.11&&0.91&{\bf \textit{0.91}}&&0.99&{\bf \textit{0.96}}\tabularnewline
+~~Flow 1 (Low)&{\bf \textit{0.20}}&{\bf \textit{0.40}}&&{\bf \textit{0.88}}&{\bf \textit{0.86}}&&1.00&{\bf \textit{0.99}}\tabularnewline
+~~Flow 2&-0.01&{\bf \textit{0.21}}&&1.00&{\bf \textit{0.94}}&&0.99&{\bf \textit{1.02}}\tabularnewline
+~~Flow 3&0.09&0.10&&0.98&0.95&&1.01&0.99\tabularnewline
+~~Flow 4 (High)&{\bf \textit{0.25}}&{\bf \textit{0.21}}&&{\bf \textit{0.89}}&{\bf \textit{0.87}}&&0.99&{\bf \textit{0.96}}\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -494,25 +496,25 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}\tabularnewline
 \hline
 {\bfseries All}&&&&&&&&\tabularnewline
-~~&{\bf \textit{0.13}}&{\bf \textit{0.15}}&&{\bf \textit{0.94}}&{\bf \textit{0.94}}&&1.00&0.99\tabularnewline
+~~&{\bf \textit{0.28}}&{\bf \textit{0.21}}&&{\bf \textit{0.87}}&{\bf \textit{0.91}}&&1.00&0.99\tabularnewline
 \hline
 {\bfseries Annual}&&&&&&&&\tabularnewline
-~~1986-1993&{\bf \textit{0.26}}&{\bf \textit{-0.32}}&&{\bf \textit{0.88}}&{\bf \textit{1.12}}&&1.01&1.00\tabularnewline
-~~1994-2000&{\bf \textit{0.20}}&{\bf \textit{-0.17}}&&{\bf \textit{0.90}}&1.03&&{\bf \textit{0.99}}&{\bf \textit{0.97}}\tabularnewline
-~~2001-2007&0.05&{\bf \textit{0.56}}&&0.98&{\bf \textit{0.77}}&&1.00&1.00\tabularnewline
-~~2008-2014&{\bf \textit{-0.15}}&{\bf \textit{0.18}}&&{\bf \textit{1.07}}&{\bf \textit{0.94}}&&1.00&1.02\tabularnewline
+~~1986-1993&{\bf \textit{0.29}}&{\bf \textit{-0.28}}&&{\bf \textit{0.86}}&{\bf \textit{1.10}}&&1.00&1.00\tabularnewline
+~~1994-2000&{\bf \textit{0.35}}&-0.10&&{\bf \textit{0.83}}&1.00&&0.99&{\bf \textit{0.97}}\tabularnewline
+~~2001-2007&{\bf \textit{0.43}}&{\bf \textit{0.66}}&&{\bf \textit{0.81}}&{\bf \textit{0.73}}&&1.00&1.00\tabularnewline
+~~2008-2014&0.00&{\bf \textit{0.20}}&&0.99&{\bf \textit{0.92}}&&{\bf \textit{0.99}}&1.00\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&&&&\tabularnewline
-~~JFM&{\bf \textit{-0.61}}&{\bf \textit{0.71}}&&{\bf \textit{1.23}}&{\bf \textit{0.51}}&&0.99&{\bf \textit{0.96}}\tabularnewline
-~~AMJ&{\bf \textit{0.14}}&{\bf \textit{0.55}}&&{\bf \textit{0.94}}&{\bf \textit{0.78}}&&1.00&{\bf \textit{0.98}}\tabularnewline
-~~JAS&{\bf \textit{0.51}}&{\bf \textit{0.62}}&&{\bf \textit{0.75}}&{\bf \textit{0.80}}&&{\bf \textit{1.01}}&1.00\tabularnewline
-~~OND&{\bf \textit{0.55}}&0.08&&{\bf \textit{0.70}}&1.00&&0.99&{\bf \textit{1.03}}\tabularnewline
+~~JFM&0.02&{\bf \textit{0.76}}&&0.98&{\bf \textit{0.47}}&&{\bf \textit{0.98}}&{\bf \textit{0.95}}\tabularnewline
+~~AMJ&{\bf \textit{0.36}}&{\bf \textit{0.79}}&&{\bf \textit{0.85}}&{\bf \textit{0.69}}&&1.00&{\bf \textit{0.98}}\tabularnewline
+~~JAS&{\bf \textit{0.81}}&{\bf \textit{0.68}}&&{\bf \textit{0.60}}&{\bf \textit{0.78}}&&1.00&1.00\tabularnewline
+~~OND&{\bf \textit{0.72}}&{\bf \textit{0.21}}&&{\bf \textit{0.61}}&0.94&&1.00&{\bf \textit{1.03}}\tabularnewline
 \hline
 {\bfseries Flow}&&&&&&&&\tabularnewline
-~~Flow 1 (Low)&{\bf \textit{0.53}}&{\bf \textit{0.24}}&&{\bf \textit{0.74}}&0.94&&{\bf \textit{1.01}}&{\bf \textit{1.02}}\tabularnewline
-~~Flow 2&0.05&{\bf \textit{0.20}}&&0.98&{\bf \textit{0.91}}&&1.00&0.99\tabularnewline
-~~Flow 3&0.02&{\bf \textit{0.14}}&&0.99&{\bf \textit{0.93}}&&1.00&{\bf \textit{0.98}}\tabularnewline
-~~Flow 4 (High)&0.08&{\bf \textit{0.23}}&&0.96&{\bf \textit{0.89}}&&1.00&{\bf \textit{0.98}}\tabularnewline
+~~Flow 1 (Low)&{\bf \textit{0.73}}&{\bf \textit{0.31}}&&{\bf \textit{0.62}}&{\bf \textit{0.91}}&&1.00&{\bf \textit{1.02}}\tabularnewline
+~~Flow 2&{\bf \textit{0.35}}&{\bf \textit{0.28}}&&{\bf \textit{0.83}}&{\bf \textit{0.88}}&&{\bf \textit{0.99}}&{\bf \textit{0.98}}\tabularnewline
+~~Flow 3&{\bf \textit{0.25}}&{\bf \textit{0.19}}&&{\bf \textit{0.89}}&{\bf \textit{0.90}}&&1.00&{\bf \textit{0.98}}\tabularnewline
+~~Flow 4 (High)&{\bf \textit{0.30}}&{\bf \textit{0.29}}&&{\bf \textit{0.88}}&{\bf \textit{0.86}}&&1.00&{\bf \textit{0.98}}\tabularnewline
 \hline
 \end{tabular}\end{center}
 

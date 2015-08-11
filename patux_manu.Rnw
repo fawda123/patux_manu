@@ -262,6 +262,10 @@ A daily time series for the entire period of record was simulated using the abov
 
 \section{Discussion}
 
+% optimal model parameters - similarities and differences with GAMs/WRTDS - see my email to Rebecca on 8/10/15
+
+% why we used the simulated data w/o a trend in biological chlorophyll - wanted to eval ability of each model to remove flow, but must emphasize that the real value of either model is to look at flow-independent trends - i.e., are there other things besides flow that are causing changes.
+
 \begin{outline}
 \0 \noindent Qualitative comparison
 \1 Computational requirements and potential limitations
@@ -334,8 +338,6 @@ latex(
   )
   
 @
-
-
 
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
@@ -703,7 +705,7 @@ latex(
 % figures
 
 % study site map
-<<map, fig.height = 7, fig.width = 5, out.width = '0.7\\textwidth', fig.cap = 'Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km).  Study sites are in bold. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline). See \\cref{tab:statsum} for a numeric summary of station characteristics.', echo = FALSE>>=
+<<map, fig.height = 7, fig.width = 5, cache = T, out.width = '0.7\\textwidth', fig.cap = 'Patuxent River estuary with Chesapeake Bay inset. Fixed locations monitored by the Chesapeake Bay Program at monthly frequencies are shown along the longitudinal axis with distance from the mouth (km).  Study sites are in bold. Salinity regions in the Patuxent for the larger Chesapeake Bay area are also shown (TF = tidal fresh, OH = oligohaline, MH = mesohaline). See \\cref{tab:statsum} for a numeric summary of station characteristics.', echo = FALSE>>=
 
 # load data
 data(cb_poly)
@@ -876,7 +878,7 @@ p1
 @
 
 % predicted trends for each mod - monthly time series of observed with predictions, RMSE in fig
-<<eval = T, echo = F, message = F, results = 'hide'>>=
+<<eval = T, echo = F, cache = T, message = F, results = 'hide'>>=
 library(dplyr)
 library(ggplot2)
 library(tidyr)
