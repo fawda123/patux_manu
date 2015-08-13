@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Wed Aug 12 07:53:21 2015 -0500
+  \\ Version Date:   Thu Aug 13 14:21:17 2015 -0500
 	}
 \date{}
 \maketitle
@@ -312,7 +312,7 @@ A daily time series for the entire period of record was simulated using the abov
 % site characteristics of TF16, LE12
 %latex.default(totab[, -1], file = "", caption.loc = "top", caption = cap.val,     rowname = totab[, 1], rowlabel = "Station", label = "tab:statsum",     col.just = rep("l", ncol(totab[, -1])))%
 \begin{table}[!tbp]
-\caption{Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).  See \cref{fig:map} for a map.\label{tab:statsum}} 
+\caption{Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).  See \cref{fig:map} for site locations.\label{tab:statsum}} 
 \begin{center}
 \begin{tabular}{llllllll}
 \hline\hline
@@ -448,9 +448,9 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 
 
 % regression fit between WRTDS, GAMs, predictions and norms
-%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("$\\beta_{0,\\,pred}$",         "$\\beta_{1,\\,pred}$", "$\\beta_{0,\\,norm}$", "$\\beta_{1,\\,norm}$"),     n.cgroup = rep(2, 3, 4), rowname = rows, colheads = rep(c("LE1.2",         "TF1.6"), 4), label = "tab:regprednorm")%
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("$\\beta_{0,\\,pred}$",         "$\\beta_{1,\\,pred}$", "$\\beta_{0,\\,norm}$", "$\\beta_{1,\\,norm}$"),     n.cgroup = rep(2, 3, 4), rowname = rows, colheads = rep(c("LE1.2",         "TF1.6"), 4), label = "tab:redprdnrm")%
 \begin{table}[!tbp]
-\caption{Regression fits comparing predicted and flow-normalized results for \ac{WRTDS} and \acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\beta_0$) estimate was significantly different from zero or the slope ($\beta_{1}$ estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:regprednorm}} 
+\caption{Regression fits comparing predicted and flow-normalized results for \ac{WRTDS} and \acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\beta_0$) estimate was significantly different from zero or the slope ($\beta_{1}$ estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.  See \cref{fig:regprdnrm} for a graphical summary.\label{tab:redprdnrm}} 
 \begin{center}
 \begin{tabular}{lllcllcllcll}
 \hline\hline
@@ -537,11 +537,11 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 % wrtds v gam predicions by periods
 \begin{figure}[!ht]
 
-{\centering \includegraphics[width=\maxwidth]{figs/wrtdsvgam-1} 
+{\centering \includegraphics[width=\maxwidth]{figs/regprdnrm-1} 
 
 }
 
-\caption[Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} at each station (LE1]{Comparison of \ac{WRTDS} and \acp{GAM} predictions of \ac{chla} at each station (LE1.2, TF1.6) and different time periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.}\label{fig:wrtdsvgam}
+\caption{Comparison of \ac{WRTDS} and \acp{GAM} results at each station (LE1.2, TF1.6) and different time periods.  Predicted and flow-normalized results are shown.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines for each model result and 1:1 replacement lines (thin grey) are also shown.  See \cref{tab:redprdnrm} for parameter estimates of regression comparisons.}\label{fig:regprdnrm}
 \end{figure}
 
 

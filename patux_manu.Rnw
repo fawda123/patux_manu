@@ -323,7 +323,7 @@ totab <- group_by(pax_data, STATION) %>%
     Station = gsub('TF1.6', '{\\\\bf TF1.6}', Station)
   )
     
-cap.val <- 'Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).  See \\cref{fig:map} for a map.'
+cap.val <- 'Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).  See \\cref{fig:map} for site locations.'
 
 # table
 latex(
@@ -606,7 +606,7 @@ totab <- rbind(
 # latex table
 tab <- totab[, -1]
 rows <- totab[, 1]
-cap.val <- "Regression fits comparing predicted and flow-normalized results for \\ac{WRTDS} and \\acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\\beta_0$) estimate was significantly different from zero or the slope ($\\beta_{1}$ estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge."
+cap.val <- "Regression fits comparing predicted and flow-normalized results for \\ac{WRTDS} and \\acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\\beta_0$) estimate was significantly different from zero or the slope ($\\beta_{1}$ estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.  See \\cref{fig:regprdnrm} for a graphical summary."
 
 latex( 
   tab,
@@ -620,7 +620,7 @@ latex(
   n.cgroup = rep(2, 3, 4),
   rowname = rows,
   colheads = rep(c('LE1.2', 'TF1.6'), 4),
-  label = 'tab:regprednorm'
+  label = 'tab:redprdnrm'
   )
 
 @
@@ -914,7 +914,7 @@ dev.off()
 \end{figure}
 
 % wrtds v gam predicions by periods
-<<wrtdsvgam, fig.width = 6, fig.height = 6.5, eval = T, echo = F, cache = T, fig.cap = 'Comparison of \\ac{WRTDS} and \\acp{GAM} predictions of \\ac{chla} at each station (LE1.2, TF1.6) and different time periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines (thick black) and 1:1 replacement lines (thin grey) are also shown.'>>=
+<<regprdnrm, fig.width = 6, fig.height = 6.5, eval = T, echo = F, cache = T, fig.cap = 'Comparison of \\ac{WRTDS} and \\acp{GAM} results at each station (LE1.2, TF1.6) and different time periods.  Predicted and flow-normalized results are shown.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines for each model result and 1:1 replacement lines (thin grey) are also shown.  See \\cref{tab:redprdnrm} for parameter estimates of regression comparisons.'>>=
 
 data(bestLE12)
 data(bestTF16)
@@ -946,54 +946,48 @@ theme_mine <- function (base_size = 12, base_family = "") {
 theme_set(theme_mine())
 
 bestLE12 <- select(bestLE12, 
-    fits_wrtds, fits_gams, flcat, mocat, yrcat
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat, dec_time
   ) %>% 
-  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'LE1.2'
-  )
+  gather(., 'var', 'val', fits_wrtds:norm_gams) %>% 
+  separate(., var, c('res', 'mod'), by = '_') %>% 
+  spread(mod, val) %>% 
+  mutate(stat = 'LE1.2')
 
 bestTF16 <- select(bestTF16, 
-    fits_wrtds, fits_gams, flcat, mocat, yrcat
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat, dec_time
   ) %>% 
-  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'TF1.6'
-  )
+  gather(., 'var', 'val', fits_wrtds:norm_gams) %>% 
+  separate(., var, c('res', 'mod'), by = '_') %>% 
+  spread(mod, val) %>% 
+  mutate(stat = 'TF1.6')
 
 toplo <- rbind(bestTF16, bestLE12)
+toplo$res <- factor(toplo$res, levels = c('fits', 'norm'), labels = c('Pred', 'Norm'))
 
-p1 <- ggplot(toplo[toplo$cats %in% 'yrcat', ], aes(x = fits_wrtds, y = fits_gams)) + 
+p <- ggplot(toplo, aes(x = gams, y = wrtds, colour = res, group = res)) + 
   geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
-  geom_point(alpha = 0.7, colour = cols[1]) + 
-  facet_grid(stat ~ cat) +
+  geom_point(aes(shape = res), alpha = 0.6, size = 1) + 
+  scale_colour_manual(values = cols[c(1, 50)]) +
+  scale_shape_manual(values = c(1, 1)) + 
   scale_x_continuous(limits = c(0, 4)) + 
   scale_y_continuous(limits = c(0, 4)) + 
-  stat_smooth(method = 'lm', se = F, colour = 'black', size = 1) + 
-  theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+  geom_smooth(method = 'lm', se = F, size = 0.7, fullrange = TRUE, alpha = 0.7)  + 
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = 'top', 
+    legend.title = element_blank()) 
 
-p2 <- ggplot(toplo[toplo$cats %in% 'mocat', ], aes(x = fits_wrtds, y = fits_gams)) + 
-  geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
-  geom_point(alpha = 0.7, colour = cols[1]) + 
-  scale_x_continuous(limits = c(0, 4)) + 
-  scale_y_continuous(limits = c(0, 4)) + 
-  facet_grid(stat ~ cat) +
-  stat_smooth(method = 'lm', se = F, colour = 'black', size = 1) + 
-  theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+pleg <- g_legend(p)
+p <- p + 
+  theme(legend.position = 'none')
 
-p3 <- ggplot(toplo[toplo$cats %in% 'flcat', ], aes(x = fits_wrtds, y = fits_gams)) + 
-  geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
-  geom_point(alpha = 0.7, colour = cols[1]) + 
-  scale_x_continuous(limits = c(0, 4)) + 
-  scale_y_continuous(limits = c(0, 4)) + 
-  facet_grid(stat ~ cat) +
-  stat_smooth(method = 'lm', se = F, colour = 'black', size = 1) + 
-  theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+p1 <- p + facet_grid(stat ~ yrcat)
+p2 <- p + facet_grid(stat ~ mocat)
+p3 <- p + facet_grid(stat ~ flcat)
 
 ylab <- expression(paste('WRTDS, ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
 xlab <- expression(paste('GAM, ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
 
-grid.arrange(p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGrob(xlab))
+grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGrob(xlab),
+  heights = c(0.12, 1, 1, 1))
 
 @
 
