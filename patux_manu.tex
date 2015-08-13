@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Thu Aug 13 14:21:17 2015 -0500
+  \\ Version Date:   Thu Aug 13 16:09:29 2015 -0500
 	}
 \date{}
 \maketitle
@@ -336,81 +336,44 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
-% performance summary of predictions WRTDS/GAMs, LE12, tab:perfLE12
-%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("RMSE",         "{\\bf \\textit{R}\\textsuperscript{2}}"), n.cgroup = c(2,         2), rowname = rows, colheads = rep(c("WRTDS", "GAM"),         2), label = "tab:perfLE12")%
+% performance summary of predictions to observed, tab:perftoobs
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("GAM",         "WRTDS"), 2), label = "tab:perftoobs")%
 \begin{table}[!tbp]
-\caption{Summary of model performances at LE1.2 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfLE12}} 
+\caption{Summary of model performances using \ac{RMSE} of observed to predicted ln-chlorophyll.  Overall performance for the entire time series is shown at the top with different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
-\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries RMSE}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries {\bf \textit{R}\textsuperscript{2}}}\tabularnewline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries LE1.2}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries TF1.6}\tabularnewline
 \cline{2-3} \cline{5-6}
-\multicolumn{1}{l}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}\tabularnewline
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{WRTDS}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&0.51&0.55&&0.48&0.39\tabularnewline
+~~&0.55&0.51&&0.56&0.52\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993&0.50&0.56&&0.53&0.42\tabularnewline
-~~1994-2000&0.50&0.56&&0.42&0.26\tabularnewline
-~~2001-2007&0.60&0.62&&0.34&0.30\tabularnewline
-~~2008-2014&0.35&0.38&&0.60&0.55\tabularnewline
+~~1986-1993&0.56&0.50&&0.52&0.49\tabularnewline
+~~1994-2000&0.56&0.50&&0.65&0.58\tabularnewline
+~~2001-2007&0.62&0.60&&0.54&0.53\tabularnewline
+~~2008-2014&0.38&0.35&&0.53&0.44\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&0.58&0.65&&0.33&0.16\tabularnewline
-~~AMJ&0.64&0.69&&0.41&0.33\tabularnewline
-~~JAS&0.35&0.38&&0.31&0.18\tabularnewline
-~~OND&0.38&0.41&&0.44&0.37\tabularnewline
+~~JFM&0.65&0.58&&0.54&0.48\tabularnewline
+~~AMJ&0.69&0.64&&0.58&0.58\tabularnewline
+~~JAS&0.38&0.35&&0.49&0.46\tabularnewline
+~~OND&0.41&0.38&&0.64&0.54\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~1 (Low)&0.36&0.40&&0.33&0.16\tabularnewline
-~~2&0.42&0.47&&0.40&0.26\tabularnewline
-~~3&0.58&0.59&&0.47&0.44\tabularnewline
-~~4 (High)&0.63&0.69&&0.34&0.19\tabularnewline
+~~1 (Low)&0.40&0.36&&0.48&0.46\tabularnewline
+~~2&0.47&0.42&&0.56&0.54\tabularnewline
+~~3&0.59&0.58&&0.56&0.52\tabularnewline
+~~4 (High)&0.69&0.63&&0.64&0.54\tabularnewline
 \hline
 \end{tabular}\end{center}
 
 \end{table}
 
 
-% performance summary of predictions WRTDS/GAMs, TF16, tab:perfTF16
-%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("RMSE",         "{\\bf \\textit{R}\\textsuperscript{2}}"), n.cgroup = c(2,         2), rowname = rows, colheads = rep(c("WRTDS", "GAM"),         2), label = "tab:perfTF16")%
-\begin{table}[!tbp]
-\caption{Summary of model performances at TF1.6 for \ac{WRTDS} and \acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfTF16}} 
-\begin{center}
-\begin{tabular}{lllcll}
-\hline\hline
-\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries RMSE}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries {\bf \textit{R}\textsuperscript{2}}}\tabularnewline
-\cline{2-3} \cline{5-6}
-\multicolumn{1}{l}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{GAM}\tabularnewline
-\hline
-{\bfseries All}&&&&&\tabularnewline
-~~&0.52&0.56&&0.71&0.66\tabularnewline
-\hline
-{\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993&0.49&0.52&&0.71&0.67\tabularnewline
-~~1994-2000&0.58&0.65&&0.67&0.59\tabularnewline
-~~2001-2007&0.53&0.54&&0.65&0.64\tabularnewline
-~~2008-2014&0.44&0.53&&0.77&0.67\tabularnewline
-\hline
-{\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&0.48&0.54&&0.38&0.22\tabularnewline
-~~AMJ&0.58&0.58&&0.48&0.47\tabularnewline
-~~JAS&0.46&0.49&&0.49&0.42\tabularnewline
-~~OND&0.54&0.64&&0.75&0.64\tabularnewline
-\hline
-{\bfseries Flow}&&&&&\tabularnewline
-~~1 (Low)&0.46&0.48&&0.43&0.38\tabularnewline
-~~2&0.54&0.56&&0.67&0.65\tabularnewline
-~~3&0.52&0.56&&0.69&0.64\tabularnewline
-~~4 (High)&0.54&0.64&&0.72&0.60\tabularnewline
-\hline
-\end{tabular}\end{center}
-
-\end{table}
-
-
-% average differences between WRTDS, GAMs
+% performance summary of models to each other, tab:perfbtw
 %latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Pred",         "Norm"), 2), label = "tab:avediff")%
 \begin{table}[!tbp]
 \caption{Average differences (\%) between \ac{WRTDS} and \acp{GAM} at each station during different time periods.  Differences for predicted and flow-normalized results from each model are provided.  Overall differences for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:avediff}} 

@@ -341,68 +341,24 @@ latex(
 
 % trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
 
-% performance summary of predictions WRTDS/GAMs, LE12, tab:perfLE12
+% performance summary of predictions to observed, tab:perftoobs
 <<eval = T, echo = F, cache = T>>=
 data(bestLE12)
-
-# summarize by categories, then combine with overall summary
-perfLE12 <- select(bestLE12, 
-    chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
-  ) %>% 
-  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, 
-    levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
-    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
-    )
-  ) %>% 
-  group_by(cat) %>% 
-  summarise(
-    wrtds_rmse = rmse.fun(res_wrtds),
-    gam_rmse = rmse.fun(res_gams),
-    wrtds_rsq = rsq.fun(res_wrtds, chla),
-    gam_rsq = rsq.fun(res_gams, chla)
-  )
-perfLE12 <- rbind(
-  with(bestLE12, data.frame(
-    cat = '', 
-    wrtds_rmse = rmse.fun(res_wrtds),
-    gam_rmse = rmse.fun(res_gams),
-    wrtds_rsq = rsq.fun(res_wrtds, chla),
-    gam_rsq = rsq.fun(res_gams, chla)
-  )), 
-  perfLE12
-)
-
-# latex table
-tab <- form_fun(perfLE12[, -1])
-rows <- perfLE12[, 1]
-cap.val<-'Summary of model performances at LE1.2 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
-
-latex( 
-  tab,
-  file = '',
-  rowlabel = 'Period',
-  caption = cap.val,
-  caption.loc = 'top',
-  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
-  n.rgroup = c(1, rep(4, 3)),
-  cgroup = c('RMSE', '{\\bf \\textit{R}\\textsuperscript{2}}'),
-  n.cgroup = c(2, 2),
-  rowname = rows,
-  colheads = rep(c('WRTDS', 'GAM'), 2),
-  label = 'tab:perfLE12'
-  )
-
-
-@
-
-% performance summary of predictions WRTDS/GAMs, TF16, tab:perfTF16
-<<eval = T, echo = F, cache = T>>=
 data(bestTF16)
 
+alldat <- rbind(
+  data.frame(bestLE12, stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16, stat = 'TF16', stringsAsFactors = F)
+  ) 
+
 # summarize by categories, then combine with overall summary
-perfTF16 <- select(bestTF16, 
-    chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
+totab <- select(alldat, 
+    stat, chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
+  ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, 
@@ -410,28 +366,32 @@ perfTF16 <- select(bestTF16,
     labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
     )
   ) %>% 
-  group_by(cat) %>% 
+  group_by(cat, stat) %>% 
   summarise(
-    wrtds_rmse = rmse.fun(res_wrtds),
-    gam_rmse = rmse.fun(res_gams),
-    wrtds_rsq = rsq.fun(res_wrtds, chla),
-    gam_rsq = rsq.fun(res_gams, chla)
+    wrtds = rmse.fun(res_wrtds),
+    gam = rmse.fun(res_gams)
   )
-perfTF16 <- rbind(
-  with(bestTF16, data.frame(
-    cat = '', 
-    wrtds_rmse = rmse.fun(res_wrtds),
-    gam_rmse = rmse.fun(res_gams),
-    wrtds_rsq = rsq.fun(res_wrtds, chla),
-    gam_rsq = rsq.fun(res_gams, chla)
-  )), 
-  perfTF16
-)
+
+# get comparisons for all obs
+totaball <- group_by(alldat, stat) %>% 
+  summarise(
+    wrtds = rmse.fun(res_wrtds), 
+    gam = rmse.fun(res_gams)
+  )
+
+# add all obs to period comparisons, make long format
+totab <- rbind(
+  data.frame(cat = '', totaball), 
+  totab
+  ) %>% 
+  gather('mod', 'rmse', wrtds:gam) %>% 
+  unite('res', stat, mod) %>% 
+  spread(res, rmse)
 
 # latex table
-tab <- form_fun(perfTF16[, -1])
-rows <- perfTF16[, 1]
-cap.val<-'Summary of model performances at TF1.6 for \\ac{WRTDS} and \\acp{GAM} during different time periods.  Overall performance for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+tab <- form_fun(totab[, -1])
+rows <- totab[, 1]
+cap.val<-'Summary of model performances using \\ac{RMSE} of observed to predicted ln-chlorophyll.  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
 
 latex( 
   tab,
@@ -441,16 +401,16 @@ latex(
   caption.loc = 'top',
   rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
   n.rgroup = c(1, rep(4, 3)),
-  cgroup = c('RMSE', '{\\bf \\textit{R}\\textsuperscript{2}}'),
+  cgroup = c('LE1.2', 'TF1.6'),
   n.cgroup = c(2, 2),
   rowname = rows,
-  colheads = rep(c('WRTDS', 'GAM'), 2),
-  label = 'tab:perfTF16'
+  colheads = rep(c('GAM', 'WRTDS'), 2),
+  label = 'tab:perftoobs'
   )
 
 @
 
-% average differences between WRTDS, GAMs
+% performance summary of models to each other, tab:perfbtw
 <<eval = T, echo = F, cache = T>>=
 data(bestLE12)
 data(bestTF16)
@@ -846,8 +806,8 @@ names(bestLE12) <- gsub('wrtds$', 'WRTDS', names(bestLE12))
 names(bestTF16) <- gsub('gams$', 'GAM', names(bestTF16))
 names(bestTF16) <- gsub('wrtds$', 'WRTDS', names(bestTF16))
 
-bestLE12 <- select(bestLE12, -sal, -lnQ, -dec_time)
-bestTF16 <- select(bestTF16, -lnQ, -sal, -dec_time)
+bestLE12 <- select(bestLE12, -sal, -lnQ, -dec_time, -se_GAM)
+bestTF16 <- select(bestTF16, -lnQ, -sal, -dec_time, -se_GAM)
 toplo <- rbind(bestTF16, bestLE12) %>% 
   gather(variable, value, fits_WRTDS:res_GAM) %>% 
   separate(variable, c('output', 'model'), sep = '_') %>% 
