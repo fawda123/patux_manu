@@ -23,7 +23,10 @@ rsq.fun<-function(resid,obs){
 ######
 #variant of rmse fun in Metrics package but handles na values
 #resid is obs - predicted
-rmse.fun<-function(resid){
+rmse.fun<-function(val1, val2 = NULL){
+  
+  if(!is.null(val2)) resid <- val1 - val2
+  else resid <- val1
   
   out<-sqrt(mean(resid^2,na.rm=T))
     

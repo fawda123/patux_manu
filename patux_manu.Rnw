@@ -391,7 +391,7 @@ totab <- rbind(
 # latex table
 tab <- form_fun(totab[, -1])
 rows <- totab[, 1]
-cap.val<-'Summary of model performances using \\ac{RMSE} of observed to predicted ln-chlorophyll.  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+cap.val<-'Summary of model performances using \\ac{RMSE} of observed to predicted ln-chlorophyll for each station (LE1.2 and TF1.6).  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
 
 latex( 
   tab,
@@ -415,66 +415,48 @@ latex(
 data(bestLE12)
 data(bestTF16)
 
-diffLE12 <-select(bestLE12, 
-    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
+alldat <- rbind(
+  data.frame(bestLE12, stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16, stat = 'TF16', stringsAsFactors = F)
+  ) 
+
+totab <-select(alldat, 
+    stat, fits_wrtds, fits_gams, flcat, mocat, yrcat
+  ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'LE1.2'
-  )
-
-diffTF16 <- select(bestTF16, 
-    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
+  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'))
   ) %>% 
-  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'TF1.6'
-  )
-
-# summmarize by categories, predictions
-summpred <- rbind(diffTF16, diffLE12) %>% 
   group_by(cat, stat) %>% 
   summarise(
-    aved = ave.fun(fits_wrtds, fits_gams)
-  ) %>%
-  mutate(stat = paste0('pred', stat)) %>% 
-  spread('stat', 'aved')
+    rmse = rmse.fun(fits_wrtds, fits_gams),
+    ave = ave.fun(fits_wrtds, fits_gams)
+  )
 
-# add summary for whole time series, predictions
-summpred <- rbind(
-  data.frame(
-    cat = '', 
-    predLE1.2 = with(bestLE12, ave.fun(fits_wrtds, fits_gams)), 
-    predTF1.6 = with(bestTF16, ave.fun(fits_wrtds, fits_gams))
-    ),
-  summpred
-)
-
-# summmarize by categories, normalized 
-summnorm <- rbind(diffTF16, diffLE12) %>% 
-  group_by(cat, stat) %>% 
+# get comparisons for all obs
+totaball <- group_by(alldat, stat) %>% 
   summarise(
-    aved = ave.fun(norm_wrtds, norm_gams)
+    rmse = rmse.fun(fits_wrtds, fits_gams), 
+    ave = ave.fun(fits_wrtds, fits_gams)
+  )
+
+# add all obs to period comparisons, make long format
+totab <- rbind(
+  data.frame(cat = '', totaball), 
+  totab
   ) %>% 
-  mutate(stat = paste0('norm', stat)) %>% 
-  spread('stat', 'aved') 
-
-# add summary for whole time series, normalized
-summnorm <- rbind(
-  data.frame(
-    cat = '', 
-    normLE1.2 = with(bestLE12, ave.fun(norm_wrtds, norm_gams)), 
-    normTF1.6 = with(bestTF16, ave.fun(norm_wrtds, norm_gams))
-    ),
-  summnorm
-)
-
-totab <- left_join(summpred, summnorm, by = 'cat')
+  gather('met', 'val', rmse:ave) %>% 
+  unite('res', stat, met) %>% 
+  spread(res, val)
 
 # latex table
 tab <- form_fun(totab[, -1])
 rows <- totab[, 1]
-cap.val <- 'Average differences (\\%) between \\ac{WRTDS} and \\acp{GAM} at each station during different time periods.  Differences for predicted and flow-normalized results from each model are provided.  Overall differences for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+cap.val <- 'Comparison of predicted results between \\ac{WRTDS} and \\acp{GAM} using average differences (\\%) and \\ac{RMSE} values at each station.  Overall comparisons for the entire time series are shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
 
 latex( 
   tab,
@@ -487,9 +469,9 @@ latex(
   cgroup = c('LE1.2', 'TF1.6'),
   n.cgroup = c(2, 2),
   rowname = rows,
-  colheads = rep(c('Pred', 'Norm'), 2),
-  label = 'tab:avediff'
-  )
+  colheads = rep(c('Ave. diff.', '\\ac{RMSE}'), 2),
+  label = 'tab:perfbtw'
+)
 
 @
 
@@ -501,6 +483,11 @@ data(bestTF16)
 diffLE12 <- select(bestLE12, 
     fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
   ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
+  ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
     stat = 'LE1.2'
@@ -508,6 +495,11 @@ diffLE12 <- select(bestLE12,
 
 diffTF16 <- select(bestTF16, 
     fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
+  ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),

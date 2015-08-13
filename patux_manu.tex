@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Thu Aug 13 16:09:29 2015 -0500
+  \\ Version Date:   Thu Aug 13 17:06:31 2015 -0500
 	}
 \date{}
 \maketitle
@@ -339,7 +339,7 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 % performance summary of predictions to observed, tab:perftoobs
 %latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("GAM",         "WRTDS"), 2), label = "tab:perftoobs")%
 \begin{table}[!tbp]
-\caption{Summary of model performances using \ac{RMSE} of observed to predicted ln-chlorophyll.  Overall performance for the entire time series is shown at the top with different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
+\caption{Summary of model performances using \ac{RMSE} of observed to predicted ln-chlorophyll for each station (LE1.2 and TF1.6).  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
@@ -374,36 +374,36 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 
 
 % performance summary of models to each other, tab:perfbtw
-%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Pred",         "Norm"), 2), label = "tab:avediff")%
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Ave. diff.",         "\\ac{RMSE}"), 2), label = "tab:perfbtw")%
 \begin{table}[!tbp]
-\caption{Average differences (\%) between \ac{WRTDS} and \acp{GAM} at each station during different time periods.  Differences for predicted and flow-normalized results from each model are provided.  Overall differences for the entire time series is shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:avediff}} 
+\caption{Comparison of predicted results between \ac{WRTDS} and \acp{GAM} using average differences (\%) and \ac{RMSE} values at each station.  Overall comparisons for the entire time series are shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perfbtw}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
 \multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries LE1.2}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries TF1.6}\tabularnewline
 \cline{2-3} \cline{5-6}
-\multicolumn{1}{l}{}&\multicolumn{1}{c}{Pred}&\multicolumn{1}{c}{Norm}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Pred}&\multicolumn{1}{c}{Norm}\tabularnewline
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave. diff.}&\multicolumn{1}{c}{\ac{RMSE}}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave. diff.}&\multicolumn{1}{c}{\ac{RMSE}}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&-0.12&-0.05&& 0.03& 0.16\tabularnewline
+~~&-0.12&0.17&&-0.05&0.27\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993& 0.59&-1.07&& 0.45&-0.45\tabularnewline
-~~1994-2000& 0.36&-1.43&&-0.14&-2.39\tabularnewline
-~~2001-2007&-0.61& 2.37&& 0.50& 3.61\tabularnewline
-~~2008-2014&-1.13& 1.18&&-1.05& 1.19\tabularnewline
+~~1986-1993& 0.59&0.18&&-1.07&0.23\tabularnewline
+~~1994-2000& 0.36&0.19&&-1.43&0.28\tabularnewline
+~~2001-2007&-0.61&0.17&& 2.37&0.26\tabularnewline
+~~2008-2014&-1.13&0.12&& 1.18&0.31\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&-0.15&-1.94&&-1.56&-2.08\tabularnewline
-~~AMJ&-0.11&-0.82&& 0.39&-1.67\tabularnewline
-~~JAS&-0.20& 0.79&& 0.43& 0.84\tabularnewline
-~~OND& 0.01& 0.87&& 0.97& 3.66\tabularnewline
+~~JFM&-0.15&0.22&&-1.94&0.30\tabularnewline
+~~AMJ&-0.11&0.21&&-0.82&0.25\tabularnewline
+~~JAS&-0.20&0.13&& 0.79&0.22\tabularnewline
+~~OND& 0.01&0.11&& 0.87&0.31\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~Flow 1 (Low)&-0.20&-0.85&& 0.86& 2.20\tabularnewline
-~~Flow 2&-0.60& 2.58&&-0.69&-0.81\tabularnewline
-~~Flow 3& 1.35& 0.81&&-0.14&-0.30\tabularnewline
-~~Flow 4 (High)&-1.03&-2.92&& 0.20&-0.93\tabularnewline
+~~Flow 1 (Low)&-0.20&0.13&&-0.85&0.19\tabularnewline
+~~Flow 2&-0.60&0.17&& 2.58&0.26\tabularnewline
+~~Flow 3& 1.35&0.18&& 0.81&0.25\tabularnewline
+~~Flow 4 (High)&-1.03&0.20&&-2.92&0.35\tabularnewline
 \hline
 \end{tabular}\end{center}
 
