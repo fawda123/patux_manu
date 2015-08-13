@@ -142,7 +142,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Tue Aug 11 15:20:55 2015 -0500
+  \\ Version Date:   Wed Aug 12 07:53:21 2015 -0500
 	}
 \date{}
 \maketitle
@@ -316,7 +316,7 @@ A daily time series for the entire period of record was simulated using the abov
 \begin{center}
 \begin{tabular}{llllllll}
 \hline\hline
-\multicolumn{1}{l}{Station}&\multicolumn{1}{c}{Lat}&\multicolumn{1}{c}{Long}&\multicolumn{1}{c}{Segment}&\multicolumn{1}{c}{Distance (km)}&\multicolumn{1}{c}{Depth (m)}&\multicolumn{1}{c}{Chl (\mugl)}&\multicolumn{1}{c}{Sal (ppt)}\tabularnewline
+\multicolumn{1}{l}{Station}&\multicolumn{1}{c}{Lat}&\multicolumn{1}{c}{Long}&\multicolumn{1}{c}{Segment}&\multicolumn{1}{c}{Distance (km)}&\multicolumn{1}{c}{Depth (m)}&\multicolumn{1}{c}{ln-Chl (\mugl)}&\multicolumn{1}{c}{Sal (ppt)}\tabularnewline
 \hline
 TF1.3&38.81&-76.71&TF&74.90&$ 2.9$&1.52& 0.00\tabularnewline
 TF1.4&38.77&-76.71&TF&69.50&$ 2.0$&2.31& 0.02\tabularnewline
@@ -447,74 +447,37 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \end{table}
 
 
-% regression fit between WRTDS, GAMs, predictions
-%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("Intercept",         "Slope", "Slope$'$"), n.cgroup = rep(2, 3), rowname = rows,     colheads = rep(c("LE1.2", "TF1.6"), 3), label = "tab:regpred")%
+% regression fit between WRTDS, GAMs, predictions and norms
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("$\\beta_{0,\\,pred}$",         "$\\beta_{1,\\,pred}$", "$\\beta_{0,\\,norm}$", "$\\beta_{1,\\,norm}$"),     n.cgroup = rep(2, 3, 4), rowname = rows, colheads = rep(c("LE1.2",         "TF1.6"), 4), label = "tab:regprednorm")%
 \begin{table}[!tbp]
-\caption{Regression fits comparing \ac{WRTDS} and \acp{GAM} predictions at each station during different time periods.  Fits for the entire time series are shown at the top.  The second slope column (Slope$'$) describes a regression that was forced through the origin.  Values in bold-italic are those where the intercept estimate was significantly different from zero or the slope estimate was significantly different from one.   Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:regpred}} 
+\caption{Regression fits comparing predicted and flow-normalized results for \ac{WRTDS} and \acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\beta_0$) estimate was significantly different from zero or the slope ($\beta_{1}$ estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:regprednorm}} 
 \begin{center}
-\begin{tabular}{lllcllcll}
+\begin{tabular}{lllcllcllcll}
 \hline\hline
-\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries Intercept}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Slope}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Slope$'$}\tabularnewline
-\cline{2-3} \cline{5-6} \cline{8-9}
-\multicolumn{1}{l}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}\tabularnewline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries $\beta_{0,\,pred}$}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries $\beta_{1,\,pred}$}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries $\beta_{0,\,norm}$}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries $\beta_{1,\,norm}$}\tabularnewline
+\cline{2-3} \cline{5-6} \cline{8-9} \cline{11-12}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}\tabularnewline
 \hline
-{\bfseries All}&&&&&&&&\tabularnewline
-~~&{\bf \textit{0.08}}&{\bf \textit{0.15}}&&{\bf \textit{0.96}}&{\bf \textit{0.93}}&&1.00&{\bf \textit{0.99}}\tabularnewline
+{\bfseries All}&&&&&&&&&&&\tabularnewline
+~~&{\bf \textit{0.08}}&{\bf \textit{0.15}}&&{\bf \textit{0.96}}&{\bf \textit{0.93}}&&{\bf \textit{0.28}}&{\bf \textit{0.21}}&&{\bf \textit{0.87}}&{\bf \textit{0.91}}\tabularnewline
 \hline
-{\bfseries Annual}&&&&&&&&\tabularnewline
-~~1986-1993&{\bf \textit{-0.24}}&{\bf \textit{-0.29}}&&{\bf \textit{1.13}}&{\bf \textit{1.10}}&&1.01&1.00\tabularnewline
-~~1994-2000&{\bf \textit{0.42}}&0.03&&{\bf \textit{0.81}}&0.97&&1.00&{\bf \textit{0.98}}\tabularnewline
-~~2001-2007&0.17&{\bf \textit{0.44}}&&{\bf \textit{0.92}}&{\bf \textit{0.81}}&&0.99&1.00\tabularnewline
-~~2008-2014&0.03&{\bf \textit{0.25}}&&0.97&{\bf \textit{0.90}}&&{\bf \textit{0.99}}&1.00\tabularnewline
+{\bfseries Annual}&&&&&&&&&&&\tabularnewline
+~~1986-1993&{\bf \textit{-0.24}}&{\bf \textit{-0.29}}&&{\bf \textit{1.13}}&{\bf \textit{1.10}}&&{\bf \textit{0.29}}&{\bf \textit{-0.28}}&&{\bf \textit{0.86}}&{\bf \textit{1.10}}\tabularnewline
+~~1994-2000&{\bf \textit{0.42}}&0.03&&{\bf \textit{0.81}}&0.97&&{\bf \textit{0.35}}&-0.10&&{\bf \textit{0.83}}&1.00\tabularnewline
+~~2001-2007&0.17&{\bf \textit{0.44}}&&{\bf \textit{0.92}}&{\bf \textit{0.81}}&&{\bf \textit{0.43}}&{\bf \textit{0.66}}&&{\bf \textit{0.81}}&{\bf \textit{0.73}}\tabularnewline
+~~2008-2014&0.03&{\bf \textit{0.25}}&&0.97&{\bf \textit{0.90}}&&0.00&{\bf \textit{0.20}}&&0.99&{\bf \textit{0.92}}\tabularnewline
 \hline
-{\bfseries Seasonal}&&&&&&&&\tabularnewline
-~~JFM&0.06&{\bf \textit{0.50}}&&0.98&{\bf \textit{0.65}}&&1.00&{\bf \textit{0.96}}\tabularnewline
-~~AMJ&0.13&{\bf \textit{0.47}}&&0.94&{\bf \textit{0.82}}&&1.00&{\bf \textit{0.99}}\tabularnewline
-~~JAS&{\bf \textit{0.40}}&{\bf \textit{0.57}}&&{\bf \textit{0.79}}&{\bf \textit{0.81}}&&1.00&1.00\tabularnewline
-~~OND&0.04&0.14&&0.98&0.94&&1.00&1.00\tabularnewline
+{\bfseries Seasonal}&&&&&&&&&&&\tabularnewline
+~~JFM&0.06&{\bf \textit{0.50}}&&0.98&{\bf \textit{0.65}}&&0.02&{\bf \textit{0.76}}&&0.98&{\bf \textit{0.47}}\tabularnewline
+~~AMJ&0.13&{\bf \textit{0.47}}&&0.94&{\bf \textit{0.82}}&&{\bf \textit{0.36}}&{\bf \textit{0.79}}&&{\bf \textit{0.85}}&{\bf \textit{0.69}}\tabularnewline
+~~JAS&{\bf \textit{0.40}}&{\bf \textit{0.57}}&&{\bf \textit{0.79}}&{\bf \textit{0.81}}&&{\bf \textit{0.81}}&{\bf \textit{0.68}}&&{\bf \textit{0.60}}&{\bf \textit{0.78}}\tabularnewline
+~~OND&0.04&0.14&&0.98&0.94&&{\bf \textit{0.72}}&{\bf \textit{0.21}}&&{\bf \textit{0.61}}&0.94\tabularnewline
 \hline
-{\bfseries Flow}&&&&&&&&\tabularnewline
-~~Flow 1 (Low)&{\bf \textit{0.20}}&{\bf \textit{0.40}}&&{\bf \textit{0.88}}&{\bf \textit{0.86}}&&1.00&{\bf \textit{0.99}}\tabularnewline
-~~Flow 2&-0.01&{\bf \textit{0.21}}&&1.00&{\bf \textit{0.94}}&&0.99&{\bf \textit{1.02}}\tabularnewline
-~~Flow 3&0.09&0.10&&0.98&0.95&&1.01&0.99\tabularnewline
-~~Flow 4 (High)&{\bf \textit{0.25}}&{\bf \textit{0.21}}&&{\bf \textit{0.89}}&{\bf \textit{0.87}}&&0.99&{\bf \textit{0.96}}\tabularnewline
-\hline
-\end{tabular}\end{center}
-
-\end{table}
-
-
-% regression fit between WRTDS, GAMs, flow-normalized predictions
-%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("Intercept",         "Slope", "Slope$'$"), n.cgroup = rep(2, 3), rowname = rows,     colheads = rep(c("LE1.2", "TF1.6"), 3), label = "tab:regnorm")%
-\begin{table}[!tbp]
-\caption{Regression fits comparing \ac{WRTDS} and \acp{GAM} flow-normalized predictions at each station during different time periods.  Fits for the entire time series are shown at the top.  The second slope column (Slope$'$) describes a regression that was forced through the origin.  Values in bold-italic are those where the intercept estimate was significantly different from zero or the slope estimate was significantly different from one.   Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:regnorm}} 
-\begin{center}
-\begin{tabular}{lllcllcll}
-\hline\hline
-\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries Intercept}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Slope}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries Slope$'$}\tabularnewline
-\cline{2-3} \cline{5-6} \cline{8-9}
-\multicolumn{1}{l}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{LE1.2}&\multicolumn{1}{c}{TF1.6}\tabularnewline
-\hline
-{\bfseries All}&&&&&&&&\tabularnewline
-~~&{\bf \textit{0.28}}&{\bf \textit{0.21}}&&{\bf \textit{0.87}}&{\bf \textit{0.91}}&&1.00&0.99\tabularnewline
-\hline
-{\bfseries Annual}&&&&&&&&\tabularnewline
-~~1986-1993&{\bf \textit{0.29}}&{\bf \textit{-0.28}}&&{\bf \textit{0.86}}&{\bf \textit{1.10}}&&1.00&1.00\tabularnewline
-~~1994-2000&{\bf \textit{0.35}}&-0.10&&{\bf \textit{0.83}}&1.00&&0.99&{\bf \textit{0.97}}\tabularnewline
-~~2001-2007&{\bf \textit{0.43}}&{\bf \textit{0.66}}&&{\bf \textit{0.81}}&{\bf \textit{0.73}}&&1.00&1.00\tabularnewline
-~~2008-2014&0.00&{\bf \textit{0.20}}&&0.99&{\bf \textit{0.92}}&&{\bf \textit{0.99}}&1.00\tabularnewline
-\hline
-{\bfseries Seasonal}&&&&&&&&\tabularnewline
-~~JFM&0.02&{\bf \textit{0.76}}&&0.98&{\bf \textit{0.47}}&&{\bf \textit{0.98}}&{\bf \textit{0.95}}\tabularnewline
-~~AMJ&{\bf \textit{0.36}}&{\bf \textit{0.79}}&&{\bf \textit{0.85}}&{\bf \textit{0.69}}&&1.00&{\bf \textit{0.98}}\tabularnewline
-~~JAS&{\bf \textit{0.81}}&{\bf \textit{0.68}}&&{\bf \textit{0.60}}&{\bf \textit{0.78}}&&1.00&1.00\tabularnewline
-~~OND&{\bf \textit{0.72}}&{\bf \textit{0.21}}&&{\bf \textit{0.61}}&0.94&&1.00&{\bf \textit{1.03}}\tabularnewline
-\hline
-{\bfseries Flow}&&&&&&&&\tabularnewline
-~~Flow 1 (Low)&{\bf \textit{0.73}}&{\bf \textit{0.31}}&&{\bf \textit{0.62}}&{\bf \textit{0.91}}&&1.00&{\bf \textit{1.02}}\tabularnewline
-~~Flow 2&{\bf \textit{0.35}}&{\bf \textit{0.28}}&&{\bf \textit{0.83}}&{\bf \textit{0.88}}&&{\bf \textit{0.99}}&{\bf \textit{0.98}}\tabularnewline
-~~Flow 3&{\bf \textit{0.25}}&{\bf \textit{0.19}}&&{\bf \textit{0.89}}&{\bf \textit{0.90}}&&1.00&{\bf \textit{0.98}}\tabularnewline
-~~Flow 4 (High)&{\bf \textit{0.30}}&{\bf \textit{0.29}}&&{\bf \textit{0.88}}&{\bf \textit{0.86}}&&1.00&{\bf \textit{0.98}}\tabularnewline
+{\bfseries Flow}&&&&&&&&&&&\tabularnewline
+~~Flow 1 (Low)&{\bf \textit{0.20}}&{\bf \textit{0.40}}&&{\bf \textit{0.88}}&{\bf \textit{0.86}}&&{\bf \textit{0.73}}&{\bf \textit{0.31}}&&{\bf \textit{0.62}}&{\bf \textit{0.91}}\tabularnewline
+~~Flow 2&-0.01&{\bf \textit{0.21}}&&1.00&{\bf \textit{0.94}}&&{\bf \textit{0.35}}&{\bf \textit{0.28}}&&{\bf \textit{0.83}}&{\bf \textit{0.88}}\tabularnewline
+~~Flow 3&0.09&0.10&&0.98&0.95&&{\bf \textit{0.25}}&{\bf \textit{0.19}}&&{\bf \textit{0.89}}&{\bf \textit{0.90}}\tabularnewline
+~~Flow 4 (High)&{\bf \textit{0.25}}&{\bf \textit{0.21}}&&{\bf \textit{0.89}}&{\bf \textit{0.87}}&&{\bf \textit{0.30}}&{\bf \textit{0.29}}&&{\bf \textit{0.88}}&{\bf \textit{0.86}}\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -584,8 +547,6 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
-
-% histograms of errors for each mod, overlap with color transparencies - use period groupings as in previous fig
 
 % examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects
 

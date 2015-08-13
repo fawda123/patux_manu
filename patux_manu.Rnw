@@ -307,7 +307,7 @@ totab <- group_by(pax_data, STATION) %>%
     Segment = CBSEG_2003_DESCRIPTION, 
     `Distance (km)` = dist_km, 
     `Depth (m)` = depth_m, 
-    `Chl (\\mugl)` = lnchla, 
+    `ln-Chl (\\mugl)` = lnchla, 
     `Sal (ppt)` = sal
   ) %>% 
   mutate(Segment = tolower(gsub('^PATUXENT RIVER-|[[:space:]]REGION$', '', Segment))) %>% 
@@ -316,7 +316,7 @@ totab <- group_by(pax_data, STATION) %>%
     Lat = form_fun(Lat), 
     Long = form_fun(Long),
     `Distance (km)` = form_fun(`Distance (km)`, 1),
-    `Chl (\\mugl)` = form_fun(`Chl (\\mugl)`), 
+    `ln-Chl (\\mugl)` = form_fun(`ln-Chl (\\mugl)`), 
     `Sal (ppt)` = form_fun(`Sal (ppt)`), 
     Segment = factor(Segment, levels = c('tidal fresh', 'oligohaline', 'mesohaline'), labels = c('TF', 'OH', 'MH')),
     Station = gsub('LE1.2', '{\\\\bf LE1.2}', Station),
@@ -533,13 +533,13 @@ latex(
 
 @
 
-% regression fit between WRTDS, GAMs, predictions
+% regression fit between WRTDS, GAMs, predictions and norms
 <<eval = T, echo = F, cache = T>>=
 data(bestLE12)
 data(bestTF16)
 
 diffLE12 <- select(bestLE12, 
-    fits_wrtds, fits_gams, flcat, mocat, yrcat
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
@@ -547,7 +547,7 @@ diffLE12 <- select(bestLE12,
   )
 
 diffTF16 <- select(bestTF16, 
-    fits_wrtds, fits_gams, flcat, mocat, yrcat
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
   mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
@@ -555,48 +555,58 @@ diffTF16 <- select(bestTF16,
   )
 
 # summmarize by categories, predictions
-pred <- rbind(diffTF16, diffLE12) %>% 
+dat <- rbind(diffTF16, diffLE12) %>% 
   group_by(cat, stat)
 
-intpred <- summarise(pred,
-    int = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[1]
+intpred <- summarise(dat,
+    pint = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[1]
   ) %>%
-  mutate(stat = paste0('int', stat)) %>% 
-  spread('stat', 'int')
+  mutate(stat = paste0('pint', stat)) %>% 
+  spread('stat', 'pint')
 
-slopred <- summarise(pred,
-    slo = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[2]
+slopred <- summarise(dat,
+    pslo = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[2]
   ) %>%
-  mutate(stat = paste0('slo', stat)) %>% 
-  spread('stat', 'slo')
+  mutate(stat = paste0('pslo', stat)) %>% 
+  spread('stat', 'pslo')
 
-sloorgpred <- summarise(pred,
-    sloorg = lm.fun(fits_wrtds, fits_gams, origin = TRUE)
+intnorm <- summarise(dat,
+    nint = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[1]
   ) %>%
-  mutate(stat = paste0('sloorg', stat)) %>% 
-  spread('stat', 'sloorg')
+  mutate(stat = paste0('nint', stat)) %>% 
+  spread('stat', 'nint')
 
-pred <- left_join(intpred, slopred, by = 'cat') %>% 
-  left_join(., sloorgpred,  by = 'cat')
+slonorm <- summarise(dat,
+    nslo = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[2]
+  ) %>%
+  mutate(stat = paste0('nslo', stat)) %>% 
+  spread('stat', 'nslo')
+
+
+dat <- left_join(intpred, slopred, by = 'cat') %>% 
+  left_join(., intnorm, by = 'cat') %>% 
+  left_join(., slonorm, by = 'cat')
 
 # add summary for whole time series, predictions
 totab <- rbind(
   data.frame(
     cat = '', 
-    intLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1], 
-    intTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1],
-    sloLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2], 
-    sloTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2],
-    sloorgLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = TRUE)), 
-    sloorgTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin =TRUE))
+    pintLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1], 
+    pintTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1],
+    psloLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2], 
+    psloTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2],
+    nintLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1], 
+    nintTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1],
+    nsloLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2], 
+    nsloTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2]
     ),
-  pred
+  dat
 )
 
 # latex table
 tab <- totab[, -1]
 rows <- totab[, 1]
-cap.val <- "Regression fits comparing \\ac{WRTDS} and \\acp{GAM} predictions at each station during different time periods.  Fits for the entire time series are shown at the top.  The second slope column (Slope$'$) describes a regression that was forced through the origin.  Values in bold-italic are those where the intercept estimate was significantly different from zero or the slope estimate was significantly different from one.   Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge."
+cap.val <- "Regression fits comparing predicted and flow-normalized results for \\ac{WRTDS} and \\acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\\beta_0$) estimate was significantly different from zero or the slope ($\\beta_{1}$ estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge."
 
 latex( 
   tab,
@@ -606,93 +616,11 @@ latex(
   caption.loc = 'top',
   rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
   n.rgroup = c(1, rep(4, 3)),
-  cgroup = c('Intercept', 'Slope', "Slope$'$"),
-  n.cgroup = rep(2, 3),
+  cgroup = c('$\\beta_{0,\\,pred}$', '$\\beta_{1,\\,pred}$', '$\\beta_{0,\\,norm}$', '$\\beta_{1,\\,norm}$'),
+  n.cgroup = rep(2, 3, 4),
   rowname = rows,
-  colheads = rep(c('LE1.2', 'TF1.6'), 3),
-  label = 'tab:regpred'
-  )
-
-@
-
-% regression fit between WRTDS, GAMs, flow-normalized predictions
-<<eval = T, echo = F, cache = T>>=
-data(bestLE12)
-data(bestTF16)
-
-diffLE12 <- select(bestLE12, 
-    norm_wrtds, norm_gams, flcat, mocat, yrcat
-  ) %>% 
-  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'LE1.2'
-  )
-
-diffTF16 <- select(bestTF16, 
-    norm_wrtds, norm_gams, flcat, mocat, yrcat
-  ) %>% 
-  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
-    stat = 'TF1.6'
-  )
-
-# summmarize by categories, predictions
-norm <- rbind(diffTF16, diffLE12) %>% 
-  group_by(cat, stat)
-
-intnorm <- summarise(norm,
-    int = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[1]
-  ) %>%
-  mutate(stat = paste0('int', stat)) %>% 
-  spread('stat', 'int')
-
-slonorm <- summarise(norm,
-    slo = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[2]
-  ) %>%
-  mutate(stat = paste0('slo', stat)) %>% 
-  spread('stat', 'slo')
-
-sloorgnorm <- summarise(norm,
-    sloorg = lm.fun(norm_wrtds, norm_gams, origin = TRUE)
-  ) %>%
-  mutate(stat = paste0('sloorg', stat)) %>% 
-  spread('stat', 'sloorg')
-
-norm <- left_join(intnorm, slonorm, by = 'cat') %>% 
-  left_join(., sloorgnorm,  by = 'cat')
-
-# add summary for whole time series, flow-normalized predictions
-totab <- rbind(
-  data.frame(
-    cat = '', 
-    intLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1], 
-    intTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1],
-    sloLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2], 
-    sloTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2],
-    sloorgLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = TRUE)), 
-    sloorgTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin =TRUE))
-    ),
-  norm
-)
-
-# latex table
-tab <- totab[, -1]
-rows <- totab[, 1]
-cap.val <- "Regression fits comparing \\ac{WRTDS} and \\acp{GAM} flow-normalized predictions at each station during different time periods.  Fits for the entire time series are shown at the top.  The second slope column (Slope$'$) describes a regression that was forced through the origin.  Values in bold-italic are those where the intercept estimate was significantly different from zero or the slope estimate was significantly different from one.   Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge."
-
-latex( 
-  tab,
-  file = '',
-  rowlabel = 'Period',
-  caption = cap.val,
-  caption.loc = 'top',
-  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
-  n.rgroup = c(1, rep(4, 3)),
-  cgroup = c('Intercept', 'Slope', "Slope$'$"),
-  n.cgroup = rep(2, 3),
-  rowname = rows,
-  colheads = rep(c('LE1.2', 'TF1.6'), 3),
-  label = 'tab:regnorm'
+  colheads = rep(c('LE1.2', 'TF1.6'), 4),
+  label = 'tab:regprednorm'
   )
 
 @
@@ -1070,8 +998,6 @@ grid.arrange(p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGrob(xlab
 @
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
-
-% histograms of errors for each mod, overlap with color transparencies - use period groupings as in previous fig
 
 % examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects
 
