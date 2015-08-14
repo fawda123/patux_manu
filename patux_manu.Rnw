@@ -339,8 +339,6 @@ latex(
   
 @
 
-% trend summary of WRTDS/GAMs (like table 4 in Beck and Hagy 2015, change as slope for diff time periods - p. 12 Moyer et al. 2012))
-
 % performance summary of predictions to observed, tab:perftoobs
 <<eval = T, echo = F, cache = T>>=
 data(bestLE12)
@@ -475,7 +473,7 @@ latex(
 
 @
 
-% regression fit between WRTDS, GAMs, predictions and norms
+% regression fit between WRTDS, GAMs, predictions and norms, tab:regprdnrm
 <<eval = T, echo = F, cache = T>>=
 data(bestLE12)
 data(bestTF16)
@@ -572,9 +570,159 @@ latex(
   n.cgroup = rep(2, 3, 4),
   rowname = rows,
   colheads = rep(c('LE1.2', 'TF1.6'), 4),
-  label = 'tab:redprdnrm'
+  label = 'tab:regprdnrm'
   )
 
+@
+
+% trend summary of flo-norm results for WRTDS/GAMs, two tables each station, tab:trendsLE12, tab:trendsTF16
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+data(bestTF16)
+
+# combine stations, agg by year for slope ests
+alldat <- rbind(
+  data.frame(bestLE12, stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16, stat = 'TF16', stringsAsFactors = F)
+  ) %>% 
+  select(stat, date, norm_wrtds, norm_gams, mocat, yrcat, flcat) %>% 
+  mutate(
+    date = as.numeric(strftime(date, '%Y'))
+  )
+  
+# these need to be aggregated separately
+
+# annual aggs
+yrdat <- group_by(alldat, stat, date, yrcat) %>% 
+  summarise(
+    norm_wrtds = mean(norm_wrtds, na.rm = T), 
+    norm_gams = mean(norm_gams, na.rm = T)
+  ) 
+
+# monthly aggs
+modat <- group_by(alldat, stat, date, mocat) %>% 
+  summarise(
+    norm_wrtds = mean(norm_wrtds, na.rm = T), 
+    norm_gams = mean(norm_gams, na.rm = T)
+  )
+
+# flo aggs
+fldat <- group_by(alldat, stat, date, flcat) %>% 
+  summarise(
+    norm_wrtds = mean(norm_wrtds, na.rm = T), 
+    norm_gams = mean(norm_gams, na.rm = T)
+  )
+
+# get summary stats for each agg period
+
+# percent change across period
+chn_fun <- function(x, y){
+  tomod <- data.frame(x, y)
+  srt <- tomod[which.min(tomod$x), 'y']
+  stp <- tomod[which.max(tomod$x), 'y']
+  out <- 100 * (stp - srt)/srt
+  return(out)
+}
+
+yrdat <- gather(yrdat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, yrcat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val)
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  rename(cat = yrcat)
+
+modat <- gather(modat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, mocat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val)
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  rename(cat = mocat)
+
+fldat <- gather(fldat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, flcat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val)
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  rename(cat = flcat)
+
+# summary across all years
+allsum <- gather(alldat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, date, mod) %>% 
+  summarise(
+    val = mean(val, na.rm = TRUE)
+  ) %>% 
+  group_by(stat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val)
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  mutate(cat = '') %>% 
+  select(stat, cat, gams_ave, gams_chg, wrtds_ave, wrtds_chg)
+
+totab <- rbind(allsum, yrdat, modat, fldat) %>% 
+  mutate(cat = factor(cat, levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'))) %>% 
+  arrange(stat, cat) %>% 
+  data.frame(.)
+
+# latex table, LE12
+tabLE12 <- form_fun(totab[totab$stat %in% 'LE12', -c(1:2)])
+rows <- totab[totab$stat %in% 'LE12', 2]
+cap.val <- 'Summaries of flow-normalized trends from each model at LE1.2 for different time periods.  Summaries are averages and percentage changes of ln-chlorophyll (\\mugl) based on annual means within each category.  For example, summary values for high flow for a given model and are based on instances of high flow across years.  Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+
+latex( 
+  tabLE12,
+  file = '',
+  rowlabel = 'Station, Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('GAM', 'WRTDS'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('Ave.', '\\% Change'), 2),
+  label = 'tab:trendsLE12'
+)
+
+# latex table, TF1.6
+tabTF16 <- form_fun(totab[totab$stat %in% 'TF16', -c(1:2)])
+rows <- totab[totab$stat %in% 'TF16', 2]
+cap.val <- 'Summaries of flow-normalized trends from each model at LE1.2 for different time periods.  Summaries are averages and percentage changes of ln-chlorophyll (\\mugl) based on annual means within each category.  For example, summary values for high flow for a given model and are based on instances of high flow across years.  Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.'
+
+latex( 
+  tabTF16,
+  file = '',
+  rowlabel = 'Station, Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('GAM', 'WRTDS'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('Ave.', '\\% Change'), 2),
+  label = 'tab:trendsTF16'
+)
+    
 @
 
 % performance summary of flow-normalized predictions WRTDS/GAMS simulated data - compare between the two mods as in previous fig, but also compare with 'known' flow-independet ts
