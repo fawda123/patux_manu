@@ -48,16 +48,20 @@
 
 % acronyms
 \acrodef{AIC}{Akaike Information Criterion}
+\acrodef{AMJ}{April-May-June}
 \acrodef{ARMA}{Autoregressive Moving Average}
 \acrodef{chla}[chl-\textit{a}]{chlorophyll \textit{a}}
 \acrodef{GAM}{generalized additive models}
+\acrodef{JAS}{July-August-September}
+\acrodef{JFM}{January-February-March}
+\acrodef{OND}{October-November-December}
 \acrodef{RMSE}{root mean square error}
 \acrodef{USGS}{US Geological Survey}
 \acrodef{WRTDS}{weighted regression on time, discharge, and season}
 
 % macros
 % for micrograms per litre
-\newcommand{\mugl}{$\mu$g L$^{-1}$}
+\newcommand{\mugl}{$\mu$g L$^{-1}$ }
 
 %knitr options
 <<setup,include=F,cache=F>>=
@@ -161,7 +165,7 @@ fl_aggs <- aggregate(cms ~ year, bowie_flow, mean, na.rm = T)
 fl_aggs$cms <- format(round(fl_aggs$cms, 1), nsmall = 1)
 @
 
-The Patuxent River estuary, Maryland, is a tributary to Chesapeake Bay on the Atlantic coast of the United States (\Cref{fig:map}). The longitudinal axis extends 65 km landward from the confluence with the mesohaline portion of Chesapeake Bay.  Estimated total volume at mean low water is 577 x 10$^6$ m$^3$ and a surface area of 126 x 10$^6$ m$^2$.  The lower estuary (below 45 km from the confluence) has a mean width of 2.2 km and depth of 6 m \citep{Cronin75}, whereas the upper estuary has a a mean width of 0.4 km and mean depth of 2.5 m \citep{Hagythes}.  The lower estuary is seasonally stratified and vertically-mixed in the upper estuary.  A two-layer circulation pattern occurs in the lower estuary characterized by an upper seaward-flowing layer and a lower landward-flowing layer.  A mixed diurnal tide dominates with mean range varying from 0.8 m in the upper estuary to 0.4 m near the mouth \citep{Boicourt98}.  The estuary drains a 2300 km$^2$ watershed that is 49\% forest, 28\% grassland, 12\% developed, and 10\% cropland \citep{Jordan03}.  The \ac{USGS} stream gage on the Patuxent River at Bowie, Maryland measures discharge from 39\% of the watershed.  Daily mean discharge from 1985 to 2014 was \Sexpr{fl_mean} m$^3$ s$^{-1}$, with abnormally high years occuring in 1996 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 1996, 'cms']} m$^3$ s$^{-1}$) and 2003 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 2003, 'cms']}  m$^3$ s$^{-1}$). 
+The Patuxent River estuary, Maryland, is a tributary to Chesapeake Bay on the Atlantic coast of the United States (\cref{fig:map}). The longitudinal axis extends 65 km landward from the confluence with the mesohaline portion of Chesapeake Bay.  Estimated total volume at mean low water is 577 x 10$^6$ m$^3$ and a surface area of 126 x 10$^6$ m$^2$.  The lower estuary (below 45 km from the confluence) has a mean width of 2.2 km and depth of 6 m \citep{Cronin75}, whereas the upper estuary has a a mean width of 0.4 km and mean depth of 2.5 m \citep{Hagythes}.  The lower estuary is seasonally stratified and vertically-mixed in the upper estuary.  A two-layer circulation pattern occurs in the lower estuary characterized by an upper seaward-flowing layer and a lower landward-flowing layer.  A mixed diurnal tide dominates with mean range varying from 0.8 m in the upper estuary to 0.4 m near the mouth \citep{Boicourt98}.  The estuary drains a 2300 km$^2$ watershed that is 49\% forest, 28\% grassland, 12\% developed, and 10\% cropland \citep{Jordan03}.  The \ac{USGS} stream gage on the Patuxent River at Bowie, Maryland measures discharge from 39\% of the watershed.  Daily mean discharge from 1985 to 2014 was \Sexpr{fl_mean} m$^3$ s$^{-1}$, with abnormally high years occuring in 1996 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 1996, 'cms']} m$^3$ s$^{-1}$) and 2003 (annual mean \Sexpr{fl_aggs[fl_aggs$year == 2003, 'cms']}  m$^3$ s$^{-1}$). 
 
 The Chesapeake Bay Program maintains a continuous monitoring network for the Patuxent at multiple fixed stations that cover the salinity gradient from estuarine to tidal fresh (\href{http://www.chesapeakebay.net/}{http://www.chesapeakebay.net/}, \cref{fig:map,tab:statsum}).  Water quality samples have been collected since 1985 at monthly or bimonthly intervals and include salinity, temperature, \ac{chla}, dissolved oxygen, and additional dissolved or particulate nutrients and organic carbon.  Seasonal variation in \ac{chla} is observed across the stations with spring and summer blooms occuring in the upper, oligohaline section, whereas primary production is generally higher in the lower estuary during winter months (\cref{fig:chlyrmofl}).  Chlorophyll concentrations are generally lowest for all stations in late fall and early winter.  Periods of low flow are associated with higher chlorophyll concentrations in the upper estuary, whereas the opposite is observed for high flow.  Stations TF1.6 and LE1.2 were chosen as representative time series from different salinity regions to evaluate the water quality models.  Observations at each station capture a longitudinal gradient of watershed influences at TF1.6 to mainstem influences from the Chesapeake Bay at LE1.2.  Long-term changes in chlorophyll have also been related to historical reductions in nutrient inputs following a statewide ban on phosphorus-based detergents in 1984 and wastewater treatment improvements in the early 1990s that reduced point sources of nitrogen \citep{Lung03,Testa08a}.  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality.
 
@@ -258,19 +262,6 @@ A daily time series for the entire period of record was simulated using the abov
 
 \subsection{Observed trends and relative fit}
 
-<<echo = FALSE>>=
-# data for rmse table of observed to fit by model, site
-data(perftoobs)
-allrmse <- perftoobs[1, c(2:ncol(perftoobs))]
-@
-
-
-The predicted \ac{chla} from each model generally followed patterns in observed \ac{chla} from 1986 to 2014 (\Cref{fig:pred}).  For each model, seasonal minima at LE1.2 were observed in late Fall, typically in December, whereas maximum \ac{chla} was observed in an early spring bloom.  A secondary, smaller seasonal peak was also observed in late summer as a result of bottom-layer regeneration and upward nutrient transport \citep{Testa08a}.  A similar secondary bloom was not observed in the upper estuary at TF1.6, where the predicted values of each model suggested a dominant unimodal pattern within each growing season. TF1.6 seasonal maxima were more prolonged than those at LE1.2 with elevated \ac{chla} starting in mid-summer and ending by early Fall, whereas an abrupt minimum was observed in December and January.  Visual evaluation of seasonal trends for each model suggested the results were similar, although \ac{WRTDS} predictions had slightly better fits at the extreme ends of the distribution of \ac{chla}.  Overall, both models provided predictions that more adequately described the range of \ac{chla} at TF1.6 as compared to LE1.2 where observed values lower or higher than the predicted values were more common.  However, quantitative summaries of model fit by site indicated that \ac{RMSE} between sites were similar with errors ranging from a minimum of \Sexpr{form_fun(min(allrmse))} at LE1.2 for \ac{WRTDS} predictions and a maximum of \Sexpr{form_fun(max(allrmse))} at TF1.6 for \ac{GAM} predictions (\Cref{tab:perftoobs}).  
-
-Comparisons of fit between models showed that \ac{WRTDS} had lower \ac{RMSE} for the overall time series and all time periods (annual, seasonal, and flow) that were evaluated, regardless of site.  Fit by different time periods generally showed agreement between methods during periods when performance was relatively high or low.  For LE1.2, models had the worst fit during the 2001-2007 annual aggregations, the April-May-June seasonal aggregations, and periods of high flow.  For TF1.6, models had the worst fit during the 1994-2000 annual aggregation, whereas the worst fit by seasonal and flow aggregations varied.  Model fit was the worst during the October-November-December seasonal aggregation for \acp{GAM}, whereas fit was the worst for the April-May-June aggregation for \ac{WRTDS}.  Maximum error for each model at TF1.6 followed similar patterns for the flow aggregations, with the worst performance for \acp{GAM} occuring during high flow and the worst performance for \ac{WRTDS} occuring during the second quartile for flow.  In general, model performance was linked to flow such that fit decreased during periods of high flow, either during seasonal or inter-annual periods of flow minima.    
-
-Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:pred}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed.  Chlorophyll values returned to the approximate site average by 2014.  Flow-normalized trends at each site provided an indication of discharge or salinity effects between sites.  Apparent 
-
 <<echo = F>>=
 data(bestLE12_wrtds)
 data(bestTF16_wrtds)
@@ -284,14 +275,39 @@ winsTF16 <- attr(bestTF16_wrtds, 'half_wins') %>%
   form_fun
 @
 
-The optimal half-window widths and degrees of freedom for smoothing varied for \ac{WRTDS} and \acp{GAM}, respectively, at each station.  For \ac{WRTDS}, optimal half-window widths identified by generalized cross-validation were \Sexpr{winsLE12[1]} as a proportion of each year, \Sexpr{winsLE12[2]} years, and \Sexpr{winsLE12[1]} as a proportion of the total range of salinity for LE1.2, and \Sexpr{winsTF16[1]} of each year, \Sexpr{winsTF16[2]} years, and \Sexpr{winsTF16[3]} of flow at TF1.6.  For both stations, the optimization method selected relatively wide windows for the year weights while minimizing the seasonal (annual proportion) and flow component.  For \acp{GAM}, optimal smoothing at each station was...[insert results].      
+The optimal half-window widths and degrees of freedom for smoothing varied for \ac{WRTDS} and \acp{GAM}, respectively, at each station.  For \ac{WRTDS}, optimal half-window widths identified by generalized cross-validation were \Sexpr{winsLE12[1]} as a proportion of each year, \Sexpr{winsLE12[2]} years, and \Sexpr{winsLE12[1]} as a proportion of the total range of salinity for LE1.2, and \Sexpr{winsTF16[1]} of each year, \Sexpr{winsTF16[2]} years, and \Sexpr{winsTF16[3]} of flow at TF1.6.  For both stations, the optimization method selected relatively wide windows for the year weights while minimizing the seasonal (annual proportion) and flow component.  For \acp{GAM}, optimal smoothing at each station was...[insert results].     
 
-Visual eval of trends from plot \cref{fig:pred}
-\Cref{tab:statsum}, \Cref{tab:perftoobs}, 
+<<echo = FALSE>>=
+# data for rmse table of observed to fit by model, site
+data(perftoobs)
+allrmse <- perftoobs[1, c(2:ncol(perftoobs))]
+
+# perf by station, time period
+le12perf <- perftoobs[-1, grepl('cat|LE12', names(perftoobs))] 
+names(le12perf) <- c('cat', 'gam', 'wrtds')
+le12perf[, -1] <- form_fun(le12perf[, -1])
+tf16perf <- perftoobs[-1, grepl('cat|TF16', names(perftoobs))]
+names(tf16perf) <- c('cat', 'gam', 'wrtds')
+tf16perf[, -1] <- form_fun(tf16perf[, -1])
+@
+
+The predicted \ac{chla} from each model generally followed patterns in observed \ac{chla} from 1986 to 2014 (\cref{fig:pred}).  At LE1.2, each model showed seasonal minimum typically in November, whereas maximum \ac{chla} was observed in a spring bloom, typically March or April (\cref{fig:seas}).  A secondary, smaller seasonal peak was also observed in late summer from bottom-layer regeneration and upward nutrient transport \citep{Testa08a}.  Seasonal variation at TF1.6 was noticeably different with an initial peak typically observed in May and a larger dominant bloom occuring in September or October (\cref{fig:seas}).  Elevated \ac{chla}  concentrations were also more prolonged than those at LE1.2 with only a slight decrease between the two seasonal blooms.  A seasonal minimum was typically observed in December or January, followed by a rapid increase in the following months.  Differences in magnitude of the seasonal range were also less prononced at LE1.2 compared to TF1.6, with differences throughout the year averaging 3.5 \mugl of \ac{chla} at LE1.2 and 9.5 \mugl of \ac{chla} at TF1.6. Visual evaluation of seasonal trends suggested each model provided similar results, although \ac{WRTDS} predictions had slightly better fits at the extreme ends of the distribution of \ac{chla} (\cref{fig:predmo}).  Overall, both models provided predictions that more adequately described the range of \ac{chla} at TF1.6 as compared to LE1.2 where observed values lower or higher than the predicted values were more common.  However, quantitative summaries of model fit by site indicated that \ac{RMSE} between sites were similar with \ac{RMSE} ranging from a minimum of \Sexpr{form_fun(min(allrmse))} at LE1.2 for \ac{WRTDS} predictions and a maximum of \Sexpr{form_fun(max(allrmse))} at TF1.6 for \ac{GAM} predictions (\cref{tab:perftoobs}).  
+
+Comparisons of model fit to observed \ac{chla} showed that both models performed similar, although \ac{WRTDS} had slightly lower \ac{RMSE} for the overall time series and all time periods (annual, seasonal, and flow) regardless of site (\cref{tab:perftoobs}).  Fit by different time periods generally showed agreement between methods during periods when performance was relatively high or low.  For LE1.2, both models had the worst fit during the 2001-2007 annual period (\ac{RMSE} \Sexpr{with(le12perf, gam[cat == '2001-2007'])} for \acp{GAM}, \ac{RMSE} \Sexpr{with(le12perf, wrtds[cat == '2001-2007'])} for \ac{WRTDS}), the \ac{AMJ} seasonal periods (\Sexpr{with(le12perf, gam[cat == 'AMJ'])} for \acp{GAM}, \Sexpr{with(le12perf, wrtds[cat == 'AMJ'])} for \ac{WRTDS}), and periods of high flow (\Sexpr{with(le12perf, gam[cat == '4 (High)'])} for \acp{GAM}, \Sexpr{with(le12perf, wrtds[cat == '4 (High)'])} for \ac{WRTDS}).  For TF1.6, models had the worst fit during the 1994-2000 annual period (\Sexpr{with(tf16perf, gam[cat == '1994-2000'])} for \acp{GAM}, \Sexpr{with(tf16perf, wrtds[cat == '1994-2000'])} for \ac{WRTDS}), whereas the worst fit by seasonal and flow periods varied.  Model fit was the worst during the \ac{OND} seasonal period for \acp{GAM} (\Sexpr{with(tf16perf, gam[cat == 'OND'])}), whereas fit was the worst for the \ac{AMJ} period for \ac{WRTDS} (\Sexpr{with(tf16perf, wrtds[cat == 'AMJ'])}).  Maximum error for each model at TF1.6 followed similar patterns for the flow periods, with the worst performance for \acp{GAM} occuring during high flow (\Sexpr{with(tf16perf, gam[cat == '4 (High)'])}) and the worst performance for \ac{WRTDS} occuring during the second quartile for flow (\Sexpr{with(tf16perf, wrtds[cat == '2'])}).  In general, model performance was partially linked to flow such that fit decreased during periods of high flow, including seasonal or inter-annual periods of high flow.  For example, both models at both sites had the best fit during the \ac{JAS} period when seasonal flow was minimized.
+
+<<echo = F>>=
+# data from flow-normalized trends table
+data(trendsTF16)
+data(trendsLE12)
+trendsTF16[, 3:6] <- round(trendsTF16[, 3:6], 1)
+trendsLE12[, 3:6] <- round(trendsLE12[, 3:6], 1)
+@
+
+Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:predann}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed. By 2014, chlorophyll returned to values similar to those prior to the initial decrease.  Flow-normalized predictions that were averaged annually at each site allowed an interpretation of trends that were independent of variation in discharge or salinity (\cref{tab:trendsLE12,tab:trendsTF16}).  Overall percent change of \ac{chla} concentration from the beginning to the end of the time series at LE1.2 was approximately 20\% with \ac{WRTDS} suggesting a larger increase (\Sexpr{with(trendsLE12, wrtds_chg[cat == ''])}\%) relative to \acp{GAM} (\Sexpr{with(trendsLE12, gams_chg[cat == ''])}\%) (\cref{tab:trendsLE12}).  An increase at TF1.6 was also observed from 1986 to 2014 (\cref{tab:trendsTF16}), although less dramatic as compared to LE1.2.  An increase in flow-normalized concentration of \Sexpr{with(trendsTF16, gams_chg[cat == ''])}\% was predicted by \acp{GAM} and \Sexpr{with(trendsTF16, wrtds_chg[cat == ''])}\% was predicted by \ac{WRTDS}.  Changes within specific time periods were also indicated periods within which increases or decrease in flow-normalized trends were most dramatic...
 
 \subsection{Comparison of model predictions}
 
-\Cref{tab:perfbtw}, \Cref{tab:regprdnrm}, \Cref{tab:trendsLE12}, \Cref{tab:trendsTF16}, \Cref{fig:pred}, \Cref{fig:regprdnrm}
+\cref{tab:perfbtw}, \cref{tab:regprdnrm}, \cref{tab:trendsLE12}, \cref{tab:trendsTF16}, \cref{fig:regprdnrm}
 
 \subsection{Flow-normalization with simulated data}
 
@@ -300,6 +316,8 @@ Visual eval of trends from plot \cref{fig:pred}
 % optimal model parameters - similarities and differences with GAMs/WRTDS - see my email to Rebecca on 8/10/15
 
 % why we used the simulated data w/o a trend in biological chlorophyll - wanted to eval ability of each model to remove flow, but must emphasize that the real value of either model is to look at flow-independent trends - i.e., are there other things besides flow that are causing changes.
+
+% performance related to flow - should not be related to flow becuase it is a model parameter (e.g., increasing variance of residuals with increasing flow)
 
 \begin{outline}
 \0 \noindent Qualitative comparison
@@ -554,6 +572,12 @@ totab <- rbind(allsum, yrdat, modat, fldat) %>%
   arrange(stat, cat) %>% 
   data.frame(.)
 
+# for inline expressions
+trendsLE12 <- totab[totab$stat %in% 'LE12', ]
+trendsTF16 <- totab[totab$stat %in% 'TF16', ]
+save(trendsLE12, file = 'data/trendsLE12.RData')
+save(trendsTF16, file = 'data/trendsTF16.RData')
+
 # latex table, LE12
 tabLE12 <- form_fun(totab[totab$stat %in% 'LE12', -c(1:2)])
 rows <- totab[totab$stat %in% 'LE12', 2]
@@ -762,7 +786,7 @@ latex(
   )
 
 @
-\
+
 % performance summary of flow-normalized predictions WRTDS/GAMS simulated data - compare between the two mods as in previous fig, but also compare with 'known' flow-independet ts
 
 % qualitative comparison of each mod, pros/cons of each, etc. to accompany discussion
@@ -1051,7 +1075,65 @@ dev.off()
 \label{fig:pred}
 \end{figure}
 
-% wrtds v gam predicions by periods
+% plot of seasonal variation from model predictions, by model and site, 
+<<seas, echo = FALSE, eval = T, cache = T, message = F, results = 'hide', fig.width = 6, fig.height = 5, fig.cap = 'Seasonal variation of predictions by station and model.  Points are all model predictions by day of year from 1986 to 2014.  The blue line is a loess (locally estimated) polynomial smooth to characterize the seasonal components.'>>=
+
+data(bestLE12)
+data(bestTF16)
+
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+  
+# change default ggplot theme
+theme_mine <- function (base_size = 12, base_family = "") {
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+  theme(
+    axis.text.x = element_text(size = 8), 
+    plot.background = element_rect(fill='transparent', 
+      colour = NA),
+    panel.background = element_rect(fill='transparent', 
+      colour = NA),
+    legend.background = element_rect(fill='transparent', 
+      colour = NA),
+    strip.background = element_rect(fill = 
+        alpha(cols[length(cols)], 0.5)),
+    legend.key = element_rect(fill = 'transparent', 
+      colour = NA)
+    )   
+}
+theme_set(theme_mine())
+
+bestLE12 <- mutate(bestLE12, stat = 'LE1.2')
+bestTF16 <- mutate(bestTF16, stat = 'TF1.6')
+
+toplo <- rbind(bestLE12, bestTF16) %>% 
+  select(date, fits_wrtds, fits_gams, stat) %>% 
+  mutate(
+    Year = '2014', 
+    mo = as.numeric(strftime(date, '%m')),
+    day = as.numeric(strftime(date, '%d')),
+    fake_date = as.Date(paste(Year, mo, day, sep = '-'))
+  ) %>% 
+  gather('mod', 'val', fits_wrtds:fits_gams) %>% 
+  mutate(mod = factor(mod, levels = c('fits_wrtds', 'fits_gams'), labels = c('WRTDS', 'GAM')))
+
+ylab <- expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
+xlab <- 'Day of year'
+
+ggplot(toplo, aes(x = fake_date, y = val, group = mod)) + 
+  geom_point(pch = 1, col = cols[40]) + 
+  stat_smooth(method = 'loess', span = 0.4, se = F, col = cols[1], size = 1) +
+  scale_y_continuous(ylab) + 
+  scale_x_date(xlab, labels = date_format("%m/%d")) + 
+  facet_grid(mod ~ stat, scales = 'free_y') + 
+  theme_mine() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 8))
+
+@
+
+% wrtds v gam predictions by periods
 <<regprdnrm, fig.width = 6, fig.height = 6.5, eval = T, echo = F, cache = T, fig.cap = 'Comparison of \\ac{WRTDS} and \\acp{GAM} results at each station (LE1.2, TF1.6) and different time periods.  Predicted and flow-normalized results are shown.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions from the discharge record (low).  Regression lines for each model result and 1:1 replacement lines (thin grey) are also shown.  See \\cref{tab:regprdnrm} for parameter estimates of regression comparisons.'>>=
 
 data(bestLE12)
