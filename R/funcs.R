@@ -127,3 +127,123 @@ g_legend<-function(a.gplot){
   leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
   legend <- tmp$grobs[[leg]]
   return(legend)}
+
+######
+# gam equivalent of dynaplot function
+# looks at changes in in the chlorophyll-flow relationships by month over different years
+# grd is the number of salinity values to use in predictions
+dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
+  size = 1, col_vec = NULL, allflo = FALSE, month = c(1:12), scales = NULL, ncol = NULL, 
+  pretty = TRUE, grids = TRUE){
+
+  # add year, month columns to dat_in
+  dat_in <- mutate(dat_in, 
+    month = as.numeric(strftime(date, '%m')), 
+    year = as.numeric(strftime(date, '%Y'))
+  )
+  to_plo <- dat_in
+  
+  # flo values to predict
+  flo_vals <- range(to_plo[, 'sal'], na.rm = TRUE)
+  flo_vals <- seq(flo_vals[1], flo_vals[2], length = grd)
+  
+  # get model predictions across range of flow values
+  dynadat <- rep(flo_vals, each = nrow(to_plo)) %>% 
+    matrix(., nrow = nrow(to_plo), ncol = grd) %>% 
+    cbind(to_plo[, c('dec_time', 'doy')], .) %>%
+    gather('split', 'sal', -dec_time, -doy) %>% 
+    select(-split) %>% 
+    data.frame(., chla = predict(mod_in, .)) %>% 
+    spread(sal, chla) %>% 
+    select(-dec_time, -doy)
+  
+  # merge predictions with year, month data, make long format
+  to_plo <- select(to_plo, year, month) %>% 
+    cbind(., dynadat) %>% 
+    gather('sal', 'chla', -year, -month) %>% 
+    mutate(sal = as.numeric(as.character(sal)))
+  
+  # subset years to plot
+  if(!is.null(years)){
+    
+    to_plo <- to_plo[to_plo$year %in% years, ]
+     
+    if(nrow(to_plo) == 0) stop('No data to plot for the date range')
+  
+  }
+    
+  # constrain plots to salinity limits for the selected month
+  if(!allflo){
+    
+    #min, max salinity values to plot
+    lim_vals <- group_by(data.frame(dat_in), month) %>% 
+      summarize(
+        Low = quantile(sal, 0.05, na.rm = TRUE),
+        High = quantile(sal, 0.95, na.rm = TRUE)
+      )
+  
+    # month sal ranges for plot
+    lim_vals <- lim_vals[lim_vals$month %in% month, ]
+  
+    # merge limts with months
+    to_plo <- left_join(to_plo, lim_vals, by = 'month')
+    
+    # reduce data
+    sel_vec <- with(to_plo, 
+      sal >= Low &
+      sal <= High
+      )
+    to_plo <- to_plo[sel_vec, !names(to_plo) %in% c('Low', 'High')]
+    to_plo <- arrange(to_plo, year, month)
+    
+  }
+  
+  # reshape data frame, average by year, month for symmetry
+  to_plo <- group_by(to_plo, year, month, sal) %>% 
+    summarize(
+      chla = mean(chla, na.rm = TRUE)
+    )
+  
+  # months labels as text
+  mo_lab <- data.frame(
+    num = seq(1:12), 
+    txt = c('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
+  )
+  mo_lab <- mo_lab[mo_lab$num %in% month, ]
+  to_plo$month <- factor(to_plo$month, levels =  mo_lab$num, labels = mo_lab$txt)
+  
+  # make plot
+  p <- ggplot(to_plo, aes(x = sal, y = chla, group = year)) + 
+    facet_wrap(~month, ncol = ncol, scales = scales)
+  
+  # return bare bones if FALSE
+  if(!pretty) return(p + geom_line())
+  
+  # colors, uses gradcols from WRTDStidal
+  cols <- gradcols(col_vec = col_vec)
+  
+  # chllab function from WRTDStidal
+  ylabel <- chllab(TRUE)
+  
+  p <- p + 
+    geom_line(size = size, aes(colour = year), alpha = alpha) +
+    scale_y_continuous(ylabel, expand = c(0, 0)) +
+    scale_x_continuous('Salinity', expand = c(0, 0)) +
+    theme_bw() +
+    theme(
+      legend.position = 'top'
+    ) +
+    scale_colour_gradientn('Year', colours = cols) +
+    guides(colour = guide_colourbar(barwidth = 10)) 
+  
+  # remove grid lines
+  if(!grids) 
+    p <- p + 
+      theme(      
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()
+      )
+  
+  return(p)
+  
+}
