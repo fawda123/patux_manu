@@ -1076,7 +1076,7 @@ dev.off()
 \end{figure}
 
 % plot of seasonal variation from model predictions, by model and site, 
-<<seas, echo = FALSE, eval = T, cache = T, message = F, results = 'hide', fig.width = 6, fig.height = 5, fig.cap = 'Seasonal variation of predictions by station and model.  Points are all model predictions by day of year from 1986 to 2014.  The blue line is a loess (locally estimated) polynomial smooth to characterize the seasonal components.'>>=
+<<seas, echo = FALSE, eval = T, cache = F, message = F, results = 'hide', fig.width = 6, fig.height = 5, fig.cap = 'Seasonal variation of predictions by station and model.  Points are all model predictions by day of year from 1986 to 2014.  The blue line is a loess (locally estimated) polynomial smooth to characterize the seasonal components.'>>=
 
 data(bestLE12)
 data(bestTF16)
