@@ -1277,8 +1277,9 @@ toplo2 <- select(sims_mos, date, lnchla_noQ, sim1, sim2, sim3) %>%
   tidyr::gather('variable', 'value', -date) 
 
 # factor labels as expressions
-labs <- c(expression(italic(Chl [bio])), expression(Constant~flow), expression(No~flow), 
-  expression(Increasing~flow))
+# labs <- c(expression(italic(Chl [bio])), expression(Constant~flow), expression(No~flow), 
+#   expression(Increasing~flow))
+labs <- c('Biological chlorophyll', 'Constant flow', 'No flow', 'Increasing flow')
 levels(toplo$variable) <- levels(toplo2$variable) <- labs
 
 # y axis labels
@@ -1290,7 +1291,7 @@ ggplot(toplo, aes(x = date, y = value, group = variable)) +
   geom_line(data = toplo2, aes(x = date, y = value, group = variable), col = cols[1]) +
   scale_y_continuous(ylab) + 
   theme(axis.title.x = element_blank()) +
-  facet_wrap(~variable, ncol = 1, labeller = label_parsed)
+  facet_wrap(~variable, ncol = 1)
 @
 
 % results of flow-normalized data for simulations
