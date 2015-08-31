@@ -221,7 +221,7 @@ Chl_{obs} = Chl_{flo} + Chl_{bio}
 \end{equation}
 A distinction between $Chl_{flo}$ and $Chl_{bio}$ is that the former describes variation in the observed time series with changes in discharge (e.g., concentration dilution with increased flow) and the latter describes a true, desired measure of chlorophyll in the water column that is directly linked to primary production.  The biological component of chlorophyll is comparable to an observation in a closed system that is not affected by flow and is the time series that is estimated by flow-normalization with \ac{WRTDS} and \acp{GAM}.
 
-The simulated time series was based on a stochastic model derived from actual flow and water quality measurements to ensure the statistical properties were comparable to existing datasets.  This approach allowed us to evaluate \acp{GAM} and \ac{WRTDS} under different sampling regimes (e.g., monthly rather than daily), while ensuring the simulated datasets had statistical properties that were consistent with known time series. Daily flow observations were obtained from the \ac{USGS} stream gage station 01594440 near Bowie, Maryland (38$^{\circ}$57$'$21.3$''$N, 76$^{\circ}$41$'$37.3$''$W) from 1985 to 2014.  Daily chlorophyll records were obtained from the Jug Bay station (38$^{\circ}$46$'$50.6$''$N, 76$^{\circ}$42$'$29.1$''$W) of the Chesapeake Bay Maryland National Estuarine Research Reserve.  Daily chlorophyll concentrations were estimated from fluorescence values that did not include blue-green algae blooms.  Our primary concern was simulating chlorophyll concentrations at monthly or bimonthly timesteps such that taxa-specific concentrations on a daily time step were not relevant.
+The simulated time series was based on a stochastic model derived from actual flow and water quality measurements to ensure the statistical properties were comparable to existing datasets.  This approach allowed us to evaluate \acp{GAM} and \ac{WRTDS} under different sampling regimes (e.g., monthly rather than daily), while ensuring the simulated datasets had statistical properties that were consistent with known time series. Daily flow observations were obtained from the \ac{USGS} stream gage station 01594440 near Bowie, Maryland (38$^{\circ}$57$'$21.3$''$N, 76$^{\circ}$41$'$37.3$''$W) from 1985 to 2014.  Daily chlorophyll records were obtained from the Jug Bay station (38$^{\circ}$46$'$50.6$''$N, 76$^{\circ}$42$'$29.1$''$W) of the Chesapeake Bay Maryland National Estuarine Research Reserve in the upper Patuxent.  Daily chlorophyll concentrations were estimated from fluorescence values that did not include blue-green algae blooms.  Our primary concern was simulating chlorophyll concentrations at monthly or bimonthly timesteps such that taxa-specific concentrations on a daily time step were not relevant.
 
 Four time series were estimated or simulated from the actual datasets to create the complete, simulated time series:\begin{inparaenum}[1\upshape)]
 \item estimated discharge as a stationary seasonal component ($\hat{Q}_{seas}$),
@@ -256,7 +256,7 @@ Chl_{seas} = \beta_0 + \beta_1 T + \beta_2 Q + \beta_3 \sin\left(2\pi T\right) +
 \end{equation}
 This approach was used to isolate an error structure for simulation that was independent of flow and biology, where the seasonal component (as time $T$ on a sinusoidal annual period) was assumed to be related to biological processes.  The error distribution was then estimated from the residuals (\cref{chlerr}) as before using an \ac{ARMA} estimate of the residual parameters, $p$ and $q$.  Standard error estimates from the regression used at each point in the one-year time series were also retained for each residual.  Errors were simulated ($\varepsilon_{Chl,\,sim}$, \cref{chlbio}) for the entire year using the estimated auto-regressive structure and multiplied by the corresponding standard error estimate from the regression.  The entire year was repeated for every year in the observed time series.  All simulated errors were rescaled to the range of the original residuals that were used to estimate the distribution.  Finally, the simulated flow-component, $Chl_{flo}$, was added to the simulated bilogical model, $Chl_{bio}$, to create the final chlorophyll-flow time series, $Chl_{obs}$, in \cref{chlobs}.  
 
-A daily time series for the entire period of record was simulated using the above methods and then used to compare the relative abilities of \ac{WRTDS} and \acp{GAM} to characterize flow-normalized trends.  Multiple time series with a monthly sampling frequencies and varying contributions of the flow component, ($Chl_{flo}$ in \cref{chlobs}) were created from the daily time series. One day in each month for each year was randomly sampled to create a monthly time series.  Varying contributions of the flow component on observed chlorophyll were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from constant, non-existent, steadily increasing, and steadily decreasing.  Respectively, the vector of coefficients applied to each flow component was a constant vector of ones, a constant vector of zeroes, a linear increase starting at zero and ending at one, and a linear decrease starting at one and ending at zero.  This created four monthly time series that were used to evaluate each model.  The flow-normalized results of \ac{WRTDS} and \acp{GAM} for each simulated time series were compared to each other and to the original biological chlorophyll component of each time series ($Chl_{bio}$, \cref{chlobs,chlbio}).
+A daily time series for the entire period of record was simulated using the above methods and then used to compare the relative abilities of \ac{WRTDS} and \acp{GAM} to characterize flow-normalized trends.  Three time series with monthly sampling frequencies and varying contributions of the flow component, ($Chl_{flo}$ in \cref{chlobs}) were created from the daily time series. One day in each month for each year was randomly sampled and used as the montly time step for each time series.  Varying contributions of the flow component on observed chlorophyll were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from constant, non-existent, and steadily increasing.  Respectively, the vector of coefficients applied to each flow component was a constant vector of ones, a constant vector of zeroes, and a linear increase starting at zero and ending at one.  This created three monthly time series that were used to evaluate each model that were analogous to no influence, constant, and changing influence of the flow component.  The flow-normalized results of \ac{WRTDS} and \acp{GAM} for each simulated time series were compared to each other and to the original biological chlorophyll component of each time series ($Chl_{bio}$, \cref{chlobs,chlbio}).
 
 \section{Results}
 
@@ -1214,6 +1214,59 @@ grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGro
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
 
 % examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects
+<<simex, fig.width = 6, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Examples of simulated time series for evaluating flow-normalized results from \\ac{WRTDS} and \\acp{GAM}.  The plots show the simulated daily time series (points) and monthly samples (lines) from the daily time series used for the models.  From top to bottom, the time series show the biological \\ac{chla} independent of flow and the three simulated datasets that represent different effects of flow: constant, none, and increasing effect.  The flow-normalized results for each model of the simulated time series were compared to the first time series that was independent of flow.'>>=
+
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+  
+# change default ggplot theme
+theme_mine <- function (base_size = 12, base_family = "") {
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+  theme(
+    axis.text.x = element_text(size = 8), 
+    plot.background = element_rect(fill='transparent', 
+      colour = NA),
+    panel.background = element_rect(fill='transparent', 
+      colour = NA),
+    legend.background = element_rect(fill='transparent', 
+      colour = NA),
+    strip.background = element_rect(fill = 
+        alpha(cols[length(cols)], 0.5)),
+    legend.key = element_rect(fill = 'transparent', 
+      colour = NA)
+    )   
+}
+theme_set(theme_mine())
+
+# load data, from sim_dat.R in tidal_comp proj
+load('data/sims_day.RData')
+load('data/sims_mos.RData')
+
+# organize daily and monthly ts for plots
+toplo <- select(sims_day, date, lnchla_noQ, sim1, sim2, sim3) %>% 
+  tidyr::gather('variable', 'value', -date)
+toplo2 <- select(sims_mos, date, lnchla_noQ, sim1, sim2, sim3) %>% 
+  tidyr::gather('variable', 'value', -date) 
+
+# factor labels as expressions
+labs <- c(expression(italic(Chl [bio])), expression(Constant~flow), expression(No~flow), 
+  expression(Increasing~flow))
+levels(toplo$variable) <- levels(toplo2$variable) <- labs
+
+# y axis labels
+ylab <- expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
+
+# merge with sampled
+ggplot(toplo, aes(x = date, y = value, group = variable)) + 
+  geom_point(pch = 1, size = 1, col = cols[40]) + 
+  geom_line(data = toplo2, aes(x = date, y = value, group = variable), col = cols[1]) +
+  scale_y_continuous(ylab) + 
+  theme(axis.title.x = element_blank()) +
+  facet_wrap(~variable, ncol = 1, labeller = label_parsed)
+
+@
 
 % results of flow-normalized data for simulations
 
