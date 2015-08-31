@@ -1212,6 +1212,32 @@ grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGro
 @
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
+<<eval = F>>=
+# need to redo this with actual 'best' mods, this is just an example
+
+devtools::load_all('M:/docs/wtreg_for_estuaries')
+library(mgcv)
+library(dplyr)
+library(tidyr)
+source('R/funcs.R')
+
+data(bestLE12)
+
+tomod <- select(bestLE12, date, dec_time, chla, sal) %>% 
+  mutate(
+    doy = as.numeric(strftime(date, '%j'))
+  )
+
+gam1 <- gam(chla~te(dec_time,doy,sal,bs=c("tp","cc","tp")), data = tomod, knots=list(doy=c(1,366)))
+
+dynagam(gam1, tomod)
+
+data(bestLE12_wrtds)
+
+dynaplot(bestLE12_wrtds)
+
+@
+
 
 % examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects
 <<simex, fig.width = 6, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Examples of simulated time series for evaluating flow-normalized results from \\ac{WRTDS} and \\acp{GAM}.  The plots show the simulated daily time series (points) and monthly samples (lines) from the daily time series used for the models.  From top to bottom, the time series show the biological \\ac{chla} independent of flow and the three simulated datasets that represent different effects of flow: constant, none, and increasing effect.  The flow-normalized results for each model of the simulated time series were compared to the first time series that was independent of flow.'>>=
@@ -1265,7 +1291,6 @@ ggplot(toplo, aes(x = date, y = value, group = variable)) +
   scale_y_continuous(ylab) + 
   theme(axis.title.x = element_blank()) +
   facet_wrap(~variable, ncol = 1, labeller = label_parsed)
-
 @
 
 % results of flow-normalized data for simulations
