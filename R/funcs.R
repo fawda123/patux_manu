@@ -134,7 +134,7 @@ g_legend<-function(a.gplot){
 # grd is the number of salinity values to use in predictions
 dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
   size = 1, col_vec = NULL, allflo = FALSE, month = c(1:12), scales = NULL, ncol = NULL, 
-  pretty = TRUE, grids = TRUE){
+  pretty = TRUE, grids = TRUE, use_bw = TRUE){
 
   # add year, month columns to dat_in
   dat_in <- mutate(dat_in, 
@@ -167,7 +167,8 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
   if(!is.null(years)){
     
     to_plo <- to_plo[to_plo$year %in% years, ]
-     
+    to_plo <- to_plo[to_plo$month %in% month, ]
+    
     if(nrow(to_plo) == 0) stop('No data to plot for the date range')
   
   }
@@ -177,16 +178,17 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
     
     #min, max salinity values to plot
     lim_vals <- group_by(data.frame(dat_in), month) %>% 
-      summarize(
+      summarise(
         Low = quantile(sal, 0.05, na.rm = TRUE),
         High = quantile(sal, 0.95, na.rm = TRUE)
       )
   
     # month sal ranges for plot
     lim_vals <- lim_vals[lim_vals$month %in% month, ]
-  
+
     # merge limts with months
     to_plo <- left_join(to_plo, lim_vals, by = 'month')
+    to_plo <- to_plo[to_plo$month %in% month, ]
     
     # reduce data
     sel_vec <- with(to_plo, 
@@ -200,7 +202,7 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
   
   # reshape data frame, average by year, month for symmetry
   to_plo <- group_by(to_plo, year, month, sal) %>% 
-    summarize(
+    summarise(
       chla = mean(chla, na.rm = TRUE)
     )
   
@@ -225,11 +227,13 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
   # chllab function from WRTDStidal
   ylabel <- chllab(TRUE)
   
+  # use bw theme
+  if(use_bw) p <- p + theme_bw()
+  
   p <- p + 
     geom_line(size = size, aes(colour = year), alpha = alpha) +
     scale_y_continuous(ylabel, expand = c(0, 0)) +
     scale_x_continuous('Salinity', expand = c(0, 0)) +
-    theme_bw() +
     theme(
       legend.position = 'top'
     ) +

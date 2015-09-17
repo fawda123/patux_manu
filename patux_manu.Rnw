@@ -88,6 +88,8 @@ library(wesanderson)
 library(grid)
 library(gridExtra)
 library(Hmisc)
+library(mgcv)
+library(WRTDStidal)
 
 source('R/funcs.R')
 @
@@ -1212,29 +1214,114 @@ grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGro
 @
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
-<<eval = F>>=
-# need to redo this with actual 'best' mods, this is just an example
+<<dynafig, fig.cap = 'Changes in the relationship between \\ac{chla} and flow across the time series.  Separate panels are shown for each station (LE1.2, TF1.6), model type (GAM, WRTDS), and chosen months.  Changes over time are shown as different predictions for each year in the time series (1986 to 2014).  Salinity was used as a tracer of flow at LE1.2, whereas the discharge record at Bowie, Maryland was used to measure flow at TF1.6.  The scales of salinity and flow are reversed for comparison of trends. Units are proportions of the total range in the observed data with values in each plot truncated by the monthly 5\\textsuperscript{th} and 95\\textsuperscript{th} percentiles.', eval = T, fig.height = 6.5, fig.width = 7.5, out.width = '1.02\\textwidth'>>=
 
-devtools::load_all('M:/docs/wtreg_for_estuaries')
-library(mgcv)
-library(dplyr)
-library(tidyr)
-source('R/funcs.R')
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+
+# change default ggplot theme
+theme_mine <- function (base_size = 12, base_family = "") {
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+  theme(
+    axis.text.x = element_text(size = 8), 
+    plot.background = element_rect(fill='transparent', 
+      colour = NA),
+    panel.background = element_rect(fill='transparent', 
+      colour = NA),
+    legend.background = element_rect(fill='transparent', 
+      colour = NA),
+    strip.background = element_rect(fill = 
+        scales::alpha(cols[length(cols)], 0.5)),
+    legend.key = element_rect(fill = 'transparent', 
+      colour = NA)
+    )   
+}
+theme_set(theme_mine())
+
+## LE12 models
 
 data(bestLE12)
 
-tomod <- select(bestLE12, date, dec_time, chla, sal) %>% 
+LE12_tomod <- select(bestLE12, date, dec_time, chla, sal) %>% 
   mutate(
     doy = as.numeric(strftime(date, '%j'))
   )
 
-gam1 <- gam(chla~te(dec_time,doy,sal,bs=c("tp","cc","tp")), data = tomod, knots=list(doy=c(1,366)))
-
-dynagam(gam1, tomod)
+bestLE12_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), data = LE12_tomod, knots=list(doy=c(1,366)))
 
 data(bestLE12_wrtds)
 
-dynaplot(bestLE12_wrtds)
+## TF16 models
+
+data(bestTF16)
+
+TF16_tomod <- select(bestTF16, date, dec_time, chla, lnQ) %>% 
+  mutate(
+    doy = as.numeric(strftime(date, '%j'))
+  ) %>% 
+  rename(sal = lnQ)
+
+bestTF16_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), data = TF16_tomod, 
+  knots=list(doy=c(1,366)), na.action = na.pass)
+
+data(bestTF16_wrtds)
+
+## plots
+margs <- grid::unit(c(0, 0, 0, -4), "mm") # margins
+fac_txt <- 10 # facet text size
+ylims <- c(0.6, 4)
+col_vec <- cols
+mos <- c(1, 4, 7, 10)
+
+p1 <- dynagam(bestLE12_gam, LE12_tomod, ncol = 1, use_bw = F, month = mos, col_vec = col_vec) +
+  theme(legend.position = 'none', axis.title.y = element_blank(), 
+    strip.text.x = element_text(size = fac_txt), plot.margin = margs) +
+  scale_y_continuous(limits = ylims)
+
+p2 <- dynaplot(bestLE12_wrtds, ncol = 1, use_bw = F, month = mos, col_vec = col_vec) +
+  theme(legend.position = 'none', axis.title.y = element_blank(), 
+    strip.text.x = element_text(size = fac_txt), axis.text.y = element_blank(), 
+    axis.ticks.y = element_blank(), plot.margin = margs) +
+  scale_y_continuous(limits = ylims)
+
+p3 <- dynagam(bestTF16_gam, TF16_tomod, ncol = 1, use_bw = F, month = mos, col_vec = col_vec) +
+  theme(legend.position = 'none', axis.title.y = element_blank(), 
+    strip.text.x = element_text(size = fac_txt), axis.text.y = element_blank(), 
+    axis.ticks.y = element_blank(), plot.margin = margs) + 
+  scale_x_reverse('Flow') +
+  scale_y_continuous(limits = ylims)
+
+p4 <- dynaplot(bestTF16_wrtds, ncol = 1, use_bw = F, month = mos, col_vec = col_vec) + 
+  theme(axis.title.y = element_blank(), legend.position = 'right', 
+    strip.text.x = element_text(size = fac_txt), axis.text.y = element_blank(), 
+    axis.ticks.y = element_blank(), plot.margin = margs) + 
+  scale_x_reverse('Flow') +
+  scale_y_continuous(limits = ylims) + 
+  guides(colour = guide_colourbar(barwidth = 1, barheight = 10)) 
+ 
+pleg <- g_legend(p4)
+p4 <- p4 + theme(legend.position = 'none')
+
+ylab <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+
+# arrange all as grob
+grobwidths <- c(1, 1, 1, 1)
+library(grid)
+
+grid.arrange(
+  arrangeGrob(textGrob(ylab, rot = 90)), 
+  arrangeGrob(
+    arrangeGrob(textGrob('LE1.2'), textGrob('TF1.6'), ncol = 2), 
+    arrangeGrob(textGrob('GAM'), textGrob('WRTDS'), textGrob('GAM'), textGrob('WRTDS'), ncol = 4), 
+    arrangeGrob(p1, p2, p3, p4, ncol = 4), 
+    heights = c(0.025, 0.05, 1)
+  ),
+  arrangeGrob(pleg), 
+  ncol = 3, 
+  widths = c(0.2, 2, 0.3)
+  )
 
 @
 
