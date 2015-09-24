@@ -77,7 +77,7 @@ raw <- raw[grep('^Date', raw)]
 raw <- paste('Version', raw)
 @
 
-% R libs
+% R libs, set ggplot theme
 <<echo = FALSE>>=
 library(httr)
 library(ggplot2)
@@ -92,6 +92,31 @@ library(mgcv)
 library(WRTDStidal)
 
 source('R/funcs.R')
+
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+  
+# change default ggplot theme
+theme_mine <- function (base_size = 12, base_family = "") {
+  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
+  theme(
+    axis.text.x = element_text(size = 9),
+    axis.text.y = element_text(size = 9), 
+    plot.background = element_rect(fill='transparent', 
+      colour = NA),
+    panel.background = element_rect(fill='transparent', 
+      colour = NA),
+    legend.background = element_rect(fill='transparent', 
+      colour = NA),
+    strip.background = element_rect(fill = 
+        alpha(cols[length(cols)], 0.5)),
+    legend.key = element_rect(fill = 'transparent', 
+      colour = NA)
+    )   
+}
+theme_set(theme_mine())
 @
 
 % get online bib file
@@ -201,15 +226,15 @@ The basic premise of cross-validation is to identify the optimal set of model pa
 
 Separate \ac{WRTDS} and \acp{GAM} were created using the above methods for the chlorophyll time series at TF1.6 and LE1.2.  Initial analyses indicated that model performance could be improved using the flow record to model \ac{chla} at TF1.6 and the salinity record to model \ac{chla} at LE1.2.  For each model and station, a predicted and flow-normalized (hereafter flow-normalized refers to both flow and salinity) time series was obtained for comparison.  The results were compared using several summary statistics that evaluated both the predictive performance to describe observed chlorophyll and direct comparisons between the models.  Emphasis was on agreement between observed and predicted values, rather than uncertainty associated with parameter estimates or model results.  As of writing, methods for estimating confidence intervals of \ac{WRTDS} have been developed for the original model \citep{Hirsch15}, but have not been fully developed for application to \ac{WRTDS} in tidal waters.  In addition to simple visual evaluation of trends over time, summary statistics used to compare model predictions to observed \ac{chla} included \ac{RMSE} and average differences.  For all comparisons, \ac{RMSE} comparing each model's predictions to observed \ac{chla} (fit) was defined as:
 \begin{equation}
-RMSE_{fit} = \sqrt {\frac{{\sum\limits_{{i = 1}}^n {{{\left( {{Chl_i} - {\hat{Chl}_i}} \right)}^2}} }}{n}}
+RMSE_{fit} = \sqrt {\frac{{\sum\limits_{{i = 1}}^n {{{\left( {{Chl_i} - {\widehat{Chl}_i}} \right)}^2}} }}{n}}
 \end{equation}
-where $n$ is the number of observations for a given evaluation, $Chl_i$ is the observed value of \ac{chla} for observation $i$, and ${\hat{Chl}}_i$ is the predicted value of \ac{chla} for observation $i$.  \ac{RMSE} values closer to zero represent model predictions closer to observed.  Comparisons between models using \ac{RMSE} are similar, such that:
+where $n$ is the number of observations for a given evaluation, $Chl_i$ is the observed value of \ac{chla} for observation $i$, and ${\widehat{Chl}}_i$ is the predicted value of \ac{chla} for observation $i$.  \ac{RMSE} values closer to zero represent model predictions closer to observed.  Comparisons between models using \ac{RMSE} are similar, such that:
 \begin{equation} \label{rmse_fun}
-RMSE_{btw} = \sqrt {\frac{{\sum\limits_{{i = 1}}^n {{{\left( {{\hat{Chl}_{WRTDS,\,i}} - {{\hat{Chl}}_{GAM,\,i}}} \right)}^2}} }}{n}}
+RMSE_{btw} = \sqrt {\frac{{\sum\limits_{{i = 1}}^n {{{\left( {{\widehat{Chl}_{WRTDS,\,i}} - {{\widehat{Chl}}_{GAM,\,i}}} \right)}^2}} }}{n}}
 \end{equation}
-where the estimated \ac{chla} values for each model, $\hat{Chl}_{i,\,WRTDS}$ and $\hat{Chl}_{i,\,GAM}$, are compared directly.  Similarly, average differences of predictions between models as a percentage was defined as:
+where the estimated \ac{chla} values for each model, $\widehat{Chl}_{i,\,WRTDS}$ and $\widehat{Chl}_{i,\,GAM}$, are compared directly.  Similarly, average differences of predictions between models as a percentage was defined as:
 \begin{equation} \label{avediff_fun}
-\textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \hat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \hat{Chl}_{GAM,\,i}}\right) * 100
+\textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \widehat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \widehat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \widehat{Chl}_{GAM,\,i}}\right) * 100
 \end{equation}
 Positive values indicate that \ac{WRTDS} provided higher predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}.  Results between models were also evaluated using regressions comparing the \ac{WRTDS} and \ac{GAM} predictions.  The regressions were compared to a null model having an intercept of zero and slope of one.  Deviation of either the intercept or slope of the regressions from the null model provided evidence of systematic differences between the models.  In general, an intercept significantly different from zero can be interpreted as an overall difference between the predictions, whereas a slope different from one can be interpreted as a difference that varies with relative magnitude of the predictions.
 
@@ -223,29 +248,29 @@ Chl_{obs} = Chl_{flo} + Chl_{bio}
 \end{equation}
 A distinction between $Chl_{flo}$ and $Chl_{bio}$ is that the former describes variation in the observed time series with changes in discharge (e.g., concentration dilution with increased flow) and the latter describes a true, desired measure of chlorophyll in the water column that is directly linked to primary production.  The biological component of chlorophyll is comparable to an observation in a closed system that is not affected by flow and is the time series that is estimated by flow-normalization with \ac{WRTDS} and \acp{GAM}.
 
-The simulated time series was based on a stochastic model derived from actual flow and water quality measurements to ensure the statistical properties were comparable to existing datasets.  This approach allowed us to evaluate \acp{GAM} and \ac{WRTDS} under different sampling regimes (e.g., monthly rather than daily), while ensuring the simulated datasets had statistical properties that were consistent with known time series. Daily flow observations were obtained from the \ac{USGS} stream gage station 01594440 near Bowie, Maryland (38$^{\circ}$57$'$21.3$''$N, 76$^{\circ}$41$'$37.3$''$W) from 1985 to 2014.  Daily chlorophyll records were obtained from the Jug Bay station (38$^{\circ}$46$'$50.6$''$N, 76$^{\circ}$42$'$29.1$''$W) of the Chesapeake Bay Maryland National Estuarine Research Reserve in the upper Patuxent.  Daily chlorophyll concentrations were estimated from fluorescence values that did not include blue-green algae blooms.  Our primary concern was simulating chlorophyll concentrations at monthly or bimonthly timesteps such that taxa-specific concentrations on a daily time step were not relevant.
+The simulated time series was created using methods similar to those in \citet{Hirsch15} and was based on a stochastic model derived from actual flow and water quality measurements to ensure the statistical properties were comparable to existing datasets.  This approach allowed us to evaluate \acp{GAM} and \ac{WRTDS} under different sampling regimes (e.g., monthly rather than daily), while ensuring the simulated datasets had statistical properties that were consistent with known time series. Daily flow observations were obtained from the \ac{USGS} stream gage station 01594440 near Bowie, Maryland (38$^{\circ}$57$'$21.3$''$N, 76$^{\circ}$41$'$37.3$''$W) from 1985 to 2014.  Daily chlorophyll records were obtained from the Jug Bay station (38$^{\circ}$46$'$50.6$''$N, 76$^{\circ}$42$'$29.1$''$W) of the Chesapeake Bay Maryland National Estuarine Research Reserve in the upper Patuxent.  Daily chlorophyll concentrations were estimated from fluorescence values that did not include blue-green algae blooms.  Our primary concern was simulating chlorophyll concentrations at monthly or bimonthly timesteps such that taxa-specific concentrations on a daily time step were not relevant.
 
 Four time series were estimated or simulated from the actual datasets to create the complete, simulated time series:\begin{inparaenum}[1\upshape)]
-\item estimated discharge as a stationary seasonal component ($\hat{Q}_{seas}$),
+\item estimated discharge as a stationary seasonal component ($\widehat{Q}_{seas}$),
 \item simulated error structure from the residuals of the seasonal discharge model ($\varepsilon_{Q,\,sim}$), 
-\item estimated chlorophyll independent of discharge as a stationary seasonal component ($\hat{Chl}_{seas}$), and
+\item estimated chlorophyll independent of discharge as a stationary seasonal component ($\widehat{Chl}_{seas}$), and
 \item simulated error structure from the residuals of the seasonal chlorophyll model ($\varepsilon_{Chl,\,sim}$).
 \end{inparaenum}
 Unless otherwise noted, chlorophyll and discharge are in ln-transformed units.  Each of the four components was used to simulate the components in \cref{chlobs}:
 \begin{equation} \label{chlflo}
-Chl_{flo} = I\left(\hat{Q}_{seas} + \sigma\cdot\varepsilon_{Q,\,sim}\right)
+Chl_{flo} = I\left(\widehat{Q}_{seas} + \sigma\cdot\varepsilon_{Q,\,sim}\right)
 \end{equation}
 \begin{equation} \label{chlbio}
-Chl_{bio} = \hat{Chl}_{seas} + \sigma\cdot\varepsilon_{Chl,\,sim}
+Chl_{bio} = \widehat{Chl}_{seas} + \sigma\cdot\varepsilon_{Chl,\,sim}
 \end{equation}
-The estimated flow time series within the parentheses, $\hat{Q}_{seas} + \sigma\cdot\varepsilon_{Q,\,sim}$, is floored at zero to simulate an additive effect of increasing flow on $Chl_{obs}$.  Although the actual relationship of water quality measurements with flow is more complex, we assumed that a simple addition was sufficient for the simulations where the primary objective was to create an empirical and linear link between flow and chlorophyll. Moreover, the vector $I$ (where $0 \leq I \leq 1$) can be manually changed to represent an independent effect of flow based on the desired simulation.  For example, a flow effect that changes from non-existent to positive throughout the period of observation can be simulated by creating a vector ranging from zero to one. For the simulated $Chl_{bio}$ time series, the seasonal and error components were characterized using the daily time series at Jug Bay that likely included an effect of flow in the observed data.  For the simulated models, we assumed that the actual flow effect was part of the seasonal component to obtain an accurate estimate of the error component that was independent of both flow and season.  Methods for estimating each of the components in \cref{chlflo,chlbio} are described in detail below. 
+The estimated flow time series within the parentheses, $\widehat{Q}_{seas} + \sigma\cdot\varepsilon_{Q,\,sim}$, is floored at zero to simulate an additive effect of increasing flow on $Chl_{obs}$.  Although the actual relationship of water quality measurements with flow is more complex, we assumed that a simple addition was sufficient for the simulations where the primary objective was to create an empirical and linear link between flow and chlorophyll. Moreover, the vector $I$ (where $0 \leq I \leq 1$) can be manually changed to represent an independent effect of flow based on the desired simulation.  For example, a flow effect that changes from non-existent to positive throughout the period of observation can be simulated by creating a vector ranging from zero to one. For the simulated $Chl_{bio}$ time series, the seasonal and error components were characterized using the daily time series at Jug Bay that likely included an effect of flow in the observed data.  For the simulated models, we assumed that the actual flow effect was part of the seasonal component to obtain an accurate estimate of the error component that was independent of both flow and season.  Methods for estimating each of the components in \cref{chlflo,chlbio} are described in detail below. 
 
 First, a model for simulating flow-related chlorophyll (\cref{chlflo}) was estimated from the stream gage data as the additive combination of a stationary seasonal component and serially-correlated errors:
 \begin{equation} \label{qseas}
 Q_{seas} = \beta_0 + \beta_1 \sin\left(2\pi T\right) + \beta_2 \cos\left(2\pi T\right)
 \end{equation}
 \begin{equation} \label{qerr}
-\varepsilon_{Q} = Q_{seas} - \hat{Q}_{seas}
+\varepsilon_{Q} = Q_{seas} - \widehat{Q}_{seas}
 \end{equation}
 A seasonal model of flow was estimated using linear regression for time, $T$, on an annual sinusoidal period (\cref{qseas}).  The residuals from this regression, $\varepsilon_{Q}$ (\cref{qerr}), were used to estimate the structure of the error distribution for simulating the stochastic component of flow.  The error distribution was characterized using an \ac{ARMA} model to identify appropriate $p$ and $q$ coefficients \citep{Hyndman08}.  The parameters were chosen using stepwise estimation for nonseasonal univariate time series that minimized \ac{AIC}.  The resulting coefficients were used to generate random errors from a standard normal distribution for the length of the original time series, $\varepsilon_{Q,\,sim}$.  These stochastic errors were multiplied by the standard deviation of the residuals in \cref{qerr} and added to the seasonal component in \cref{qseas} to create a simulated, daily time series of the flow-component for chlorophyll, $Chl_{flo}$ (\cref{chlflo}).
 
@@ -254,11 +279,11 @@ The chlorophyll time series was created using a similar approach.  The first ste
 Chl_{seas} = \beta_0 + \beta_1 T + \beta_2 Q + \beta_3 \sin\left(2\pi T\right) + \beta_4 \cos\left(2\pi T\right)
 \end{equation}
 \begin{equation} \label{chlerr}
-\varepsilon_{Chl} = Chl_{seas} - \hat{Chl}_{seas}
+\varepsilon_{Chl} = Chl_{seas} - \widehat{Chl}_{seas}
 \end{equation}
 This approach was used to isolate an error structure for simulation that was independent of flow and biology, where the seasonal component (as time $T$ on a sinusoidal annual period) was assumed to be related to biological processes.  The error distribution was then estimated from the residuals (\cref{chlerr}) as before using an \ac{ARMA} estimate of the residual parameters, $p$ and $q$.  Standard error estimates from the regression used at each point in the one-year time series were also retained for each residual.  Errors were simulated ($\varepsilon_{Chl,\,sim}$, \cref{chlbio}) for the entire year using the estimated auto-regressive structure and multiplied by the corresponding standard error estimate from the regression.  The entire year was repeated for every year in the observed time series.  All simulated errors were rescaled to the range of the original residuals that were used to estimate the distribution.  Finally, the simulated flow-component, $Chl_{flo}$, was added to the simulated bilogical model, $Chl_{bio}$, to create the final chlorophyll-flow time series, $Chl_{obs}$, in \cref{chlobs}.  
 
-A daily time series for the entire period of record was simulated using the above methods and then used to compare the relative abilities of \ac{WRTDS} and \acp{GAM} to characterize flow-normalized trends.  Three time series with monthly sampling frequencies and varying contributions of the flow component, ($Chl_{flo}$ in \cref{chlobs}) were created from the daily time series. One day in each month for each year was randomly sampled and used as the montly time step for each time series.  Varying contributions of the flow component on observed chlorophyll were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from constant, non-existent, and steadily increasing.  Respectively, the vector of coefficients applied to each flow component was a constant vector of ones, a constant vector of zeroes, and a linear increase starting at zero and ending at one.  This created three monthly time series that were used to evaluate each model that were analogous to no influence, constant, and changing influence of the flow component.  The flow-normalized results of \ac{WRTDS} and \acp{GAM} for each simulated time series were compared to each other and to the original biological chlorophyll component of each time series ($Chl_{bio}$, \cref{chlobs,chlbio}).
+A daily time series for the entire period of record was simulated using the above methods and then used to compare the relative abilities of \ac{WRTDS} and \acp{GAM} to characterize flow-normalized trends.  Three time series with monthly sampling frequencies and varying contributions of the flow component ($Chl_{flo}$ in \cref{chlobs}) were created from the daily time series (\cref{fig:simex}). One day in each month for each year was randomly sampled and used as the monthly time step for each time series.  Varying contributions of the flow component on observed chlorophyll were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from constant, non-existent, and steadily increasing.  Respectively, the vector of coefficients applied to each flow component was a constant vector of ones, a constant vector of zeroes, and a linear increase starting at zero and ending at one.  This created three monthly time series that were used to evaluate each model that were analogous to no influence, constant, and changing influence of the flow component(\cref{fig:simex}).  The flow-normalized results of \ac{WRTDS} and \acp{GAM} for each simulated time series were compared to each other and to the original biological chlorophyll component of each time series ($Chl_{bio}$, \cref{chlobs,chlbio}).
 
 \section{Results}
 
@@ -314,17 +339,21 @@ data(perfbtw)
 perfbtw[ , 2:5] <- round(perfbtw[, 2:5], 2)
 @
 
-The following describes comparisons of model results, whereas the previous section emphasized results relative to trends over time.  Accordingly, direct comparisons between model predictions provide a means of identifying instances when models provided results that were systematically different from each other.  \Cref{tab:perfbtw} compares average differences and \ac{RMSE} of results between each model for the complete time series and different subsets by annual, seasonal, and flow periods.  Overall, differences between the models were minor with most percent differences not exceeding 1\% and only one \ac{RMSE} value greater than 0.20 (\ac{RMSE} \Sexpr{with(perfbtw, TF16_rmse[cat == 'JFM'])} for \ac{JFM} at TF1.6).  The greatest differences between the models were observed in the seasonal comparisons, with the most extreme differences observed at LE1.2 for the \ac{JAS} (\Sexpr{with(perfbtw, LE12_ave[cat == 'JAS'])}\%, \ac{WRTDS} greater than \acp{GAM}) and \ac{OND} (\Sexpr{with(perfbtw, LE12_ave[cat == 'OND'])}, \ac{WRTDS} less than \acp{GAM}) periods.  Differences between stations were not apparent.  
+The following describes comparisons of model results, whereas the previous section emphasized results relative to trends over time.  Accordingly, direct comparisons between model predictions provided a means of identifying instances when models provided results that were systematically different from each other.  \Cref{tab:perfbtw} compares average differences and \ac{RMSE} of results between each model for the complete time series and different subsets by annual, seasonal, and flow periods.  Overall, differences between the models were minor with most percent differences not exceeding 1\% and only one \ac{RMSE} value greater than 0.20 (\ac{RMSE} \Sexpr{with(perfbtw, TF16_rmse[cat == 'JFM'])} for \ac{JFM} at TF1.6).  The greatest differences between the models were observed in the seasonal comparisons, with the most extreme differences observed at LE1.2 for the \ac{JAS} (\Sexpr{with(perfbtw, LE12_ave[cat == 'JAS'])}\%, \ac{WRTDS} greater than \acp{GAM}) and \ac{OND} (\Sexpr{with(perfbtw, LE12_ave[cat == 'OND'])}, \ac{WRTDS} less than \acp{GAM}) periods.  Differences between stations were not apparent.  
 
-Regressions comparing model results provided additional information about systematic differences (significantly different intercept) and differences between the models that varied for different values (significantly different slopes) (\cref{tab:regprdnrm}, \cref{fig:regprdnrm}).  No significant differences were observed for the entire time series such that estimated intercepts and slopes were similar to zero and one, respectiveely, for both stations and model predictions (observed and flow-normalized).  However, differences were observed for the time period subsets, with the most obvious differences occuring for the seasonal aggregations.  For example, all comparisons between the models for both sites and model predictions had intercept estimates significantly greater than one and slope estimates signifcantly less than one for the \ac{JAS} period (\cref{tab:regprdnrm}).  All site and model prediction comparisons also had significantly different intercept and slope estimates for the low flow time period.    
+Regressions comparing model results provided additional information about overall differences (significantly different intercept) and differences between the models that varied for different values (significantly different slope) (\cref{tab:regprdnrm}, \cref{fig:regprdnrm}).  No significant differences were observed for the entire time series such that estimated intercepts and slopes were similar to zero and one, respectively, for both stations and model predictions (observed and flow-normalized).  However, differences were observed for the time period subsets, with the most obvious differences occuring for the seasonal aggregations.  For example, all comparisons between the models for both sites and model predictions had intercept estimates significantly greater than zero and slope estimates significantly less than one for the \ac{JAS} period (\cref{tab:regprdnrm}).  All site and model prediction comparisons also had significantly different intercept and slope estimates for the low flow time period.  Visual comparisons of results in \cref{fig:regprdnrm} confirm those in \cref{tab:regprdnrm}, particularly differences in the seasonal aggregations.  For example, comparisons of \ac{WRTDS} and \acp{GAM} results for the \ac{JFM} period at TF1.6 showed an intercept greater than zero and a tendency for \ac{GAM} estimates to be higher than \ac{WRTDS} at the right-side of the distribution (i.e., slope less than one with the regression line below 1:1).  Overall, no systematic differences were apparent between the model predictions for observed \ac{chla} and flow-normalized predictions.  
 
 \subsection{Changes in chlorophyll response to flow over time}
 
-Both models describe chlorophyll response with sufficient parameterization of input variables to evaluate variation in response to flow changes over time.  As in \citet{Beck15}, changes in the relationship of \ac{chla} to flow can be evaluated by predicting observed \ac{chla} across the range of observed salinity (or flow) values for each year in the time series.  Visual information obtained from these plots are useful to identify periods of time when \ac{chla} was or was not related to changes in flow and may also lead to the development of hypotheses regarding changes in the drivers of primary production, e.g., temporal shifts in point-sources to non-point sources of pollution \citep{Hirsch10,Beck15}.  The only difference between the models in creating such plots is that the three-dimensional prediction grid of \ac{chla}, flow, and time created during model fitting is used for \ac{WRTDS}, whereas the plots for \acp{GAM} are based on post-hoc model predictions with novel data. 
+Both models describe chlorophyll response with sufficient parameterization of input variables to evaluate variation with flow changes over time.  As in \citet{Beck15}, changes in the relationship of \ac{chla} to flow can be evaluated by predicting observed \ac{chla} across the range of observed salinity (or flow) values for each year in the time series.  Visual information obtained from these plots are useful to identify periods of time when \ac{chla} was or was not related to changes in flow and may also lead to the development of hypotheses regarding changes in the drivers of primary production, e.g., temporal shifts in point-sources to non-point sources of pollution \citep{Hirsch10,Beck15}.  The only difference between the models in creating such plots is that the three-dimensional prediction grid of \ac{chla}, flow, and time created during model fitting is used for \ac{WRTDS}, whereas the plots for \acp{GAM} are based on post-hoc model predictions with novel data. 
 
-\Cref{fig:dynafig} shows the change in predicted \ac{chla} for salinity or flow (depending on station) across all years in the study period, for each model.  The plots are also separated by months of interest to evaluate the effects of seasonal variation.  Visual assessment of the plots suggests that the relationship were dynamic across the study years and varied considerably between LE1.2 and TF1.6.  For example, the October plots show a decreasing sensitivity of \ac{chla} with decreasing flow (increasing salinity) at LE1.2 from early to late in the time series (i.e., a strong, negative relationship changing to a weak relationship over time).  Conversely, the opposite trend is observed at TF1.6 in October such that a weak relationship with decreasing flow is observed early in the time series and a strong positive relationship is observed later in the time series, although overall \ac{chla} has decrease over time.  Additionally, both models provided similar indications of the changes over time, although some differences were apparent, particularly for January where \ac{WRTDS} provided a wider range in the response of \ac{chl} to salinity in the earlier years.
+\Cref{fig:dynafig} shows the change in predicted \ac{chla} for salinity (LE1.2) or flow (TF1.6) across all years in the study period, for each model.  The plots are also separated by months of interest to evaluate the effects of seasonal variation.  Visual assessment of the plots suggests that the relationships were dynamic across the study years and varied considerably between LE1.2 and TF1.6.  For example, the October plots show a decreasing sensitivity of \ac{chla} with decreasing flow (increasing salinity) at LE1.2 from early to late in the time series (i.e., a strong, negative relationship changing to a weak relationship over time).  Conversely, the opposite trend is observed at TF1.6 in October such that a weak relationship with decreasing flow is observed early in the time series and a strong positive relationship is observed later in the time series, although overall \ac{chla} has decrease over time.  Additionally, both models provided similar indications of the changes over time, regardless of site or tiem of year.  However, some differences between the models were observed, particularly for January where \ac{WRTDS} provided a wider range in the response of \ac{chla} to salinity in the earlier years.
 
 \subsection{Flow-normalization with simulated data}
+
+Verify that simulated data is what it's claimed to be, then results.
+
+\cref{fig:simex}, \cref{fig:dynasim}, \cref{fig:simres}
 
 \section{Discussion}
 
@@ -802,7 +831,7 @@ latex(
 
 @
 
-% performance summary of flow-normalized predictions WRTDS/GAMS simulated data - compare between the two mods as in previous fig, but also compare with 'known' flow-independet ts
+% comparison of flow-normalized results for each model
 
 % qualitative comparison of each mod, pros/cons of each, etc. to accompany discussion
 
@@ -821,10 +850,10 @@ data(pax_meta)
 # lims <- bbox(patux_poly)
 
 # color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+mapcols <- wes_palette('Zissou', 100, 'continuous') %>% 
   as.character %>% 
   .[1:60]
-cols <- cols[round(seq(1, length(cols), length = 3))]
+mapcols <- mapcols[round(seq(1, length(mapcols), length = 3))]
 
 # prep for plots
 cb_poly <- fortify(cb_poly)
@@ -840,7 +869,7 @@ p1 <- ggplot(patux_poly, aes(x = long, y = lat)) +
   geom_polygon(data = cb_poly, aes(x = long, y = lat, group = group), 
     fill = 'grey90', colour = 'grey50') +
   geom_polygon(aes(fill = factor(id), group = group), colour = NA) +
-  scale_fill_manual(values = rev(cols)) +
+  scale_fill_manual(values = rev(mapcols)) +
   geom_point(data = pax_meta, aes(x = LONG, y = LAT), size = 5, alpha = 0.8) +
   geom_text(data = pax_meta, aes(x = LONG * 1.001, y = LAT, label = lab), size = 5, 
     parse = TRUE) +
@@ -886,30 +915,6 @@ print(p2, vp = v2)
 load(file = 'data/pax_data.RData')
 load(file = 'data/pax_meta.RData')
 load(file = 'data/pax_clip.RData')
-
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-
-# change default ggplot theme
-theme_mine <- function (base_size = 12, base_family = "") {
-  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
-  theme(
-    axis.text.x = element_text(size = 8), 
-    plot.background = element_rect(fill='transparent', 
-      colour = NA),
-    panel.background = element_rect(fill='transparent', 
-      colour = NA),
-    legend.background = element_rect(fill='transparent', 
-      colour = NA),
-    strip.background = element_rect(fill = 
-        alpha(cols[length(cols)], 0.5)),
-    legend.key = element_rect(fill = 'transparent', 
-      colour = NA)
-    )   
-}
-theme_set(theme_mine())
 
 # color for water for continuity with last fig
 wt_col <- wes_palette('Zissou', 100, 'continuous')[10] %>% 
@@ -990,30 +995,6 @@ library(tidyr)
 
 data(bestLE12)
 data(bestTF16)
-
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-
-# change default ggplot theme
-theme_mine <- function (base_size = 12, base_family = "") {
-  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
-  theme(
-    axis.text.x = element_text(size = 8), 
-    plot.background = element_rect(fill='transparent', 
-      colour = NA),
-    panel.background = element_rect(fill='transparent', 
-      colour = NA),
-    legend.background = element_rect(fill='transparent', 
-      colour = NA),
-    strip.background = element_rect(fill = 
-        alpha(cols[length(cols)], 0.5)),
-    legend.key = element_rect(fill = 'transparent', 
-      colour = NA)
-    )   
-}
-theme_set(theme_mine())
 
 # some plots
 bestTF16$site <- 'TF1.6'
@@ -1096,30 +1077,6 @@ dev.off()
 data(bestLE12)
 data(bestTF16)
 
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-  
-# change default ggplot theme
-theme_mine <- function (base_size = 12, base_family = "") {
-  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
-  theme(
-    axis.text.x = element_text(size = 8), 
-    plot.background = element_rect(fill='transparent', 
-      colour = NA),
-    panel.background = element_rect(fill='transparent', 
-      colour = NA),
-    legend.background = element_rect(fill='transparent', 
-      colour = NA),
-    strip.background = element_rect(fill = 
-        alpha(cols[length(cols)], 0.5)),
-    legend.key = element_rect(fill = 'transparent', 
-      colour = NA)
-    )   
-}
-theme_set(theme_mine())
-
 bestLE12 <- mutate(bestLE12, stat = 'LE1.2')
 bestTF16 <- mutate(bestTF16, stat = 'TF1.6')
 
@@ -1154,32 +1111,6 @@ ggplot(toplo, aes(x = fake_date, y = val, group = mod)) +
 data(bestLE12)
 data(bestTF16)
 
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-
-# change default ggplot theme
-theme_mine <- function (base_size = 12, base_family = "") {
-  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
-  theme(
-    axis.text.x = element_text(size = 8), 
-    axis.text.y = element_text(size = 8),
-    plot.background = element_rect(fill='transparent', 
-      colour = NA),
-    panel.background = element_rect(fill='transparent', 
-      colour = NA),
-    legend.background = element_rect(fill='transparent', 
-      colour = NA),
-    strip.background = element_rect(fill = 
-        alpha(cols[length(cols)], 0.5)),
-    legend.key = element_rect(fill = 'transparent', 
-      colour = NA),
-    plot.margin = unit(c(0, 1, 0, 0), "cm")
-    )   
-}
-theme_set(theme_mine())
-
 bestLE12 <- select(bestLE12, 
     fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat, dec_time
   ) %>% 
@@ -1199,6 +1130,9 @@ bestTF16 <- select(bestTF16,
 toplo <- rbind(bestTF16, bestLE12)
 toplo$res <- factor(toplo$res, levels = c('fits', 'norm'), labels = c('Pred', 'Norm'))
 
+# margins
+mars <- grid::unit(c(0, 0, 0, 0), 'cm')
+
 p <- ggplot(toplo, aes(x = gams, y = wrtds, colour = res, group = res)) + 
   geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
   geom_point(aes(shape = res), alpha = 0.6, size = 1) + 
@@ -1214,9 +1148,9 @@ pleg <- g_legend(p)
 p <- p + 
   theme(legend.position = 'none')
 
-p1 <- p + facet_grid(stat ~ yrcat)
-p2 <- p + facet_grid(stat ~ mocat)
-p3 <- p + facet_grid(stat ~ flcat)
+p1 <- p + facet_grid(stat ~ yrcat) + theme(plot.margin = mars)
+p2 <- p + facet_grid(stat ~ mocat) + theme(plot.margin = mars)
+p3 <- p + facet_grid(stat ~ flcat) + theme(plot.margin = mars)
 
 ylab <- expression(paste('WRTDS, ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
 xlab <- expression(paste('GAM, ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
@@ -1228,30 +1162,6 @@ grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGro
 
 % dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
 <<dynafig, fig.cap = 'Changes in the relationship between \\ac{chla} and flow across the time series.  Separate panels are shown for each station (LE1.2, TF1.6), model type (GAM, WRTDS), and chosen months.  Changes over time are shown as different predictions for each year in the time series (1986 to 2014).  Salinity was used as a tracer of flow at LE1.2, whereas the discharge record at Bowie, Maryland was used to measure flow at TF1.6.  The scales of salinity and flow are reversed for comparison of trends. Units are proportions of the total range in the observed data with values in each plot truncated by the monthly 5\\textsuperscript{th} and 95\\textsuperscript{th} percentiles.', eval = T, fig.height = 6.5, fig.width = 7.5, out.width = '1.02\\textwidth'>>=
-
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-
-# change default ggplot theme
-theme_mine <- function (base_size = 12, base_family = "") {
-  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
-  theme(
-    axis.text.x = element_text(size = 8), 
-    plot.background = element_rect(fill='transparent', 
-      colour = NA),
-    panel.background = element_rect(fill='transparent', 
-      colour = NA),
-    legend.background = element_rect(fill='transparent', 
-      colour = NA),
-    strip.background = element_rect(fill = 
-        scales::alpha(cols[length(cols)], 0.5)),
-    legend.key = element_rect(fill = 'transparent', 
-      colour = NA)
-    )   
-}
-theme_set(theme_mine())
 
 ## LE12 models
 
@@ -1339,46 +1249,20 @@ grid.arrange(
 @
 
 % examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects
-<<simex, fig.width = 6, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Examples of simulated time series for evaluating flow-normalized results from \\ac{WRTDS} and \\acp{GAM}.  The plots show the simulated daily time series (points) and monthly samples (lines) from the daily time series used for the models.  From top to bottom, the time series show the biological \\ac{chla} independent of flow and the three simulated datasets that represent different effects of flow: constant, none, and increasing effect.  The flow-normalized results for each model of the simulated time series were compared to the first time series that was independent of flow.'>>=
-
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-  
-# change default ggplot theme
-theme_mine <- function (base_size = 12, base_family = "") {
-  theme_bw(base_size = base_size, base_family = base_family) %+replace% 
-  theme(
-    axis.text.x = element_text(size = 8), 
-    plot.background = element_rect(fill='transparent', 
-      colour = NA),
-    panel.background = element_rect(fill='transparent', 
-      colour = NA),
-    legend.background = element_rect(fill='transparent', 
-      colour = NA),
-    strip.background = element_rect(fill = 
-        alpha(cols[length(cols)], 0.5)),
-    legend.key = element_rect(fill = 'transparent', 
-      colour = NA)
-    )   
-}
-theme_set(theme_mine())
+<<simex, fig.width = 6, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Examples of simulated time series for evaluating flow-normalized results from \\ac{WRTDS} and \\acp{GAM}.  The plots show the simulated daily time series (points) and monthly samples (lines) from the daily time series used to evaluate the flow-normalized predictions from \\ac{WRTDS} and \\acp{GAM}.  From top to bottom, the time series show the biological \\ac{chla} independent of flow and the three simulated datasets that represent different effects of flow: none, constant, and increasing effect.  The flow-normalized results for the simulated monthly time series from each model were compared to the first time series (biological chlorophyll) that was independent of flow.'>>=
 
 # load data, from sim_dat.R in tidal_comp proj
 load('data/sims_day.RData')
 load('data/sims_mos.RData')
 
 # organize daily and monthly ts for plots
-toplo <- select(sims_day, date, lnchla_noQ, sim1, sim2, sim3) %>% 
+toplo <- select(sims_day, date, lnchla_noQ, sim2, sim1, sim3) %>% 
   tidyr::gather('variable', 'value', -date)
-toplo2 <- select(sims_mos, date, lnchla_noQ, sim1, sim2, sim3) %>% 
+toplo2 <- select(sims_mos, date, lnchla_noQ, sim2, sim1, sim3) %>% 
   tidyr::gather('variable', 'value', -date) 
 
 # factor labels as expressions
-# labs <- c(expression(italic(Chl [bio])), expression(Constant~flow), expression(No~flow), 
-#   expression(Increasing~flow))
-labs <- c('Biological chlorophyll', 'Constant flow', 'No flow', 'Increasing flow')
+labs <- c('Biological chlorophyll', 'No flow', 'Constant flow', 'Increasing flow')
 levels(toplo$variable) <- levels(toplo2$variable) <- labs
 
 # y axis labels
@@ -1393,6 +1277,120 @@ ggplot(toplo, aes(x = date, y = value, group = variable)) +
   facet_wrap(~variable, ncol = 1)
 @
 
+% dynaplot examples for mods with simulated data
+<<dynasim, echo = F, cache = T, fig.height = 2.5, fig.width = 7, fig.cap = 'Examples of changing relationships between \\ac{chla} (\\mugl) and flow (as proportion of the total range) over time (2005--2015) for each simulated time series in \\cref{fig:simex}.  The plots are based on August predictions from three \\ac{WRTDS} models for each time series to illustrate the simulated relationships between flow and chlorophyll.', eval = T>>=
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+modcols <- cols[c(1, 50)]
+  
+data(bestsim_wrtds)
+
+lims <- c(0.85, 3)
+mars <- grid::unit(c(0, 0, 0, 0), 'cm')
+
+# no effect
+p1 <- dynaplot(bestsim_wrtds[[2]], month = 8, col_vec = cols, fac_nms = 'No flow') + 
+  scale_y_continuous(limits = lims) +
+  theme_mine() +
+  theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
+    strip.text.x = element_text(size = NULL))
+
+# constant
+p2 <- dynaplot(bestsim_wrtds[[1]], month = 8, col_vec = cols, fac_nms = 'Constant flow') + 
+  scale_y_continuous(limits = lims) +
+  theme_mine() +
+  theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars)
+
+# increasing
+p3 <- dynaplot(bestsim_wrtds[[3]], month = 8, col_vec = cols, fac_nms = 'Increasing flow') + 
+  scale_y_continuous(limits = lims) +
+  theme_mine() +
+  theme(legend.position = 'top', axis.title = element_blank(), plot.margin = mars) +
+  guides(colour = guide_colourbar(barwidth = 10, barheight = 1)) 
+
+pleg <- g_legend(p3)
+p3 <- p3 + theme(legend.position = 'none')
+
+ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+
+grid.arrange(
+  pleg,
+  arrangeGrob( 
+    textGrob(ylabs, rot = 90), p1, p2, p3, ncol = 4, widths = c(0.1, 1, 1, 1)), 
+  textGrob('Flow'),
+  heights = c(0.35, 1, 0.1)
+)
+@
+
 % results of flow-normalized data for simulations
+<<simres, echo = F, cache = T, fig.height = 7.5, fig.width = 6, fig.cap = 'Model predictions for three simulated datasets with different flow contributions (none, constant, increasing).  Estimated variables (e.g., $\\widehat{Chl}_{bio}$) are compared to simulated variables (e.g., $Chl_{bio}$) to evaluate the ability of each model (\\acp{GAM} and \\ac{WRTDS}) to recreate the flow-normalized time series of chlorophyll (i.e., bottom plot, $\\widehat{Chl}_{bio}$ vs $Chl_{bio}$) after removing a simulated flow component from the observed chlorophyll time series ($Chl_{obs}$).  The top plot compares only simulated time series for biological and observed chlorophyll ($Chl_{bio}$, $Chl_{obs}$) to emphasize the contribution of flow for each. See the text for more details.', eval = T>>=
+# color palette
+cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:60]
+modcols <- cols[c(1, 50)]
+  
+data(simres)
+
+# rename factor labels for each simulation
+simres <- mutate(simres, 
+  sim = factor(sim, levels = c('sim2', 'sim1', 'sim3'), labels = c('No flow', 'Constant flow', 'Increasing flow'))
+)
+
+# plot margins
+mars <- grid::unit(c(0, 0, 0, 0), 'cm')
+
+# plot limits
+lims <- c(0, 4)
+
+# simulated observed vs simulated norms
+p1 <- ggplot(simres, aes(x = simval, y = lnchla_noQ)) +
+  geom_abline(intercept = 0, slope = 1) +
+  scale_x_continuous(quote(italic('Chl' [obs])), limits = lims) + 
+  scale_y_continuous(quote(italic('Chl' [bio])), limits = lims) + 
+  geom_point(colour = 'black', shape = 1) + 
+  scale_colour_manual(values = modcols) +
+  facet_wrap(~sim, ncol = 3) +
+  theme(legend.position = 'none', plot.margin = mars)
+
+# fits vs norms
+p2 <- ggplot(simres, aes(x = fits, y = norm)) +
+  geom_abline(intercept = 0, slope = 1) +
+  scale_x_continuous(quote(italic(widehat('Chl') [obs])), limits = lims) + 
+  scale_y_continuous(quote(italic(widehat('Chl') [bio])), limits = lims) + 
+  geom_point(aes(colour = mod), shape = 1) + 
+  scale_colour_manual(values = modcols) +
+  facet_wrap(~sim, ncol = 3) +
+  theme(legend.position = 'none', plot.margin = mars)
+
+# fits vs simulated observed
+p3 <- ggplot(simres, aes(x = fits, y = simval)) +
+  geom_abline(intercept = 0, slope = 1) +
+  scale_x_continuous(quote(italic(widehat('Chl') [obs])), limits = lims) + 
+  scale_y_continuous(quote(italic('Chl' [obs])), limits = lims) +   
+  geom_point(aes(colour = mod), shape = 1) + 
+  scale_colour_manual(values = modcols) +
+  facet_wrap(~sim, ncol = 3) + 
+  theme(legend.position = 'none', plot.margin = mars)
+
+# norms vs simulated norms
+p4 <- ggplot(simres, aes(x = norm, y = lnchla_noQ)) +
+  geom_abline(intercept = 0, slope = 1) +
+  scale_x_continuous(quote(italic(widehat('Chl') [bio])), limits = lims) + 
+  scale_y_continuous(quote(italic('Chl' [bio])), limits = lims) + 
+  geom_point(aes(colour = mod), shape = 1) + 
+  scale_colour_manual(values = modcols) +
+  facet_wrap(~sim, ncol = 3) + 
+  theme(legend.position = 'top', legend.title = element_blank(), plot.margin = mars)
+
+pleg <- g_legend(p4)
+p4 <- p4 + theme(legend.position = 'none')
+
+# final plot
+grid.arrange(pleg, p1, p2, p3, p4, ncol = 1, heights = c(0.15, 1, 1, 1, 1))
+
+@
 
 \end{document}

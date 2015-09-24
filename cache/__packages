@@ -11,9 +11,9 @@ lattice
 survival
 Formula
 Hmisc
-sp
-maps
-mapproj
 nlme
 mgcv
 WRTDStidal
+sp
+maps
+mapproj
