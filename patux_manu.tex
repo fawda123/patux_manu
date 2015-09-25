@@ -146,7 +146,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Wed Sep 23 16:14:31 2015 -0500
+  \\ Version Date:   Thu Sep 24 16:38:06 2015 -0500
 	}
 \date{}
 \maketitle
@@ -277,7 +277,7 @@ Chl_{seas} = \beta_0 + \beta_1 T + \beta_2 Q + \beta_3 \sin\left(2\pi T\right) +
 \end{equation}
 This approach was used to isolate an error structure for simulation that was independent of flow and biology, where the seasonal component (as time $T$ on a sinusoidal annual period) was assumed to be related to biological processes.  The error distribution was then estimated from the residuals (\cref{chlerr}) as before using an \ac{ARMA} estimate of the residual parameters, $p$ and $q$.  Standard error estimates from the regression used at each point in the one-year time series were also retained for each residual.  Errors were simulated ($\varepsilon_{Chl,\,sim}$, \cref{chlbio}) for the entire year using the estimated auto-regressive structure and multiplied by the corresponding standard error estimate from the regression.  The entire year was repeated for every year in the observed time series.  All simulated errors were rescaled to the range of the original residuals that were used to estimate the distribution.  Finally, the simulated flow-component, $Chl_{flo}$, was added to the simulated bilogical model, $Chl_{bio}$, to create the final chlorophyll-flow time series, $Chl_{obs}$, in \cref{chlobs}.  
 
-A daily time series for the entire period of record was simulated using the above methods and then used to compare the relative abilities of \ac{WRTDS} and \acp{GAM} to characterize flow-normalized trends.  Three time series with monthly sampling frequencies and varying contributions of the flow component ($Chl_{flo}$ in \cref{chlobs}) were created from the daily time series (\cref{fig:simex}). One day in each month for each year was randomly sampled and used as the monthly time step for each time series.  Varying contributions of the flow component on observed chlorophyll were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from constant, non-existent, and steadily increasing.  Respectively, the vector of coefficients applied to each flow component was a constant vector of ones, a constant vector of zeroes, and a linear increase starting at zero and ending at one.  This created three monthly time series that were used to evaluate each model that were analogous to no influence, constant, and changing influence of the flow component(\cref{fig:simex}).  The flow-normalized results of \ac{WRTDS} and \acp{GAM} for each simulated time series were compared to each other and to the original biological chlorophyll component of each time series ($Chl_{bio}$, \cref{chlobs,chlbio}).
+A daily time series for the entire period of record was simulated using the above methods and then used to compare the relative abilities of \ac{WRTDS} and \acp{GAM} to characterize flow-normalized trends.  Three time series with monthly sampling frequencies and varying contributions of the flow component ($Chl_{flo}$ in \cref{chlobs}) were created from the daily time series (\cref{fig:simex}). One day in each month for each year was randomly sampled and used as the monthly time step for each time series.  Varying effects of the flow component on observed chlorophyll were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from constant, non-existent, and steadily increasing.  Respectively, the vector of coefficients applied to each flow component was a constant vector of ones, a constant vector of zeroes, and a linear increase starting at zero and ending at one.  This created three monthly time series that were used to evaluate each model that were analogous to no influence, constant, and changing influence of the flow component over time (\cref{fig:simex}).  Results were evaluated by first comparing the predicted ($\widehat{Chl}_{obs}$) and observed ($Chl_{obs}$) chloropyll values for each simulation, following by comparing the flow-normalized results ($\widehat{Chl}_{bio}$) from each model to the original biological chlorophyll ($Chl_{bio}$) component of each simulated time series (\cref{chlobs,chlbio}).  The former comparison provided information on relative fit to validate the simulated data, whereas the latter comparison to evaluate flow-normalization was the primary focus of the analysis.
 
 \section{Results}
 
@@ -313,9 +313,9 @@ Both models describe chlorophyll response with sufficient parameterization of in
 
 \subsection{Flow-normalization with simulated data}
 
-Verify that simulated data is what it's claimed to be, then results.
+\ac{WRTDS} and \acp{GAM} were fit to each dataset creating six models to evaluate the general fit of observed to predicted ($Chl_{obs} \sim \widehat{Chl}_{obs}$) and biological to flow-normalized \ac{chla} ($Chl_{bio} \sim \widehat{Chl}_{bio}$).  Models were fit using identical methods as those for the actual \ac{chla} time series in the Patuxent such that an optimal window width combination for \ac{WRTDS} results and optimal degrees of freedom for smoothing parameters with \acp{GAM} were identified.  \Cref{fig:dynasim} shows an example of the changing relationships between \ac{chla} and flow across the simulated time series using the results from three optimal \ac{WRTDS} models.  The plots confirm those in \cref{fig:simex} by showing the varying effects of flow in each simulated dataset over time (no effect, constant, increasing) and that the models appropriately characterized the relationships.  For example, a changing response of \ac{chla} to salinity is apparent in the third panel of \cref{fig:dynasim} such that no response is observed early in the time series followed by an increase in the response of \ac{chla} to flow later in the time series.  Similar patterns were observed for the \acp{GAM}.
 
-\cref{fig:simex}, \cref{fig:dynasim}, \cref{fig:simres}
+Comparisons of fit for each model to the simulated time series provided similar results as those for the Patuxent dataset.  Overall, \ac{WRTDS} results had lower \ac{RMSE} than \acp{GAM} for all comparisons except one ($Chl_{obs} \sim \widehat{Chl}_{obs}$, constant flow simulation), although differences in performance were minor (\cref{tab:simperf}).  Visual comparison of results suggested that both models provided comparable information for predictions of observed values and flow-normalized predictions (\cref{fig:simres}).  Additionally, the varying effect of flow on each time series was apparent in comparisons of predicted with flow-normalized results, such that $\widehat{Chl}_{bio}$ was increasingly different from $\widehat{Chl}_{obs}$ from no effect to constant effect of the flow component (top row, \cref{fig:simres}).  Although both models provided similar performance for individual simulations, differences between the simulations were observed.  The increasing effect of flow had a negative effect on the ability of each model to remove the flow component.  Comparisons of $Chl_{bio}$ with $\widehat{Chl}_{bio}$ showed the lowest \ac{RMSE} with no flow effect and the highest with a constant flow effect (\cref{tab:simperf}).  Increasing flow effects did not have an influence on the relationship between predicted ($\widehat{Chl}_{obs}$) and observed ($Chl_{obs}$) \ac{chla} such that \ac{RMSE} for all models and simulations were similar and lower than those comparing the flow-normalized results.  Overall, changing the flow component primarily affected the ability of each model to reproduce the flow-normalized component ($\widehat{Chl}_{bio}$) with relatively minor differences between the models. 
 
 \section{Discussion}
 
@@ -324,6 +324,8 @@ Verify that simulated data is what it's claimed to be, then results.
 % why we used the simulated data w/o a trend in biological chlorophyll - wanted to eval ability of each model to remove flow, but must emphasize that the real value of either model is to look at flow-independent trends - i.e., are there other things besides flow that are causing changes.
 
 % performance related to flow - should not be related to flow becuase it is a model parameter (e.g., increasing variance of residuals with increasing flow)
+
+% WRTDS did outperfrom GAMs in almost all performance metrics but the tradeoff with computation time vs relatively small inreases in performance is the main point - performance increase vs cost, law of diminishing returns?  Maybe relate to neural network vs multiple regression, the key might be to find instances when there is a clear benefit of using a more complex model (e.g., neural networks work well with larger datasets?)
 
 \begin{outline}
 \0 \noindent Qualitative comparison
@@ -375,7 +377,7 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 % performance summary of predictions to observed, tab:perftoobs
 %latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("GAM",         "WRTDS"), 2), label = "tab:perftoobs")%
 \begin{table}[!tbp]
-\caption{Summary of model performances using \ac{RMSE} of observed to predicted ln-chlorophyll for each station (LE1.2 and TF1.6).  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
+\caption{Summaries of model performance using \ac{RMSE} of observed to predicted ln-chlorophyll for each station (LE1.2 and TF1.6).  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
@@ -410,13 +412,13 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 
 
 % trend summary of flo-norm results for WRTDS/GAMs, two tables each station, tab:trendsLE12, tab:trendsTF16
-%latex.default(tabLE12, file = "", rowlabel = "Station, Period",     caption = cap.val, caption.loc = "top", rgroup = c("All",         "Annual", "Seasonal", "Flow"), n.rgroup = c(1, rep(4,         3)), cgroup = c("GAM", "WRTDS"), n.cgroup = c(2, 2),     rowname = rows, colheads = rep(c("Ave.", "\\% Change"), 2),     label = "tab:trendsLE12")%
+%latex.default(tabLE12, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("GAM",         "WRTDS"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Ave.",         "\\% Change"), 2), label = "tab:trendsLE12")%
 \begin{table}[!tbp]
 \caption{Summaries of flow-normalized trends from each model at LE1.2 for different time periods.  Summaries are averages and percentage changes of ln-chlorophyll (\mugl) based on annual means within each category.  For example, summary values for high flow for a given model and are based on instances of high flow across years.  Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:trendsLE12}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
-\multicolumn{1}{l}{\bfseries Station, Period}&\multicolumn{2}{c}{\bfseries GAM}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries WRTDS}\tabularnewline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries GAM}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries WRTDS}\tabularnewline
 \cline{2-3} \cline{5-6}
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}\tabularnewline
 \hline
@@ -444,13 +446,13 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \end{tabular}\end{center}
 
 \end{table}
-%latex.default(tabTF16, file = "", rowlabel = "Station, Period",     caption = cap.val, caption.loc = "top", rgroup = c("All",         "Annual", "Seasonal", "Flow"), n.rgroup = c(1, rep(4,         3)), cgroup = c("GAM", "WRTDS"), n.cgroup = c(2, 2),     rowname = rows, colheads = rep(c("Ave.", "\\% Change"), 2),     label = "tab:trendsTF16")%
+%latex.default(tabTF16, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("GAM",         "WRTDS"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Ave.",         "\\% Change"), 2), label = "tab:trendsTF16")%
 \begin{table}[!tbp]
 \caption{Summaries of flow-normalized trends from each model at TF1.6 for different time periods.  Summaries are averages and percentage changes of ln-chlorophyll (\mugl) based on annual means within each category.  For example, summary values for high flow for a given model and are based on instances of high flow across years.  Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:trendsTF16}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
-\multicolumn{1}{l}{\bfseries Station, Period}&\multicolumn{2}{c}{\bfseries GAM}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries WRTDS}\tabularnewline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries GAM}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries WRTDS}\tabularnewline
 \cline{2-3} \cline{5-6}
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}\tabularnewline
 \hline
@@ -520,7 +522,7 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 % regression fit between WRTDS, GAMs, predictions and norms, tab:regprdnrm
 %latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("$\\beta_{0,\\,pred}$",         "$\\beta_{1,\\,pred}$", "$\\beta_{0,\\,norm}$", "$\\beta_{1,\\,norm}$"),     n.cgroup = rep(2, 3, 4), rowname = rows, colheads = rep(c("LE1.2",         "TF1.6"), 4), label = "tab:regprdnrm")%
 \begin{table}[!tbp]
-\caption{Regression fits comparing predicted and flow-normalized results for \ac{WRTDS} and \acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\beta_0$) estimate was significantly different from zero or the slope ($\beta_{1}$ estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.  See \cref{fig:regprdnrm} for a graphical summary.\label{tab:regprdnrm}} 
+\caption{Regression fits comparing predicted ({\it pred}) and flow-normalized ({\it norm}) results for \ac{WRTDS} and \acp{GAM} at each station.  Values in bold-italic are those where the intercept ($\beta_0$) estimate was significantly different from zero or the slope ($\beta_{1}$) estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.  See \cref{fig:regprdnrm} for a graphical summary.\label{tab:regprdnrm}} 
 \begin{center}
 \begin{tabular}{lllcllcllcll}
 \hline\hline
@@ -554,7 +556,31 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \end{table}
 
 
-% comparison of flow-normalized results for each model
+% comparison of flow-normalized results for simulated datasets, tab:simperf
+%latex.default(tab, file = "", rowlabel = "Simulations", caption = cap.val,     caption.loc = "top", rgroup = c("No flow", "Constant flow",         "Increasing flow"), n.rgroup = rep(2, 3), rowname = rows,     colheads = c("$Chl_{obs} \\sim \\widehat{Chl}_{obs}$", "$Chl_{bio} \\sim \\widehat{Chl}_{bio}$"),     label = "tab:simperf")%
+\begin{table}[!tbp]
+\caption{Summaries of model performance comparing observed chlorophyll with predicted values ($Chl_{obs} \sim \widehat{Chl}_{obs}$) and biological chlorophyll with flow-normalized values ($Chl_{bio} \sim \widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \ac{RMSE} values comparing results from each model (\ac{GAM}, \ac{WRTDS}) in the bottom two rows of panels in \cref{fig:simres}.\label{tab:simperf}} 
+\begin{center}
+\begin{tabular}{lll}
+\hline\hline
+\multicolumn{1}{l}{Simulations}&\multicolumn{1}{c}{$Chl_{obs} \sim \widehat{Chl}_{obs}$}&\multicolumn{1}{c}{$Chl_{bio} \sim \widehat{Chl}_{bio}$}\tabularnewline
+\hline
+{\bfseries No flow}&&\tabularnewline
+~~GAM&0.51&0.53\tabularnewline
+~~WRTDS&0.50&0.52\tabularnewline
+\hline
+{\bfseries Constant flow}&&\tabularnewline
+~~GAM&0.51&0.58\tabularnewline
+~~WRTDS&0.53&0.57\tabularnewline
+\hline
+{\bfseries Increasing flow}&&\tabularnewline
+~~GAM&0.51&0.54\tabularnewline
+~~WRTDS&0.50&0.52\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
 
 % qualitative comparison of each mod, pros/cons of each, etc. to accompany discussion
 
@@ -673,7 +699,7 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 
 }
 
-\caption{Model predictions for three simulated datasets with different flow contributions (none, constant, increasing).  Estimated variables (e.g., $\widehat{Chl}_{bio}$) are compared to simulated variables (e.g., $Chl_{bio}$) to evaluate the ability of each model (\acp{GAM} and \ac{WRTDS}) to recreate the flow-normalized time series of chlorophyll (i.e., bottom plot, $\widehat{Chl}_{bio}$ vs $Chl_{bio}$) after removing a simulated flow component from the observed chlorophyll time series ($Chl_{obs}$).  The top plot compares only simulated time series for biological and observed chlorophyll ($Chl_{bio}$, $Chl_{obs}$) to emphasize the contribution of flow for each. See the text for more details.}\label{fig:simres}
+\caption{Model predictions for three simulated datasets with different flow contributions (none, constant, increasing).  Estimated variables (e.g., $\widehat{Chl}_{bio}$) are compared to simulated variables (e.g., $Chl_{bio}$) to evaluate the ability of each model (\acp{GAM} and \ac{WRTDS}) to recreate the flow-normalized time series of chlorophyll (i.e., bottom plot, $\widehat{Chl}_{bio}$ vs $Chl_{bio}$) after removing a simulated flow component from the observed chlorophyll time series ($Chl_{obs}$).}\label{fig:simres}
 \end{figure}
 
 
