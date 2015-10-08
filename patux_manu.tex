@@ -128,7 +128,7 @@
 \begin{document}
 
 \raggedbottom
-% \linenumbers
+\linenumbers
 \raggedright
 \urlstyle{same}
 \setlength{\parindent}{0.5in}
@@ -146,7 +146,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Thu Sep 24 16:38:06 2015 -0500
+  \\ Version Date:   Fri Sep 25 10:52:55 2015 -0500
 	}
 \date{}
 \maketitle
@@ -210,11 +210,15 @@ Predicted values are based on an interpolation matrix from the unique regression
 
 \subsubsection{Generalized Additive Models}
 
+A \ac{GAM} is a statistical model that allows for a linear predictor to be represented as the sum of multiple smooth functions of covariates \citep{Hastie90}. In this application, \acp{GAM} were constructed with the same explanatory parameters as the \ac{WRTDS} approach: log of \ac{chla} was modeled as a function of decimal time, salinity or flow, and day of year (i.e., to capture the annual cycle). The relationships between log-\ac{chla} and the covariates were modeled with thin plate regression splines \citep{Wood06} as the smooth functions using the `mgcv' package in R. To allow for interaction between the model covariates (e.g., seasonal differences in the long-term \ac{chla} pattern), a tensor product basis between all three covariates was constructed. The tensor product basis allows for the smooth construct to be a function of any number of covariates, without an isotropy constraint. The \ac{GAM} implementation in `mgcv' does not require the selection of knots for a spline basis, but instead a reasonable upper limit on the flexibility of the function is set, and a `wiggliness' penalty is added to create a penalized regression spline structure. The balance between model fit and smoothness is achieved by selecting a smoothness parameter that minimizes the generalized cross-validation score \citep{Wood06}.
+
+Model predictions with \acp{GAM} are straightforward to obtain after the model parameters are selected, and can be computed along with standard errors which are based on the Bayesian posterior covariance matrix \citep{Wood06}. For this comparison, salinity- or flow-normalized \ac{GAM} predictions were obtained in a manner for consistency with \ac{WRTDS}. The observed salinity or flow values were compiled that occurred in the same month throughout all years in the dataset. These values were assumed to be equally likely to occur at that particular month.  A normalized \ac{GAM} estimate at each date in the record was computed as the average of the predictions obtained using all of the flow or salinity values for that month of the year throughout the record. 
+
 \subsubsection{Selection of model parameters}
 
-The selection of optimal model parameters is a challenge that represents a tradeoff between model precision and ability to generalize to novel datasets.  Weighted regression requires identifying optimal half-window widths, whereas \acp{GAM} requires identifying the optimal degrees of freedom for the smoothing parameter.  Overfitting a model with excessively small window widths or excessive degrees of freedom will minimize prediction error but prevent extrapolation of results to different datasets. Similarly, underfitting a model with large window widths or very few degrees of freedom will reduce precision but will improve the ability to generalize results to different datasets. From a statistical perspective, the optimal model parameters provide a balance between over- and under-fitting.  Both models use a form of cross-validation to identify model parameters that maximize the precision of model predictions with a novel dataset.   
+The selection of optimal model parameters is a challenge that represents a tradeoff between model precision and ability to generalize to novel datasets.  Weighted regression requires identifying optimal half-window widths, whereas the \ac{GAM} approach used here requires identifying an optimal value for a smoothing parameter that weights the wiggliness of the function against model fit \citep{Wood06}.  Overfitting a model with excessively small window widths or smoothing parameter will minimize prediction error but prevent extrapolation of results to different datasets. Similarly, underfitting a model with large window widths or smoothing parameter will reduce precision but will improve the ability to generalize results to different datasets. From a statistical perspective, the optimal model parameters provide a balance between over- and under-fitting.  Both models use a form of cross-validation to identify model parameters that maximize the precision of model predictions with a novel dataset.   
 
-The basic premise of cross-validation is to identify the optimal set of model parameters that minimize prediction error on a dataset that was not used to develop the model.  For \acp{GAM} \citep{Hastie90,Zuur12}...[insert GAMs methods]. Similarly, the tidal adaptation of \ac{WRTDS} used k-fold cross-validation to identify the optimal half-window widths. For a given set of half-window widhts, the dataset was separated into ten disjoint sets, such that ten models were evaluated for every combination of k - 1 training and remaining test datasets. That is, the training dataset for each fold was all k - 1 folds and the test dataset was the remaining fold, repeated k times. The average prediction error of the test datasets across k folds provided an indication of model performance for the given combination of half-window widths.  The optimum window widths were those that provided minimum errors on the test data.  Evaluating multiple combinations of window-widths can be computationally intensive. An optimization function was implemented in R  \citep{Byrd95,RDCT15} to more efficiently evaluate model parameters using a search algorithm.  Window widths were searched using the limited-memory modification of the BFGS quasi-Newton method that imposes upper and lower bounds for each parameter.  The chosen parameters were based on a selected convergence tolerance for the error minimization of the search algorithm.  
+The basic premise of cross-validation is to identify the optimal set of model parameters that minimize prediction error on a dataset that was not used to develop the model.  For the \ac{GAM} approach, generalized cross-validation is used to obtain the optimal smoothing parameter in an iterative process with penalized likelihood maximization to solve for model coefficients. The effective degrees of freedom of the resulting model varies with the smoothing parameter \citep{Wood06}. Similarly, the tidal adaptation of \ac{WRTDS} used k-fold cross-validation to identify the optimal half-window widths. For a given set of half-window widhts, the dataset was separated into ten disjoint sets, such that ten models were evaluated for every combination of k - 1 training and remaining test datasets. That is, the training dataset for each fold was all k - 1 folds and the test dataset was the remaining fold, repeated k times. The average prediction error of the test datasets across k folds provided an indication of model performance for the given combination of half-window widths.  The optimum window widths were those that provided minimum errors on the test data.  Evaluating multiple combinations of window-widths can be computationally intensive. An optimization function was implemented in R  \citep{Byrd95,RDCT15} to more efficiently evaluate model parameters using a search algorithm.  Window widths were searched using the limited-memory modification of the BFGS quasi-Newton method that imposes upper and lower bounds for each parameter.  The chosen parameters were based on a selected convergence tolerance for the error minimization of the search algorithm.  
 
 \subsection{Comparison of modelled trends}
 
@@ -285,7 +289,7 @@ A daily time series for the entire period of record was simulated using the abov
 
 
 
-The optimal half-window widths and degrees of freedom for smoothing varied for \ac{WRTDS} and \acp{GAM}, respectively, at each station.  For \ac{WRTDS}, optimal half-window widths identified by generalized cross-validation were  0.25 as a proportion of each year, 13.59 years, and  0.25 as a proportion of the total range of salinity for LE1.2, and 0.25 of each year, 6.28 years, and 0.50 of flow at TF1.6.  For both stations, the optimization method selected relatively wide windows for the year weights while minimizing the seasonal (annual proportion) and flow component.  For \acp{GAM}, optimal smoothing at each station was...[insert results].     
+The optimal half-window widths and degrees of freedom for smoothing varied for \ac{WRTDS} and \acp{GAM}, respectively, at each station.  For \ac{WRTDS}, optimal half-window widths identified by generalized cross-validation were  0.25 as a proportion of each year, 13.59 years, and  0.25 as a proportion of the total range of salinity for LE1.2, and 0.25 of each year, 6.28 years, and 0.50 of flow at TF1.6.  For both stations, the optimization method selected relatively wide windows for the year weights while minimizing the seasonal (annual proportion) and flow component.  For \acp{GAM}, the optimal smoothing procedure resulted in a smoother model at LE1.2 than TF1.6 with effective degrees of freedom of 32.2 and 47.1, respectively.  The tensor product smooth costruct does not split apart the effective degrees of freedom among the three interacting parameters.     
 
 
 
@@ -326,6 +330,10 @@ Comparisons of fit for each model to the simulated time series provided similar 
 % performance related to flow - should not be related to flow becuase it is a model parameter (e.g., increasing variance of residuals with increasing flow)
 
 % WRTDS did outperfrom GAMs in almost all performance metrics but the tradeoff with computation time vs relatively small inreases in performance is the main point - performance increase vs cost, law of diminishing returns?  Maybe relate to neural network vs multiple regression, the key might be to find instances when there is a clear benefit of using a more complex model (e.g., neural networks work well with larger datasets?)
+
+% characterization of seasonal components for each model - WRTDS did better (fig. 4), also compare characterization of components in different years, e.g., GAMs seasonal characterization was different for first and last ten years
+
+% what does this mean for the patuxent - not really an emphasis of the paper but interesting trends, e.g., effects of hurricane flushing lasted several years at tf16.  Also seasonal changes at LE12, chlorophyll increasing in cooler months (anecdotally), supported by models?
 
 \begin{outline}
 \0 \noindent Qualitative comparison
