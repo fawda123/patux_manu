@@ -242,7 +242,7 @@ where the estimated \ac{chla} values for each model, $\widehat{Chl}_{i,\,WRTDS}$
 \end{equation}
 Positive values indicate that \ac{WRTDS} provided higher predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}.  Results between models were also evaluated using regressions comparing the \ac{WRTDS} and \ac{GAM} predictions.  The regressions were compared to a null model having an intercept of zero and slope of one.  Deviation of either the intercept or slope of the regressions from the null model provided evidence of systematic differences between the models.  In general, an intercept significantly different from zero can be interpreted as an overall difference between the predictions, whereas a slope different from one can be interpreted as a difference that varies with relative magnitude of the predictions.
 
-The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of flow-normalized data for each model was primarily accomplished using simulated datasets with known components that were independent of discharge.  However, a simple comparison of flow-normalized trends by different time periods was provided to summarize long-term patterns in the Patuxent River estuary.   
+The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of flow-normalized data for each model was primarily accomplished using simulated datasets with known components that were independent of discharge.  However, a simple comparison of flow-normalized trends by different time periods was provided to summarize long-term patterns in the Patuxent River estuary.  These comparisons evaluated percent changes of flow-normalized estimates at the beginning and end of each time period.  Percent changes within each period were based on a comparison of annual mean estimates for the first and last three years of flow-normalized \ac{chla} estimates, excluding the annual aggregations that had limited annual mean data (i.e., seven years per period).  For example, percent change for the \ac{JFM} seasonal period was based on an average of JFM annual means for 1986 through 1988 to an average of JFM annual means for 2012 through 2014. This approach was used to reduce the influence of abnormal years on trend estimates.   
 
 \subsection{Comparison of flow-normalized trends}
 
@@ -334,7 +334,7 @@ trendsTF16[, 3:6] <- round(trendsTF16[, 3:6], 1)
 trendsLE12[, 3:6] <- round(trendsLE12[, 3:6], 1)
 @
 
-Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:predann}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed. By 2014, chlorophyll returned to values similar to those prior to the initial decrease.  Flow-normalized predictions that were averaged annually at each site allowed an interpretation of trends that were independent of variation in discharge or salinity (\cref{tab:trendsLE12,tab:trendsTF16}).  Overall percent change of \ac{chla} concentration from the beginning to the end of the time series at LE1.2 was approximately 20\% (\cref{tab:trendsLE12}).  An increase at TF1.6 was also observed from 1986 to 2014 (\cref{tab:trendsTF16}), although less dramatic as compared to LE1.2.  Changes by annual and seasonal time periods at LE1.2 were comparable for each time period and model type.  However, changes by flow periods differed such that both models showed an increase in \ac{chla} for both low and high flow periods, whereas decreases in chlorophyll were observed for moderate flow periods (flow 2 and flow 3, \cref{tab:trendsLE12}).  Trends by different time periods were more apparent for TF1.6, particularly as an overall decrease in \ac{chla} for both models during the 2001--2007 period and an overall increase during 2008--2014 period (\cref{tab:trendsTF16}).  Seasonal changes were especially pronounced during the \ac{JFM} period where both models showed an increase with differences between the two (\Sexpr{with(trendsTF16, gams_chg[cat == 'JFM'])}\% for \acp{GAM}, \Sexpr{with(trendsTF16, wrtds_chg[cat == 'JFM'])}\% for \ac{WRTDS}).  Percent changes by flow period were also observed at TF1.6, with the most noticeable difference from LE1.2 being a decrease in \ac{chla} during high flow (both models) and relatively larger increases in \ac{chla} during moderate flow.  
+Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:predann}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed. By 2014, chlorophyll returned to values similar to those prior to the initial decrease.  Flow-normalized predictions that were averaged annually at each site allowed an interpretation of trends that were independent of variation in discharge or salinity (\cref{tab:trendsLE12,tab:trendsTF16}).  Overall percent change of \ac{chla} concentration from the beginning to the end of the time series at LE1.2 was approximately 20\% (\cref{tab:trendsLE12}).  A slight decrease in \ac{chla} at TF1.6 was observed from 1986 to 2014 (\cref{tab:trendsTF16}).  Changes by annual, seasonal, and flow time periods at LE1.2 were comparable for each time period and model type, although some differences were observed.  For example, both models had maximum increases in \ac{chla} for the different flow periods for high levels of flow (\Sexpr{with(trendsLE12, gams_chg[cat %in% "Flow 4 (High)"])}\% for \acp{GAM}, \Sexpr{with(trendsLE12, wrtds_chg[cat %in% "Flow 4 (High)"])}\% for \ac{WRTDS}).  Trends by different time periods were more apparent for TF1.6, particularly as an overall decrease in \ac{chla} for both models during the 2001--2007 period and an overall increase during 2008--2014 period (\cref{tab:trendsTF16}).  Seasonal changes were especially pronounced during the \ac{JFM} and \ac{OND} periods where both models showed an increase and decrease, respectively, with differences between the two (\ac{JFM} period, \Sexpr{with(trendsTF16, gams_chg[cat == 'JFM'])}\% for \acp{GAM}, \Sexpr{with(trendsTF16, wrtds_chg[cat == 'JFM'])}\% for \ac{WRTDS}; \ac{OND} period, \Sexpr{with(trendsTF16, gams_chg[cat == 'OND'])}\% for \acp{GAM}, \Sexpr{with(trendsTF16, wrtds_chg[cat == 'OND'])}\% for \ac{WRTDS}).  Percent changes by flow period were also observed at TF1.6, with the most noticeable difference from LE1.2 being a decrease in \ac{chla} during both high and low flow (both models) and relatively larger increases in \ac{chla} during moderate flow.  
 
 \subsection{Comparison of model predictions}
 
@@ -362,6 +362,8 @@ Comparisons of fit for each model to the simulated time series provided similar 
 \section{Discussion}
 
 % optimal model parameters - similarities and differences with GAMs/WRTDS - see my email to Rebecca on 8/10/15
+
+% oddities in shape for dynafig with WRTDS - related to data limitation issues, so choose a wider window width but this also compromises precision for periods with adequate data. There is a tradeoff here.
 
 % why we used the simulated data w/o a trend in biological chlorophyll - wanted to eval ability of each model to remove flow, but must emphasize that the real value of either model is to look at flow-independent trends - i.e., are there other things besides flow that are causing changes.
 
@@ -559,12 +561,36 @@ fldat <- group_by(alldat, stat, date, flcat) %>%
 # get summary stats for each agg period
 
 # percent change across period
-chn_fun <- function(x, y){
+# based on differences between average of earliest three and latest three years
+# to minimize outliers
+# use single = T to use only one year for first and last comparisons
+chn_fun <- function(x, y, single = F){
+
   tomod <- data.frame(x, y)
-  srt <- tomod[which.min(tomod$x), 'y']
-  stp <- tomod[which.max(tomod$x), 'y']
+  tomod <- tomod[order(tomod$x), ]
+  
+  # get only first and last year's data
+  if(single){
+  
+    srt <- tomod[which.min(tomod$x), 'y']
+    stp <- tomod[which.max(tomod$x), 'y']
+  
+  # otherwise get average of first and last three years of data
+  } else {
+    
+    srt <- which.min(tomod$x)
+    srt <- seq(srt, srt + 2)
+    srt <- mean(tomod[srt, 'y'], na.rm = TRUE)
+    stp <- which.max(tomod$x)
+    stp <- seq(stp - 2, stp)
+    stp <- mean(tomod[stp, 'y'], na.rm = TRUE)
+      
+  }
+  
+  # get percent change from beginning to end
   out <- 100 * (stp - srt)/srt
   return(out)
+  
 }
 
 yrdat <- gather(yrdat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
@@ -572,7 +598,7 @@ yrdat <- gather(yrdat, 'mod', 'val', norm_wrtds:norm_gams) %>%
   group_by(stat, yrcat, mod) %>% 
   summarise(
     ave = mean(val, na.rm = TRUE),
-    chg = chn_fun(date, val)
+    chg = chn_fun(date, val, single = T) # important!
   ) %>% 
   gather('met', 'val', ave:chg) %>% 
   unite('modmet', mod, met) %>% 

@@ -146,7 +146,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Fri Sep 25 10:52:55 2015 -0500
+  \\ Version Date:   Thu Oct 8 16:47:31 2015 -0500
 	}
 \date{}
 \maketitle
@@ -236,7 +236,7 @@ where the estimated \ac{chla} values for each model, $\widehat{Chl}_{i,\,WRTDS}$
 \end{equation}
 Positive values indicate that \ac{WRTDS} provided higher predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}.  Results between models were also evaluated using regressions comparing the \ac{WRTDS} and \ac{GAM} predictions.  The regressions were compared to a null model having an intercept of zero and slope of one.  Deviation of either the intercept or slope of the regressions from the null model provided evidence of systematic differences between the models.  In general, an intercept significantly different from zero can be interpreted as an overall difference between the predictions, whereas a slope different from one can be interpreted as a difference that varies with relative magnitude of the predictions.
 
-The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of flow-normalized data for each model was primarily accomplished using simulated datasets with known components that were independent of discharge.  However, a simple comparison of flow-normalized trends by different time periods was provided to summarize long-term patterns in the Patuxent River estuary.   
+The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of flow-normalized data for each model was primarily accomplished using simulated datasets with known components that were independent of discharge.  However, a simple comparison of flow-normalized trends by different time periods was provided to summarize long-term patterns in the Patuxent River estuary.  These comparisons evaluated percent changes of flow-normalized estimates at the beginning and end of each time period.  Percent changes within each period were based on a comparison of annual mean estimates for the first and last three years of flow-normalized \ac{chla} estimates, excluding the annual aggregations that had limited annual mean data (i.e., seven years per period).  For example, percent change for the \ac{JFM} seasonal period was based on an average of JFM annual means for 1986 through 1988 to an average of JFM annual means for 2012 through 2014. This approach was used to reduce the influence of abnormal years on trend estimates.   
 
 \subsection{Comparison of flow-normalized trends}
 
@@ -299,7 +299,7 @@ Quantitative summaries of model fit by site indicated that \ac{RMSE} values betw
 
 
 
-Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:predann}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed. By 2014, chlorophyll returned to values similar to those prior to the initial decrease.  Flow-normalized predictions that were averaged annually at each site allowed an interpretation of trends that were independent of variation in discharge or salinity (\cref{tab:trendsLE12,tab:trendsTF16}).  Overall percent change of \ac{chla} concentration from the beginning to the end of the time series at LE1.2 was approximately 20\% (\cref{tab:trendsLE12}).  An increase at TF1.6 was also observed from 1986 to 2014 (\cref{tab:trendsTF16}), although less dramatic as compared to LE1.2.  Changes by annual and seasonal time periods at LE1.2 were comparable for each time period and model type.  However, changes by flow periods differed such that both models showed an increase in \ac{chla} for both low and high flow periods, whereas decreases in chlorophyll were observed for moderate flow periods (flow 2 and flow 3, \cref{tab:trendsLE12}).  Trends by different time periods were more apparent for TF1.6, particularly as an overall decrease in \ac{chla} for both models during the 2001--2007 period and an overall increase during 2008--2014 period (\cref{tab:trendsTF16}).  Seasonal changes were especially pronounced during the \ac{JFM} period where both models showed an increase with differences between the two (19.9\% for \acp{GAM}, 68.1\% for \ac{WRTDS}).  Percent changes by flow period were also observed at TF1.6, with the most noticeable difference from LE1.2 being a decrease in \ac{chla} during high flow (both models) and relatively larger increases in \ac{chla} during moderate flow.  
+Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:predann}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed. By 2014, chlorophyll returned to values similar to those prior to the initial decrease.  Flow-normalized predictions that were averaged annually at each site allowed an interpretation of trends that were independent of variation in discharge or salinity (\cref{tab:trendsLE12,tab:trendsTF16}).  Overall percent change of \ac{chla} concentration from the beginning to the end of the time series at LE1.2 was approximately 20\% (\cref{tab:trendsLE12}).  A slight decrease in \ac{chla} at TF1.6 was observed from 1986 to 2014 (\cref{tab:trendsTF16}).  Changes by annual, seasonal, and flow time periods at LE1.2 were comparable for each time period and model type, although some differences were observed.  For example, both models had maximum increases in \ac{chla} for the different flow periods for high levels of flow (20\% for \acp{GAM}, 22.3\% for \ac{WRTDS}).  Trends by different time periods were more apparent for TF1.6, particularly as an overall decrease in \ac{chla} for both models during the 2001--2007 period and an overall increase during 2008--2014 period (\cref{tab:trendsTF16}).  Seasonal changes were especially pronounced during the \ac{JFM} and \ac{OND} periods where both models showed an increase and decrease, respectively, with differences between the two (\ac{JFM} period, 5.7\% for \acp{GAM}, 32.7\% for \ac{WRTDS}; \ac{OND} period, \ensuremath{-13.6}\% for \acp{GAM}, \ensuremath{-17.5}\% for \ac{WRTDS}).  Percent changes by flow period were also observed at TF1.6, with the most noticeable difference from LE1.2 being a decrease in \ac{chla} during both high and low flow (both models) and relatively larger increases in \ac{chla} during moderate flow.  
 
 \subsection{Comparison of model predictions}
 
@@ -324,6 +324,8 @@ Comparisons of fit for each model to the simulated time series provided similar 
 \section{Discussion}
 
 % optimal model parameters - similarities and differences with GAMs/WRTDS - see my email to Rebecca on 8/10/15
+
+% oddities in shape for dynafig with WRTDS - related to data limitation issues, so choose a wider window width but this also compromises precision for periods with adequate data. There is a tradeoff here.
 
 % why we used the simulated data w/o a trend in biological chlorophyll - wanted to eval ability of each model to remove flow, but must emphasize that the real value of either model is to look at flow-independent trends - i.e., are there other things besides flow that are causing changes.
 
@@ -431,25 +433,25 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&2.19&22.68&&2.18& 22.18\tabularnewline
+~~&2.19&20.40&&2.18&18.85\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993&2.02& 3.86&&2.03&  1.75\tabularnewline
-~~1994-2000&2.12& 5.78&&2.12&  5.50\tabularnewline
-~~2001-2007&2.25& 4.77&&2.24&  5.35\tabularnewline
-~~2008-2014&2.38& 4.08&&2.37&  6.07\tabularnewline
+~~1986-1993&2.02& 3.86&&2.03& 1.75\tabularnewline
+~~1994-2000&2.12& 5.78&&2.12& 5.50\tabularnewline
+~~2001-2007&2.25& 4.77&&2.24& 5.35\tabularnewline
+~~2008-2014&2.38& 4.08&&2.37& 6.07\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&2.51&17.18&&2.58& 15.95\tabularnewline
-~~AMJ&2.41&31.50&&2.33& 25.54\tabularnewline
-~~JAS&1.92&20.20&&2.01& 25.50\tabularnewline
-~~OND&1.92&13.20&&1.83& 12.94\tabularnewline
+~~JFM&2.51&15.20&&2.58&14.04\tabularnewline
+~~AMJ&2.41&28.00&&2.33&22.47\tabularnewline
+~~JAS&1.92&18.06&&2.01&19.91\tabularnewline
+~~OND&1.92&15.57&&1.83&15.14\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~Flow 1 (Low)&1.91&12.72&&1.93& 18.71\tabularnewline
-~~Flow 2&2.12&-5.57&&2.11& -4.78\tabularnewline
-~~Flow 3&2.30&-9.80&&2.29&-17.07\tabularnewline
-~~Flow 4 (High)&2.34&26.90&&2.33& 30.93\tabularnewline
+~~Flow 1 (Low)&1.91&13.04&&1.93&16.77\tabularnewline
+~~Flow 2&2.12&10.04&&2.11& 7.73\tabularnewline
+~~Flow 3&2.30&12.22&&2.29& 9.24\tabularnewline
+~~Flow 4 (High)&2.34&20.00&&2.33&22.29\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -465,7 +467,7 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&2.44&  3.57&&2.44&  4.76\tabularnewline
+~~&2.44& -4.36&&2.44& -2.28\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
 ~~1986-1993&2.63& -2.40&&2.60& -3.06\tabularnewline
@@ -474,16 +476,16 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 ~~2008-2014&2.24& 45.59&&2.30& 38.35\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&1.56& 19.87&&1.48& 68.09\tabularnewline
-~~AMJ&2.59& 13.74&&2.62&  8.65\tabularnewline
-~~JAS&3.08&  1.16&&3.08&  3.57\tabularnewline
-~~OND&2.15&-10.16&&2.20&-16.13\tabularnewline
+~~JFM&1.56&  5.70&&1.48& 32.72\tabularnewline
+~~AMJ&2.59&  7.51&&2.62&  5.14\tabularnewline
+~~JAS&3.08& -2.18&&3.08&  0.79\tabularnewline
+~~OND&2.15&-13.57&&2.20&-17.55\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~Flow 1 (Low)&2.89&  3.53&&2.93&  8.96\tabularnewline
-~~Flow 2&2.41& 36.26&&2.43& 41.63\tabularnewline
-~~Flow 3&2.28& 11.85&&2.27& 24.99\tabularnewline
-~~Flow 4 (High)&2.22& -7.24&&2.21&-10.89\tabularnewline
+~~Flow 1 (Low)&2.89& -5.99&&2.93& -0.42\tabularnewline
+~~Flow 2&2.41& 17.54&&2.43& 20.31\tabularnewline
+~~Flow 3&2.28&  7.50&&2.27& 15.20\tabularnewline
+~~Flow 4 (High)&2.22& -8.51&&2.21&-11.27\tabularnewline
 \hline
 \end{tabular}\end{center}
 
