@@ -242,7 +242,7 @@ where the estimated \ac{chla} values for each model, $\widehat{Chl}_{i,\,WRTDS}$
 \end{equation}
 Positive values indicate that \ac{WRTDS} provided higher predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}.  Results between models were also evaluated using regressions comparing the \ac{WRTDS} and \ac{GAM} predictions.  The regressions were compared to a null model having an intercept of zero and slope of one.  Deviation of either the intercept or slope of the regressions from the null model provided evidence of systematic differences between the models.  In general, an intercept significantly different from zero can be interpreted as an overall difference between the predictions, whereas a slope different from one can be interpreted as a difference that varies with relative magnitude of the predictions.
 
-The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of flow-normalized data for each model was primarily accomplished using simulated datasets with known components that were independent of discharge.  However, a simple comparison of flow-normalized trends by different time periods was provided to summarize long-term patterns in the Patuxent River estuary.  These comparisons evaluated percent changes of flow-normalized estimates at the beginning and end of each time period.  Percent changes within each period were based on a comparison of annual mean estimates for the first and last three years of flow-normalized \ac{chla} estimates, excluding the annual aggregations that had limited annual mean data (i.e., seven years per period).  For example, percent change for the \ac{JFM} seasonal period was based on an average of JFM annual means for 1986 through 1988 to an average of JFM annual means for 2012 through 2014. This approach was used to reduce the influence of abnormal years on trend estimates.   
+The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max) relevant to each station.  Flow-normalized time series were compared similarly but only between the models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of flow-normalized data for each model was primarily accomplished using simulated datasets with known components that were independent of discharge.  However, a simple comparison of flow-normalized trends by different time periods summarized long-term patterns in the Patuxent River estuary.  These comparisons evaluated percent changes of flow-normalized estimates at the beginning and end of each time period.  Percent changes within each period were based on annual mean estimates for the first and last three years of flow-normalized \ac{chla} estimates, excluding the annual aggregations that had limited annual mean data (i.e., seven years per period).  For example, percent change for the \ac{JFM} seasonal period compared an average of JFM annual means for 1986 through 1988 to an average of JFM annual means for 2012 through 2014. This approach was used to reduce the influence of abnormal years or missing data on trend estimates.   
 
 \subsection{Comparison of flow-normalized trends}
 
@@ -1030,6 +1030,9 @@ pax_plo <- rbind(pax_yr, pax_mo, pax_fl)
 # plot label
 ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
 
+# station labels, first panel only
+text_lab <- filter(data.frame(pax_plo), STATION %in% c('TF1.6', 'LE1.2') & cat %in% '1986-1993')
+
 # plot
 p1 <- ggplot(pax_meta, aes(x = LONG, y = LAT)) + 
   geom_polygon(data = pax_clip, aes(x = long, y = lat, group = group),
@@ -1038,6 +1041,7 @@ p1 <- ggplot(pax_meta, aes(x = LONG, y = LAT)) +
     xlim = c(-76.78, -76.36),
     ylim = c(38.27, 38.85)
   ) +
+  geom_text(data = text_lab, aes(x = LONG + 0.09, y = LAT, label = STATION), size = 2.5) + 
   geom_point(data = pax_plo, aes(group = cat, size = lnchla, fill = lnchla), 
     pch = 21) +
   facet_wrap(~cat, ncol = 4) +
@@ -1159,7 +1163,7 @@ toplo <- rbind(bestLE12, bestTF16) %>%
     fake_date = as.Date(paste(Year, mo, day, sep = '-'))
   ) %>% 
   gather('mod', 'val', fits_wrtds:fits_gams) %>% 
-  mutate(mod = factor(mod, levels = c('fits_wrtds', 'fits_gams'), labels = c('WRTDS', 'GAM')))
+  mutate(mod = factor(mod, levels = c('fits_gams', 'fits_wrtds'), labels = c('GAM', 'WRTDS')))
 
 ylab <- expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
 xlab <- 'Day of year'
@@ -1169,7 +1173,7 @@ ggplot(toplo, aes(x = fake_date, y = val, group = mod)) +
   stat_smooth(method = 'loess', span = 0.4, se = F, col = cols[1], size = 1) +
   scale_y_continuous(ylab) + 
   scale_x_date(xlab, labels = date_format("%m/%d")) + 
-  facet_grid(mod ~ stat, scales = 'free_y') + 
+  facet_grid(stat ~ mod, scales = 'free_y') + 
   theme_mine() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 8))
 
