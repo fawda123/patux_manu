@@ -146,7 +146,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Thu Oct 15 09:20:50 2015 -0500
+  \\ Version Date:   Tue Oct 20 10:29:20 2015 -0500
 	}
 \date{}
 \maketitle
@@ -389,7 +389,7 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 % performance summary of predictions to observed, tab:perftoobs
 %latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("GAM",         "WRTDS"), 2), label = "tab:perftoobs")%
 \begin{table}[!tbp]
-\caption{Summaries of model performance using \ac{RMSE} of observed to predicted ln-chlorophyll for each station (LE1.2 and TF1.6).  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
+\caption{Summaries of model performance using \ac{RMSE} of observed to predicted ln-chlorophyll for each station (LE1.2 and TF1.6).  Deviance for each model as the sum of squared residuals is shown in parentheses. Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings by monthly quarters (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
 \begin{center}
 \begin{tabular}{lllcll}
 \hline\hline
@@ -398,25 +398,25 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \multicolumn{1}{l}{}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{WRTDS}\tabularnewline
 \hline
 {\bfseries All}&&&&&\tabularnewline
-~~&0.54&0.51&&0.54&0.52\tabularnewline
+~~&0.54 (153.6)&0.51 (135.1)&&0.54 (150.4)&0.52 (138.6)\tabularnewline
 \hline
 {\bfseries Annual}&&&&&\tabularnewline
-~~1986-1993&0.54&0.50&&0.53&0.49\tabularnewline
-~~1994-2000&0.52&0.50&&0.58&0.58\tabularnewline
-~~2001-2007&0.63&0.60&&0.54&0.53\tabularnewline
-~~2008-2014&0.39&0.36&&0.49&0.44\tabularnewline
+~~1986-1993&0.54 (47.5)&0.50 (40.9)&&0.53 (45.7)&0.49 (39.1)\tabularnewline
+~~1994-2000&0.52 (37.1)&0.50 (33.2)&&0.58 (44.5)&0.58 (44.9)\tabularnewline
+~~2001-2007&0.63 (55.1)&0.60 (49.6)&&0.54 (38.6)&0.53 (37.5)\tabularnewline
+~~2008-2014&0.39 (14.0)&0.36 (11.4)&&0.49 (21.6)&0.44 (17.1)\tabularnewline
 \hline
 {\bfseries Seasonal}&&&&&\tabularnewline
-~~JFM&0.61&0.58&&0.53&0.49\tabularnewline
-~~AMJ&0.69&0.64&&0.60&0.58\tabularnewline
-~~JAS&0.38&0.35&&0.48&0.46\tabularnewline
-~~OND&0.41&0.38&&0.55&0.54\tabularnewline
+~~JFM&0.61 (38.8)&0.58 (35.3)&&0.53 (28.2)&0.49 (23.8)\tabularnewline
+~~AMJ&0.69 (74.7)&0.64 (65.3)&&0.60 (55.4)&0.58 (51.9)\tabularnewline
+~~JAS&0.38 (22.1)&0.35 (18.6)&&0.48 (35.0)&0.46 (32.2)\tabularnewline
+~~OND&0.41 (18.1)&0.38 (15.9)&&0.55 (31.7)&0.54 (30.7)\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~1 (Low)&0.40&0.36&&0.48&0.46\tabularnewline
-~~2&0.47&0.42&&0.56&0.54\tabularnewline
-~~3&0.61&0.57&&0.56&0.52\tabularnewline
-~~4 (High)&0.64&0.63&&0.56&0.54\tabularnewline
+~~1 (Low)&0.40 (21.5)&0.36 (16.7)&&0.48 (29.5)&0.46 (27.7)\tabularnewline
+~~2&0.47 (29.1)&0.42 (23.5)&&0.56 (40.3)&0.54 (37.8)\tabularnewline
+~~3&0.61 (48.5)&0.57 (42.9)&&0.56 (39.6)&0.52 (35.4)\tabularnewline
+~~4 (High)&0.64 (54.6)&0.63 (52.0)&&0.56 (41.0)&0.54 (37.7)\tabularnewline
 \hline
 \end{tabular}\end{center}
 
