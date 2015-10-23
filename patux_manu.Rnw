@@ -899,15 +899,23 @@ simres <- mutate(simres,
 # compare predicted to simulated obs chl and norm bio to actual bio
 totab <- group_by(simres, sim, mod) %>% 
   summarise(
-    obs = rmse.fun(simval, fits), 
-    bio = rmse.fun(lnchla_noQ, norm)
+    obs_rmse = rmse.fun(simval, fits), 
+    obs_dev = sum((simval - fits)^2, na.rm = TRUE),
+    bio_rmse = rmse.fun(lnchla_noQ, norm),
+    bio_dev = sum((lnchla_noQ - norm)^2, na.rm = TRUE)
   ) %>% 
+  ungroup %>% 
+  mutate(
+    obs = paste0(form_fun(obs_rmse), ' (', form_fun(obs_dev, 1, 1, 1, trim = TRUE), ')'),
+    bio = paste0(form_fun(bio_rmse), ' (', form_fun(bio_dev, 1, 1, 1, trim = TRUE), ')')
+  ) %>% 
+  select(-matches('_dev$|_rmse$')) %>%  
   data.frame
-    
+
 # latex table
-tab <- form_fun(totab[, -c(1:2)])
+tab <- totab[, -c(1:2)]
 rows <- totab[, 2]
-cap.val<-'Summaries of model performance comparing observed chlorophyll with predicted values ($Chl_{obs} \\sim \\widehat{Chl}_{obs}$) and biological chlorophyll with flow-normalized values ($Chl_{bio} \\sim \\widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \\ac{RMSE} values comparing results from each model (\\ac{GAM}, \\ac{WRTDS}) in the bottom two rows of panels in \\cref{fig:simres}.'
+cap.val<-'Summaries of model performance comparing observed chlorophyll with predicted values ($Chl_{obs} \\sim \\widehat{Chl}_{obs}$) and biological chlorophyll with flow-normalized values ($Chl_{bio} \\sim \\widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \\ac{RMSE} values comparing results from each model (\\ac{GAM}, \\ac{WRTDS}) in the bottom two rows of panels in \\cref{fig:simres}. Deviance for each model as the sum of squared residuals is shown in parentheses.'
 
 latex( 
   tab,

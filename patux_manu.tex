@@ -146,7 +146,7 @@
 	\\{\textit {\normalsize 410 Severn Avenue, Suite 112, Annapolis, MD 21403}}
 	\\{\textit {\normalsize Phone: 410-267-9837, Fax: 410-267-5777, Email: \href{mailto:rmurphy@chesapeakbay.net}{rmurphy@chesapeakebay.net}}}
   \vspace{1in} 
-  \\ Version Date:   Tue Oct 20 10:29:20 2015 -0500
+  \\ Version Date:   Tue Oct 20 12:02:08 2015 -0500
 	}
 \date{}
 \maketitle
@@ -571,23 +571,23 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 % comparison of flow-normalized results for simulated datasets, tab:simperf
 %latex.default(tab, file = "", rowlabel = "Simulations", caption = cap.val,     caption.loc = "top", rgroup = c("No flow", "Constant flow",         "Increasing flow"), n.rgroup = rep(2, 3), rowname = rows,     colheads = c("$Chl_{obs} \\sim \\widehat{Chl}_{obs}$", "$Chl_{bio} \\sim \\widehat{Chl}_{bio}$"),     label = "tab:simperf")%
 \begin{table}[!tbp]
-\caption{Summaries of model performance comparing observed chlorophyll with predicted values ($Chl_{obs} \sim \widehat{Chl}_{obs}$) and biological chlorophyll with flow-normalized values ($Chl_{bio} \sim \widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \ac{RMSE} values comparing results from each model (\ac{GAM}, \ac{WRTDS}) in the bottom two rows of panels in \cref{fig:simres}.\label{tab:simperf}} 
+\caption{Summaries of model performance comparing observed chlorophyll with predicted values ($Chl_{obs} \sim \widehat{Chl}_{obs}$) and biological chlorophyll with flow-normalized values ($Chl_{bio} \sim \widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \ac{RMSE} values comparing results from each model (\ac{GAM}, \ac{WRTDS}) in the bottom two rows of panels in \cref{fig:simres}. Deviance for each model as the sum of squared residuals is shown in parentheses.\label{tab:simperf}} 
 \begin{center}
 \begin{tabular}{lll}
 \hline\hline
 \multicolumn{1}{l}{Simulations}&\multicolumn{1}{c}{$Chl_{obs} \sim \widehat{Chl}_{obs}$}&\multicolumn{1}{c}{$Chl_{bio} \sim \widehat{Chl}_{bio}$}\tabularnewline
 \hline
 {\bfseries No flow}&&\tabularnewline
-~~GAM&0.51&0.53\tabularnewline
-~~WRTDS&0.50&0.52\tabularnewline
+~~GAM&0.51 (31.2)&0.53 (33.2)\tabularnewline
+~~WRTDS&0.50 (29.4)&0.52 (31.7)\tabularnewline
 \hline
 {\bfseries Constant flow}&&\tabularnewline
-~~GAM&0.51&0.58\tabularnewline
-~~WRTDS&0.53&0.57\tabularnewline
+~~GAM&0.51 (31.2)&0.58 (39.8)\tabularnewline
+~~WRTDS&0.53 (32.8)&0.57 (38.9)\tabularnewline
 \hline
 {\bfseries Increasing flow}&&\tabularnewline
-~~GAM&0.51&0.54\tabularnewline
-~~WRTDS&0.50&0.52\tabularnewline
+~~GAM&0.51 (31.2)&0.54 (35.0)\tabularnewline
+~~WRTDS&0.50 (29.7)&0.52 (31.9)\tabularnewline
 \hline
 \end{tabular}\end{center}
 
