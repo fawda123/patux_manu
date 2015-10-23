@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  23 OCT 2015 09:11
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.8.29)  23 OCT 2015 14:09
 entering extended mode
 **patux_manu.tex
 (M:\docs\manuscripts\patux_manu\patux_manu.tex
@@ -734,123 +734,133 @@ although it is yet undefined on input line 298.
 Package acronym Info: Label `acro:OND' newly defined as it shall be overridden
 although it is yet undefined on input line 302.
  [17] [18] [19] [20]
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 344.
+Package acronym Info: Label `acro:GAMs' newly defined as it shall be overridden
+
+although it is yet undefined on input line 330.
 
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
+Package acronym Warning: Acronym `GAMs' is not defined on input line 330.
+
+
+Package acronym Warning: Acronym `GAMs' is not defined on input line 330.
+
+[21]
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 354.
+
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [21]
-(M:\docs\manuscripts\patux_manu\patux_manu.bbl [22
+) [22]
+(M:\docs\manuscripts\patux_manu\patux_manu.bbl [23
 
-] [23]) [24]
-Overfull \hbox (2.78888pt too wide) in paragraph at lines 369--384
+] [24]) [25]
+Overfull \hbox (2.78888pt too wide) in paragraph at lines 384--399
  [] 
  []
 
-<figs/map-1.pdf, id=443, 361.35pt x 505.89pt>
+<figs/map-1.pdf, id=457, 361.35pt x 505.89pt>
 File: figs/map-1.pdf Graphic file (type pdf)
  <use figs/map-1.pdf>
-Package pdftex.def Info: figs/map-1.pdf used on input line 605.
+Package pdftex.def Info: figs/map-1.pdf used on input line 618.
 (pdftex.def)             Requested size: 328.82707pt x 460.36061pt.
 
-<figs/chlyrmofl-1.pdf, id=446, 361.35pt x 560.0925pt>
+<figs/chlyrmofl-1.pdf, id=460, 361.35pt x 560.0925pt>
 File: figs/chlyrmofl-1.pdf Graphic file (type pdf)
 
 <use figs/chlyrmofl-1.pdf>
-Package pdftex.def Info: figs/chlyrmofl-1.pdf used on input line 617.
+Package pdftex.def Info: figs/chlyrmofl-1.pdf used on input line 630.
 (pdftex.def)             Requested size: 361.34912pt x 560.09113pt.
- <figs/predmo.pdf, id=449, 650.43pt x 289.08pt>
+ <figs/predmo.pdf, id=463, 650.43pt x 289.08pt>
 File: figs/predmo.pdf Graphic file (type pdf)
 
 <use figs/predmo.pdf>
-Package pdftex.def Info: figs/predmo.pdf used on input line 634.
+Package pdftex.def Info: figs/predmo.pdf used on input line 647.
 (pdftex.def)             Requested size: 469.75502pt x 208.78584pt.
 
-Overfull \hbox (6.00002pt too wide) in paragraph at lines 634--635
+Overfull \hbox (6.00002pt too wide) in paragraph at lines 647--648
  [][] 
  []
 
-<figs/predann.pdf, id=450, 650.43pt x 289.08pt>
+<figs/predann.pdf, id=464, 650.43pt x 289.08pt>
 File: figs/predann.pdf Graphic file (type pdf)
  <use figs/predann.pdf>
-Package pdftex.def Info: figs/predann.pdf used on input line 639.
+Package pdftex.def Info: figs/predann.pdf used on input line 652.
 (pdftex.def)             Requested size: 469.75502pt x 208.78584pt.
 
-Overfull \hbox (6.00002pt too wide) in paragraph at lines 639--640
+Overfull \hbox (6.00002pt too wide) in paragraph at lines 652--653
  [][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 647.
+Package xcolor Warning: Incompatible color definition on input line 660.
 
-<figs/seas-1.pdf, id=455, 433.62pt x 361.35pt>
+<figs/seas-1.pdf, id=469, 433.62pt x 361.35pt>
 File: figs/seas-1.pdf Graphic file (type pdf)
  <use figs/seas-1.pdf>
-Package pdftex.def Info: figs/seas-1.pdf used on input line 649.
+Package pdftex.def Info: figs/seas-1.pdf used on input line 662.
 (pdftex.def)             Requested size: 433.61894pt x 361.36566pt.
 
-<figs/regprdnrm-1.pdf, id=456, 433.62pt x 469.755pt>
+<figs/regprdnrm-1.pdf, id=470, 433.62pt x 469.755pt>
 File: figs/regprdnrm-1.pdf Graphic file (type pdf)
 
 <use figs/regprdnrm-1.pdf>
-Package pdftex.def Info: figs/regprdnrm-1.pdf used on input line 662.
+Package pdftex.def Info: figs/regprdnrm-1.pdf used on input line 675.
 (pdftex.def)             Requested size: 433.61894pt x 469.77536pt.
- <figs/dynafig-1.pdf, id=459, 542.025pt x 469.755pt>
+ <figs/dynafig-1.pdf, id=473, 542.025pt x 469.755pt>
 File: figs/dynafig-1.pdf Graphic file (type pdf)
 
 <use figs/dynafig-1.pdf>
-Package pdftex.def Info: figs/dynafig-1.pdf used on input line 674.
+Package pdftex.def Info: figs/dynafig-1.pdf used on input line 687.
 (pdftex.def)             Requested size: 479.15211pt x 415.278pt.
 
-Overfull \hbox (9.3971pt too wide) in paragraph at lines 674--675
+Overfull \hbox (9.3971pt too wide) in paragraph at lines 687--688
  [][] 
  []
 
-<figs/simex-1.pdf, id=460, 433.62pt x 505.89pt>
+<figs/simex-1.pdf, id=474, 433.62pt x 505.89pt>
 File: figs/simex-1.pdf Graphic file (type pdf)
  <use figs/simex-1.pdf>
-Package pdftex.def Info: figs/simex-1.pdf used on input line 686.
+Package pdftex.def Info: figs/simex-1.pdf used on input line 699.
 (pdftex.def)             Requested size: 433.61894pt x 505.9119pt.
 
-<figs/dynasim-1.pdf, id=461, 505.89pt x 180.675pt>
+<figs/dynasim-1.pdf, id=475, 505.89pt x 180.675pt>
 File: figs/dynasim-1.pdf Graphic file (type pdf)
  <use figs/dynasim-1.pdf>
-Package pdftex.def Info: figs/dynasim-1.pdf used on input line 698.
+Package pdftex.def Info: figs/dynasim-1.pdf used on input line 711.
 (pdftex.def)             Requested size: 469.75502pt x 167.77237pt.
 
-<figs/simres-1.pdf, id=464, 433.62pt x 433.62pt>
+<figs/simres-1.pdf, id=478, 433.62pt x 433.62pt>
 File: figs/simres-1.pdf Graphic file (type pdf)
  <use figs/simres-1.pdf>
-Package pdftex.def Info: figs/simres-1.pdf used on input line 710.
+Package pdftex.def Info: figs/simres-1.pdf used on input line 723.
 (pdftex.def)             Requested size: 433.61894pt x 433.63878pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 719.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 732.
 
-[25] [26] [27] [28] [29] [30] [31] [32 <M:/docs/manuscripts/patux_manu/figs/map
--1.pdf>] [33 <M:/docs/manuscripts/patux_manu/figs/chlyrmofl-1.pdf>] [34 <M:/doc
+[26] [27] [28] [29] [30] [31] [32] [33 <M:/docs/manuscripts/patux_manu/figs/map
+-1.pdf>] [34 <M:/docs/manuscripts/patux_manu/figs/chlyrmofl-1.pdf>] [35 <M:/doc
 s/manuscripts/patux_manu/figs/predmo.pdf> <M:/docs/manuscripts/patux_manu/figs/
-predann.pdf>] [35 <M:/docs/manuscripts/patux_manu/figs/seas-1.pdf>] [36 <M:/doc
-s/manuscripts/patux_manu/figs/regprdnrm-1.pdf>] [37 <M:/docs/manuscripts/patux_
-manu/figs/dynafig-1.pdf>] [38 <M:/docs/manuscripts/patux_manu/figs/simex-1.pdf>
-] [39 <M:/docs/manuscripts/patux_manu/figs/dynasim-1.pdf>] [40 <M:/docs/manuscr
+predann.pdf>] [36 <M:/docs/manuscripts/patux_manu/figs/seas-1.pdf>] [37 <M:/doc
+s/manuscripts/patux_manu/figs/regprdnrm-1.pdf>] [38 <M:/docs/manuscripts/patux_
+manu/figs/dynafig-1.pdf>] [39 <M:/docs/manuscripts/patux_manu/figs/simex-1.pdf>
+] [40 <M:/docs/manuscripts/patux_manu/figs/dynasim-1.pdf>] [41 <M:/docs/manuscr
 ipts/patux_manu/figs/simres-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 719.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 732.
 
 (M:\docs\manuscripts\patux_manu\patux_manu.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 719.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 719.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 732.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 732.
 Package rerunfilecheck Info: File `patux_manu.out' has not changed.
-(rerunfilecheck)             Checksum: 0A559AAE06B27327CB46D5EAEAE52DCF;1200.
+(rerunfilecheck)             Checksum: 48787BD696BD7B09D80F2BBF6D394735;1359.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 719.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 732.
  ) 
 Here is how much of TeX's memory you used:
- 12063 strings out of 493921
- 190086 string characters out of 3147282
+ 12076 strings out of 493921
+ 190243 string characters out of 3147282
  348711 words of memory out of 3000000
- 15006 multiletter control sequences out of 15000+200000
+ 15015 multiletter control sequences out of 15000+200000
  34920 words of font info for 76 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  44i,11n,47p,2505b,568s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -866,9 +876,9 @@ iles/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw
 /times/utmbi8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on patux_manu.pdf (40 pages, 3800691 bytes).
+Output written on patux_manu.pdf (41 pages, 3804222 bytes).
 PDF statistics:
- 714 PDF objects out of 1000 (max. 8388607)
- 140 named destinations out of 1000 (max. 500000)
- 179 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 727 PDF objects out of 1000 (max. 8388607)
+ 144 named destinations out of 1000 (max. 500000)
+ 195 words of extra memory for PDF output out of 10000 (max. 10000000)
 
