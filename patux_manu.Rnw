@@ -1272,7 +1272,7 @@ LE12_tomod <- select(bestLE12, date, dec_time, chla, sal) %>%
     doy = as.numeric(strftime(date, '%j'))
   )
 
-bestLE12_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), data = LE12_tomod, knots=list(doy=c(1,366)))
+bestLE12_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), k = c(5, 8, 5), data = LE12_tomod, knots=list(doy=c(1,366)))
 
 data(bestLE12_wrtds)
 
@@ -1286,7 +1286,8 @@ TF16_tomod <- select(bestTF16, date, dec_time, chla, lnQ) %>%
   ) %>% 
   rename(sal = lnQ)
 
-bestTF16_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), data = TF16_tomod, 
+bestTF16_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), k = c(5, 10, 5), 
+  data = TF16_tomod, 
   knots=list(doy=c(1,366)), na.action = na.pass)
 
 data(bestTF16_wrtds)
