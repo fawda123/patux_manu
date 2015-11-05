@@ -1104,8 +1104,8 @@ names(bestLE12) <- gsub('wrtds$', 'WRTDS', names(bestLE12))
 names(bestTF16) <- gsub('gams$', 'GAM', names(bestTF16))
 names(bestTF16) <- gsub('wrtds$', 'WRTDS', names(bestTF16))
 
-bestLE12 <- select(bestLE12, -sal, -lnQ, -dec_time, -se_GAM)
-bestTF16 <- select(bestTF16, -lnQ, -sal, -dec_time, -se_GAM)
+bestLE12 <- select(bestLE12, -sal, -lnQ, -dec_time)
+bestTF16 <- select(bestTF16, -lnQ, -sal, -dec_time)
 toplo <- rbind(bestTF16, bestLE12) %>% 
   gather(variable, value, fits_WRTDS:res_GAM) %>% 
   separate(variable, c('output', 'model'), sep = '_') %>% 
@@ -1172,7 +1172,7 @@ dev.off()
 \end{figure}
 
 % plot of seasonal variation from model predictions, by model and site, 
-<<seas, echo = FALSE, eval = T, cache = F, message = F, results = 'hide', fig.width = 6, fig.height = 5, fig.cap = 'Seasonal variation of predictions by station and model.  Points are all model predictions by day of year from 1986 to 2014.  The blue line is a loess (locally estimated) polynomial smooth to characterize the seasonal components.'>>=
+<<seas, echo = FALSE, eval = T, cache = F, message = F, results = 'hide', fig.width = 9, fig.height = 5, fig.cap = 'Seasonal variation from observed and model predictions of \\ac{chla} by station.  Predictions are points by day of year from 1986 to 2014.  The blue line is a loess (locally estimated) polynomial smooth to characterize the seasonal components.'>>=
 
 data(bestLE12)
 data(bestTF16)
@@ -1181,16 +1181,19 @@ bestLE12 <- mutate(bestLE12, stat = 'LE1.2')
 bestTF16 <- mutate(bestTF16, stat = 'TF1.6')
 
 toplo <- rbind(bestLE12, bestTF16) %>% 
-  select(date, fits_wrtds, fits_gams, stat) %>% 
+  select(date, fits_wrtds, fits_gams, chla, stat) %>% 
   mutate(
     Year = '2014', 
     mo = as.numeric(strftime(date, '%m')),
     day = as.numeric(strftime(date, '%d')),
     fake_date = as.Date(paste(Year, mo, day, sep = '-'))
   ) %>% 
-  gather('mod', 'val', fits_wrtds:fits_gams) %>% 
-  mutate(mod = factor(mod, levels = c('fits_gams', 'fits_wrtds'), labels = c('GAM', 'WRTDS')))
-
+  gather('mod', 'val', fits_wrtds:chla) %>% 
+  mutate(
+    mod = factor(mod, levels = c('chla', 'fits_gams', 'fits_wrtds'), 
+      labels = c('observed', 'GAM', 'WRTDS'))
+  )
+  
 ylab <- expression(paste('ln-Chl ',' (',italic('\u03bc'),'g ',L^-1,')'))
 xlab <- 'Day of year'
 
@@ -1202,7 +1205,6 @@ ggplot(toplo, aes(x = fake_date, y = val, group = mod)) +
   facet_grid(stat ~ mod, scales = 'free_y') + 
   theme_mine() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 8))
-
 @
 
 % wrtds v gam predictions by periods
