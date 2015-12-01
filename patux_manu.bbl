@@ -59,6 +59,12 @@ Hagy JD, Lehrter JC, Murrell MC. 2006.
   {F}lorida.
 \newblock Estuaries and Coasts, 29(6A):919--925.
 
+\bibitem[Haraguchi et~al., 2015]{Haraguchi15}
+Haraguchi L, Carstensen J, Abreu PC, Odebrecht C. 2015.
+\newblock Long-term changes of the phytoplankton community and biomass in the
+  subtropical shallow {P}atos {L}agoon {E}stuary, {B}razil.
+\newblock Estuarine, Coastal and Shelf Science, 162(SI):76--87.
+
 \bibitem[Harding, 1994]{Harding94}
 Harding LW. 1994.
 \newblock Long-term trends in the distribution of phytoplankton in {C}hesapeake
@@ -205,10 +211,22 @@ Tobin J. 1958.
 \newblock Estimation of relationships for limited dependent variables.
 \newblock Econometrica, 26(1):24--36.
 
-\bibitem[Wood, 2006]{Wood06}
-Wood SN. 2006.
+\bibitem[{USGS (US Geological Survey)}, 2015]{USGS15}
+{USGS (US Geological Survey)}. 2015.
+\newblock {Water Quality Loads and Trends at Nontidal Monitoring Stations in
+  the Chesapeake Bay Watershed}.
+\newblock \url{http://cbrim.er.usgs.gov/}. (Accessed November, 2015).
+
+\bibitem[Wood, 2006a]{Wood06}
+Wood SN. 2006a.
 \newblock Generalized Additive Models: An Introduction with R.
 \newblock Chapman and Hall, CRC Press, London, United Kingdom.
+
+\bibitem[Wood, 2006b]{Wood06b}
+Wood SN. 2006b.
+\newblock Low-rank scale-invariant tensor product smooths for generalized
+  additive mixed models.
+\newblock Biometrics, 62(4):1025--1036.
 
 \bibitem[Zhang et~al., 2013]{Zhang13}
 Zhang Q, Brady DC, Ball WP. 2013.
