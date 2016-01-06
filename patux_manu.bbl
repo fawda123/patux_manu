@@ -1,238 +1,212 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{39}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
 
-\bibitem[Beck and {Hagy III}, 2015]{Beck15}
-Beck MW, {Hagy III} JD. 2015.
-\newblock Adaptation of a weighted regression approach to evaluate water
-  quality trends in an estuary.
-\newblock Environmental Modelling and Assessment, 20(6):637--655.
+\bibitem[{Beck and {Hagy III}(2015)}]{Beck15}
+Beck, M.~W. and J.~D. {Hagy III}, 2015. Adaptation of a weighted regression
+  approach to evaluate water quality trends in an estuary. Environmental
+  Modelling and Assessment 20(6):637--655.
 
-\bibitem[Boicourt and Sanford, 1998]{Boicourt98}
-Boicourt WC, Sanford LP. 1998.
-\newblock A hydrodynamic study of the {P}atuxent {R}iver estuary.
-\newblock Technical report, Maryland Department of the Environment, Baltimore,
+\bibitem[{Boicourt and Sanford(1998)}]{Boicourt98}
+Boicourt, W.~C. and L.~P. Sanford, 1998. A hydrodynamic study of the {P}atuxent
+  {R}iver estuary, Technical report, Maryland Department of the Environment,
+  Baltimore, Maryland.
+
+\bibitem[{Borsuk \emph{et~al.}(2004)Borsuk, Stow, and Reckhow}]{Borsuk04b}
+Borsuk, M.~E., C.~A. Stow, and K.~H. Reckhow, 2004. Confounding effect of flow
+  on estuarine response to nitrogen loading. Journal of Environmental
+  Engineering-ASCE 130(6):605--614.
+
+\bibitem[{Byrd \emph{et~al.}(1995)Byrd, Lu, and adn C.~Zhu}]{Byrd95}
+Byrd, R.~H., P.~Lu, and J.~N. adn C.~Zhu, 1995. A limited memory algorithm for
+  bound constrained optimization. SIAM Journal on Scientific Computing
+  16(5):1190--1208.
+
+\bibitem[{Cade and Noon(2003)}]{Cade03}
+Cade, B.~S. and B.~R. Noon, 2003. A gentle introduction to quantile regression
+  for ecologists. Frontiers in Ecology and the Environment 1(8):412--420.
+
+\bibitem[{Cloern(1996)}]{Cloern96}
+Cloern, J.~E., 1996. Phytoplankton bloom dynamics in coastal ecosystems: {A}
+  review with some general lessons from sustained investigation of {S}an
+  {F}rancisco {B}ay, {C}alifornia. Review of Geophysics 34(2):127--168.
+
+\bibitem[{Cloern and Jassby(2010)}]{Cloern10}
+Cloern, J.~E. and A.~D. Jassby, 2010. Patterns and scales of phytoplankton
+  variability in estuarine-coastal ecosystems. Estuaries and Coasts
+  33(2):230--241.
+
+\bibitem[{Cronin and Pritchard(1975)}]{Cronin75}
+Cronin, W.~B. and D.~W. Pritchard, 1975. Additional statistics on the
+  dimensions of the {C}hesapeake {B}ay and its tributaries: Cross-section
+  widths and segment volumes per meter depth, Technical Report 42, Reference
+  75-3, Chesapeak Bay Institute, The Johns Hopkins University, Baltimore,
   Maryland.
 
-\bibitem[Borsuk et~al., 2004]{Borsuk04b}
-Borsuk ME, Stow CA, Reckhow KH. 2004.
-\newblock Confounding effect of flow on estuarine response to nitrogen loading.
-\newblock Journal of Environmental Engineering-ASCE, 130(6):605--614.
+\bibitem[{Hagy(1996)}]{Hagythes}
+Hagy, J.~D., 1996. Residence times and net ecosystem processes in {P}atuxent
+  {R}iver estuary, Master's thesis, University of Maryland, College Park,
+  Maryland.
 
-\bibitem[Byrd et~al., 1995]{Byrd95}
-Byrd RH, Lu P, adn C.~Zhu JN. 1995.
-\newblock A limited memory algorithm for bound constrained optimization.
-\newblock SIAM Journal on Scientific Computing, 16(5):1190--1208.
+\bibitem[{Hagy \emph{et~al.}(2006)Hagy, Lehrter, and Murrell}]{Hagy06}
+Hagy, J.~D., J.~C. Lehrter, and M.~C. Murrell, 2006. Effects of hurricanee
+  {I}van on water quality in {P}ensacola {B}ay, {F}lorida. Estuaries and Coasts
+  29(6A):919--925.
 
-\bibitem[Cade and Noon, 2003]{Cade03}
-Cade BS, Noon BR. 2003.
-\newblock A gentle introduction to quantile regression for ecologists.
-\newblock Frontiers in Ecology and the Environment, 1(8):412--420.
+\bibitem[{Haraguchi \emph{et~al.}(2015)Haraguchi, Carstensen, Abreu, and
+  Odebrecht}]{Haraguchi15}
+Haraguchi, L., J.~Carstensen, P.~C. Abreu, and C.~Odebrecht, 2015. Long-term
+  changes of the phytoplankton community and biomass in the subtropical shallow
+  {P}atos {L}agoon {E}stuary, {B}razil. Estuarine, Coastal and Shelf Science
+  162(SI):76--87.
 
-\bibitem[Cloern, 1996]{Cloern96}
-Cloern JE. 1996.
-\newblock Phytoplankton bloom dynamics in coastal ecosystems: {A} review with
-  some general lessons from sustained investigation of {S}an {F}rancisco {B}ay,
-  {C}alifornia.
-\newblock Review of Geophysics, 34(2):127--168.
+\bibitem[{Harding(1994)}]{Harding94}
+Harding, L.~W., 1994. Long-term trends in the distribution of phytoplankton in
+  {C}hesapeake {B}ay - roles of light, nutrients, and streamflow. Marine
+  Ecology Progress Series 104:267--291.
 
-\bibitem[Cloern and Jassby, 2010]{Cloern10}
-Cloern JE, Jassby AD. 2010.
-\newblock Patterns and scales of phytoplankton variability in estuarine-coastal
-  ecosystems.
-\newblock Estuaries and Coasts, 33(2):230--241.
+\bibitem[{Harding \emph{et~al.}(2015)Harding, Gallegos, Perry, Miller, Adolf,
+  Mallonee, and Paerl}]{Harding15}
+Harding, L.~W., C.~L. Gallegos, E.~S. Perry, W.~D. Miller, J.~E. Adolf, M.~E.
+  Mallonee, and H.~W. Paerl, 2015. Long-term trends of nutrients and
+  phytoplankton in {C}hesapeake {B}ay. Estuaries and Coasts .
 
-\bibitem[Cronin and Pritchard, 1975]{Cronin75}
-Cronin WB, Pritchard DW. 1975.
-\newblock Additional statistics on the dimensions of the {C}hesapeake {B}ay and
-  its tributaries: Cross-section widths and segment volumes per meter depth.
-\newblock Technical Report 42, Reference 75-3, Chesapeak Bay Institute, The
-  Johns Hopkins University, Baltimore, Maryland.
+\bibitem[{Hastie and Tibshirani(1990)}]{Hastie90}
+Hastie, T. and R.~Tibshirani, 1990. Generalized Additive Models, Chapman and
+  Hall, London, New York.
 
-\bibitem[Hagy, 1996]{Hagythes}
-Hagy JD. 1996.
-\newblock Residence times and net ecosystem processes in {P}atuxent {R}iver
-  estuary.
-\newblock Master's thesis, University of Maryland, College Park, Maryland.
+\bibitem[{Hirsch(2014)}]{Hirsch14b}
+Hirsch, R.~M., 2014. Large biases in regression-based constituent flux
+  estimates: causes and diagnostic tools. Journal of the American Water
+  Resources Association 50(6):1401--1424.
 
-\bibitem[Hagy et~al., 2006]{Hagy06}
-Hagy JD, Lehrter JC, Murrell MC. 2006.
-\newblock Effects of hurricanee {I}van on water quality in {P}ensacola {B}ay,
-  {F}lorida.
-\newblock Estuaries and Coasts, 29(6A):919--925.
+\bibitem[{Hirsch \emph{et~al.}(2015)Hirsch, Archfield, and {De
+  Cicco}}]{Hirsch15}
+Hirsch, R.~M., S.~A. Archfield, and L.~A. {De Cicco}, 2015. A bootstrap method
+  for estimating uncertainty of water quality trends. Environmental Modelling
+  and Software 73:148--166.
 
-\bibitem[Haraguchi et~al., 2015]{Haraguchi15}
-Haraguchi L, Carstensen J, Abreu PC, Odebrecht C. 2015.
-\newblock Long-term changes of the phytoplankton community and biomass in the
-  subtropical shallow {P}atos {L}agoon {E}stuary, {B}razil.
-\newblock Estuarine, Coastal and Shelf Science, 162(SI):76--87.
+\bibitem[{Hirsch and {De Cicco}(2014)}]{Hirsch14}
+Hirsch, R.~M. and L.~{De Cicco}, 2014. User guide to {E}xploration and
+  {G}raphics for {R}iv{E}r {T}rends ({EGRET}) and data{R}etrieval: {R} packages
+  for hydrologic data, Technical Report Techniques and Methods book 4, ch. A10,
+  US Geological Survey, Reston, Virginia.
+  \url{http://pubs.usgs.gov/tm/04/a10/}.
 
-\bibitem[Harding, 1994]{Harding94}
-Harding LW. 1994.
-\newblock Long-term trends in the distribution of phytoplankton in {C}hesapeake
-  {B}ay - roles of light, nutrients, and streamflow.
-\newblock Marine Ecology Progress Series, 104:267--291.
+\bibitem[{Hirsch \emph{et~al.}(2010)Hirsch, Moyer, and Archfield}]{Hirsch10}
+Hirsch, R.~M., D.~L. Moyer, and S.~A. Archfield, 2010. Weighted regressions on
+  time, discharge, and season ({WRTDS}), with an application to {C}hesapeake
+  {B}ay river inputs. Journal of the American Water Resources Association
+  46(5):857--880.
 
-\bibitem[Harding et~al., 2015]{Harding15}
-Harding LW, Gallegos CL, Perry ES, Miller WD, Adolf JE, Mallonee ME, Paerl HW.
-  2015.
-\newblock Long-term trends of nutrients and phytoplankton in {C}hesapeake
-  {B}ay.
-\newblock Estuaries and Coasts.
+\bibitem[{Hyndman and Khandakar(2008)}]{Hyndman08}
+Hyndman, R.~J. and Y.~Khandakar, 2008. Automatic time series forecasting: The
+  forecast package for R. JOurnal of Statistical Software 26(3):1--22.
 
-\bibitem[Hastie and Tibshirani, 1990]{Hastie90}
-Hastie T, Tibshirani R. 1990.
-\newblock Generalized Additive Models.
-\newblock Chapman and Hall, London, New York.
+\bibitem[{Jordan \emph{et~al.}(2003)Jordan, Weller, and Correll}]{Jordan03}
+Jordan, T.~E., D.~E. Weller, and D.~L. Correll, 2003. Sources of nutrient
+  inputs to the {P}atuxent {R}iver estuary. Estuaries and Coasts
+  26(2A):226--243.
 
-\bibitem[Hirsch, 2014]{Hirsch14b}
-Hirsch RM. 2014.
-\newblock Large biases in regression-based constituent flux estimates: causes
-  and diagnostic tools.
-\newblock Journal of the American Water Resources Association,
-  50(6):1401--1424.
+\bibitem[{Lung and Bai(2003)}]{Lung03}
+Lung, W. and S.~Bai, 2003. A water quality model for the {P}atuxent estuary:
+  Current conditions and predictions under changing land-use scenarios.
+  Estuaries 26(2A):267--279.
 
-\bibitem[Hirsch et~al., 2015]{Hirsch15}
-Hirsch RM, Archfield SA, {De Cicco} LA. 2015.
-\newblock A bootstrap method for estimating uncertainty of water quality
-  trends.
-\newblock Environmental Modelling and Software, 73:148--166.
+\bibitem[{Medalie \emph{et~al.}(2012)Medalie, Hirsch, and
+  Archfield}]{Medalie12}
+Medalie, L., R.~M. Hirsch, and S.~A. Archfield, 2012. Use of flow-normalization
+  to evaluate nutrient concentration and flux changes in {L}ake {C}hamplain
+  tributaries, 1990-2009. Journal of Great Lakes Research 38(SI):58--67.
 
-\bibitem[Hirsch and {De Cicco}, 2014]{Hirsch14}
-Hirsch RM, {De Cicco} L. 2014.
-\newblock User guide to {E}xploration and {G}raphics for {R}iv{E}r {T}rends
-  ({EGRET}) and data{R}etrieval: {R} packages for hydrologic data.
-\newblock Technical Report Techniques and Methods book 4, ch. A10, US
-  Geological Survey, Reston, Virginia.
-\newblock \url{http://pubs.usgs.gov/tm/04/a10/}.
+\bibitem[{Monbet(1992)}]{Monbet92}
+Monbet, Y., 1992. Control of phytoplankton biomass in estuaries: A comparative
+  analysis of microtidal and macrotidal estuaries. Estuaries 15(4):563--571.
 
-\bibitem[Hirsch et~al., 2010]{Hirsch10}
-Hirsch RM, Moyer DL, Archfield SA. 2010.
-\newblock Weighted regressions on time, discharge, and season ({WRTDS}), with
-  an application to {C}hesapeake {B}ay river inputs.
-\newblock Journal of the American Water Resources Association, 46(5):857--880.
+\bibitem[{Moyer \emph{et~al.}(2012)Moyer, Hirsch, and Hyer}]{Moyer12}
+Moyer, D.~L., R.~M. Hirsch, and K.~E. Hyer, 2012. Comparison of two
+  regression-based approaches for determining nutrient and sediment fluxes and
+  trends in the {C}hesapeake {B}ay Watershed, Technical Report Scientific
+  Investigations Report 2012-544, US Geological Survey, US Department of the
+  Interior, Reston, Virginia.
 
-\bibitem[Hyndman and Khandakar, 2008]{Hyndman08}
-Hyndman RJ, Khandakar Y. 2008.
-\newblock Automatic time series forecasting: The forecast package for r.
-\newblock JOurnal of Statistical Software, 26(3):1--22.
+\bibitem[{Murrell \emph{et~al.}(2007)Murrell, Hagy, Lores, and
+  Greene}]{Murrell07}
+Murrell, M.~C., J.~D. Hagy, E.~M. Lores, and R.~M. Greene, 2007. Phytoplankton
+  production and nutrient distributions in a subtropical esuary: Importance of
+  freshwater flow. Estuaries and Coasts 30(3):390--402.
 
-\bibitem[Jordan et~al., 2003]{Jordan03}
-Jordan TE, Weller DE, Correll DL. 2003.
-\newblock Sources of nutrient inputs to the {P}atuxent {R}iver estuary.
-\newblock Estuaries and Coasts, 26(2A):226--243.
+\bibitem[{Nixon(1995)}]{Nixon95}
+Nixon, S.~W., 1995. Coastal marine eutrophication: A definition, social causes,
+  and future concerns. Ophelia 41:199--219.
 
-\bibitem[Lung and Bai, 2003]{Lung03}
-Lung W, Bai S. 2003.
-\newblock A water quality model for the {P}atuxent estuary: Current conditions
-  and predictions under changing land-use scenarios.
-\newblock Estuaries, 26(2A):267--279.
+\bibitem[{Paerl(2006)}]{Paerl06}
+Paerl, H.~W., 2006. Assessing and managing nutrient-enhanced eutrophication in
+  estuarine and coastal waters: Interacive effects of human and climatic
+  perturbations. Ecological Engineering 26(1):40--54.
 
-\bibitem[Medalie et~al., 2012]{Medalie12}
-Medalie L, Hirsch RM, Archfield SA. 2012.
-\newblock Use of flow-normalization to evaluate nutrient concentration and flux
-  changes in {L}ake {C}hamplain tributaries, 1990-2009.
-\newblock Journal of Great Lakes Research, 38(SI):58--67.
+\bibitem[{Paerl \emph{et~al.}(2014)Paerl, Hall, Peierls, and
+  Rossignol}]{Paerl14}
+Paerl, H.~W., N.~S. Hall, B.~L. Peierls, and K.~L. Rossignol, 2014. Evolving
+  paradigms and challenges in estuarine and coastal eutrophication dynamics in
+  a culturally and climatically stressed world. Estuaries and Coasts
+  37(2):243--258.
 
-\bibitem[Monbet, 1992]{Monbet92}
-Monbet Y. 1992.
-\newblock Control of phytoplankton biomass in estuaries: A comparative analysis
-  of microtidal and macrotidal estuaries.
-\newblock Estuaries, 15(4):563--571.
+\bibitem[{Powers \emph{et~al.}(2005)Powers, Peterson, Christian, Sullivan,
+  Powers, Bishop, and Buzzelli}]{Powers05}
+Powers, S.~P., C.~H. Peterson, R.~R. Christian, E.~Sullivan, M.~J. Powers,
+  M.~J. Bishop, and C.~P. Buzzelli, 2005. Effects of eutrophication on bottom
+  habitat and prey resources of demersal fishes. Marine Ecology Progress Series
+  302:233--243.
 
-\bibitem[Moyer et~al., 2012]{Moyer12}
-Moyer DL, Hirsch RM, Hyer KE. 2012.
-\newblock Comparison of two regression-based approaches for determining
-  nutrient and sediment fluxes and trends in the {C}hesapeake {B}ay watershed.
-\newblock Technical Report Scientific Investigations Report 2012-544, US
-  Geological Survey, US Department of the Interior, Reston, Virginia.
+\bibitem[{{RDCT (R Development Core Team)}(2015)}]{RDCT15}
+{RDCT (R Development Core Team)}, 2015. {R: A language and environment for
+  statistical computing, v3.2.0. R Foundation for Statistical Computing,
+  Vienna, Austria}. \url{http://www.R-project.org}.
 
-\bibitem[Murrell et~al., 2007]{Murrell07}
-Murrell MC, Hagy JD, Lores EM, Greene RM. 2007.
-\newblock Phytoplankton production and nutrient distributions in a subtropical
-  esuary: Importance of freshwater flow.
-\newblock Estuaries and Coasts, 30(3):390--402.
+\bibitem[{Sprague \emph{et~al.}(2011)Sprague, Hirsch, and
+  Aulenbach}]{Sprague11}
+Sprague, L.~A., R.~M. Hirsch, and B.~T. Aulenbach, 2011. Nitrate in the
+  {M}ississippi {R}iver and its tributaries, 1980 to 2008: Are we making
+  progress? Environmental Science and Technology 45(17):7209--7216.
 
-\bibitem[Nixon, 1995]{Nixon95}
-Nixon SW. 1995.
-\newblock Coastal marine eutrophication: A definition, social causes, and
-  future concerns.
-\newblock Ophelia, 41:199--219.
+\bibitem[{Steward and Green(2007)}]{Steward07}
+Steward, J.~S. and W.~C. Green, 2007. Setting load limits for nutrients and
+  suspended solids based upon seagrass depth-limit targets. Estuaries and
+  Coasts 30(4):657--670.
 
-\bibitem[Paerl, 2006]{Paerl06}
-Paerl HW. 2006.
-\newblock Assessing and managing nutrient-enhanced eutrophication in estuarine
-  and coastal waters: Interacive effects of human and climatic perturbations.
-\newblock Ecological Engineering, 26(1):40--54.
+\bibitem[{{TBEP (Tampa Bay Estuary Program)}(2011)}]{TBEP11}
+{TBEP (Tampa Bay Estuary Program)}, 2011. {Tampa Bay Water Atlas}.
+  \url{http://www.tampabay.wateratlas.usf.edu/}. (Accessed October, 2013).
 
-\bibitem[Paerl et~al., 2014]{Paerl14}
-Paerl HW, Hall NS, Peierls BL, Rossignol KL. 2014.
-\newblock Evolving paradigms and challenges in estuarine and coastal
-  eutrophication dynamics in a culturally and climatically stressed world.
-\newblock Estuaries and Coasts, 37(2):243--258.
+\bibitem[{Testa \emph{et~al.}(2008)Testa, Kemp, Boynton, and Hagy}]{Testa08a}
+Testa, J.~M., W.~M. Kemp, W.~R. Boynton, and J.~D. Hagy, 2008. Long-term
+  changes in water quality and productivity in the {P}atuxent {R}iver
+  {E}stuary: 1985 to 2003. Estuaries and Coasts 31(6):1021--1037.
 
-\bibitem[Powers et~al., 2005]{Powers05}
-Powers SP, Peterson CH, Christian RR, Sullivan E, Powers MJ, Bishop MJ,
-  Buzzelli CP. 2005.
-\newblock Effects of eutrophication on bottom habitat and prey resources of
-  demersal fishes.
-\newblock Marine Ecology Progress Series, 302:233--243.
+\bibitem[{Tobin(1958)}]{Tobin58}
+Tobin, J., 1958. Estimation of relationships for limited dependent variables.
+  Econometrica 26(1):24--36.
 
-\bibitem[{RDCT (R Development Core Team)}, 2015]{RDCT15}
-{RDCT (R Development Core Team)}. 2015.
-\newblock {R: A language and environment for statistical computing, v3.2.0. R
-  Foundation for Statistical Computing, Vienna, Austria}.
-\newblock \url{http://www.R-project.org}.
+\bibitem[{{USGS (US Geological Survey)}(2015)}]{USGS15}
+{USGS (US Geological Survey)}, 2015. {Water Quality Loads and Trends at
+  Nontidal Monitoring Stations in the Chesapeake Bay Watershed}.
+  \url{http://cbrim.er.usgs.gov/}. (Accessed November, 2015).
 
-\bibitem[Sprague et~al., 2011]{Sprague11}
-Sprague LA, Hirsch RM, Aulenbach BT. 2011.
-\newblock Nitrate in the {M}ississippi {R}iver and its tributaries, 1980 to
-  2008: Are we making progress?
-\newblock Environmental Science and Technology, 45(17):7209--7216.
+\bibitem[{Wood(2006{\natexlab{a}})}]{Wood06}
+Wood, S.~N., 2006{\natexlab{a}}. Generalized Additive Models: An Introduction
+  with R, Chapman and Hall, CRC Press, London, United Kingdom.
 
-\bibitem[Steward and Green, 2007]{Steward07}
-Steward JS, Green WC. 2007.
-\newblock Setting load limits for nutrients and suspended solids based upon
-  seagrass depth-limit targets.
-\newblock Estuaries and Coasts, 30(4):657--670.
+\bibitem[{Wood(2006{\natexlab{b}})}]{Wood06b}
+---, 2006{\natexlab{b}}. Low-rank scale-invariant tensor product smooths for
+  generalized additive mixed models. Biometrics 62(4):1025--1036.
 
-\bibitem[{TBEP (Tampa Bay Estuary Program)}, 2011]{TBEP11}
-{TBEP (Tampa Bay Estuary Program)}. 2011.
-\newblock {Tampa Bay Water Atlas}.
-\newblock \url{http://www.tampabay.wateratlas.usf.edu/}. (Accessed October,
-  2013).
-
-\bibitem[Testa et~al., 2008]{Testa08a}
-Testa JM, Kemp WM, Boynton WR, Hagy JD. 2008.
-\newblock Long-term changes in water quality and productivity in the {P}atuxent
-  {R}iver {E}stuary: 1985 to 2003.
-\newblock Estuaries and Coasts, 31(6):1021--1037.
-
-\bibitem[Tobin, 1958]{Tobin58}
-Tobin J. 1958.
-\newblock Estimation of relationships for limited dependent variables.
-\newblock Econometrica, 26(1):24--36.
-
-\bibitem[{USGS (US Geological Survey)}, 2015]{USGS15}
-{USGS (US Geological Survey)}. 2015.
-\newblock {Water Quality Loads and Trends at Nontidal Monitoring Stations in
-  the Chesapeake Bay Watershed}.
-\newblock \url{http://cbrim.er.usgs.gov/}. (Accessed November, 2015).
-
-\bibitem[Wood, 2006a]{Wood06}
-Wood SN. 2006a.
-\newblock Generalized Additive Models: An Introduction with R.
-\newblock Chapman and Hall, CRC Press, London, United Kingdom.
-
-\bibitem[Wood, 2006b]{Wood06b}
-Wood SN. 2006b.
-\newblock Low-rank scale-invariant tensor product smooths for generalized
-  additive mixed models.
-\newblock Biometrics, 62(4):1025--1036.
-
-\bibitem[Zhang et~al., 2013]{Zhang13}
-Zhang Q, Brady DC, Ball WP. 2013.
-\newblock Long-term seasonal trends of nitrogen, phosphorus, and suspended
-  sediment load from the non-tidal {S}usquehanna {R}iver {B}asin to
-  {C}hesapeake {B}ay.
-\newblock Science of the Total Environment, 452-453:208--221.
+\bibitem[{Zhang \emph{et~al.}(2013)Zhang, Brady, and Ball}]{Zhang13}
+Zhang, Q., D.~C. Brady, and W.~P. Ball, 2013. Long-term seasonal trends of
+  nitrogen, phosphorus, and suspended sediment load from the non-tidal
+  {S}usquehanna {R}iver {B}asin to {C}hesapeake {B}ay. Science of the Total
+  Environment 452-453:208--221.
 
 \end{thebibliography}
