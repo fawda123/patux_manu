@@ -79,7 +79,7 @@
 
 % page margins and section title formatting
 \linespread{1.5}
-\setlength{\footskip}{0.5in}
+% \setlength{\footskip}{0.25in}
 \titleformat*{\section}{\singlespace}
 \titleformat*{\subsection}{\singlespace\it}
 \titleformat*{\subsubsection}{\singlespace\bf}
@@ -133,11 +133,11 @@
 % \linenumbers
 \raggedright
 \urlstyle{same}
-\setlength{\parindent}{0.5in}
+\setlength{\parindent}{0.25in}
 \renewcommand\refname{\centerline{LITERATURE CITED} \vspace{12pt}}
 
 \begin{singlespace}
-\title{{\bf {\Large Comparison of weighted regression and additive models for trend evaluation of water quality in tidal waters\footnote{Version Date:   Wed Jan 6 15:06:37 2016 -0600}}}}
+\title{{\bf {\Large Comparison of weighted regression and additive models for trend evaluation of water quality in tidal waters\footnote{Version Date:   Wed Jan 6 17:03:31 2016 -0600}}}}
 \author{{\bf {\normalsize Marcus W. Beck, Rebecca R. Murphy\textsuperscript{1}}}}
 \date{}
 \footnotetext[1]{Post-doctorate researcher (Beck), USEPA National Health and Environmental Effects Research Laboratory, Gulf Ecology Division, 1 Sabine Island Drive, Gulf Breeze, FL 32561, Estuarine Data Analyst (Murphy), UMCES at Chesapeake Bay Program, 410 Severn Avenue, Suite 112, Annapolis, MD 21403 (Email/Beck: \href{mailto:beck.marcus@epa.gov}{beck.marcus@epa.gov})}
@@ -149,7 +149,7 @@
 
 \noindent Two similar statistical approaches, \ac{WRTDS} and \aclu{GAM} (\acp{GAM}), have recently been used to evaluate long-term trends in \ac{chla} in estuarine systems. We evaluated \ac{WRTDS} and \acp{GAM} using thirty years of data for a monthly time series of \ac{chla} in the Patuxent River Estuary, a well-studied tributary to Chesapeake Bay.  Each model was evaluated based on predictive capabilities to the observed data and ability to reproduce flow-normalized trends with simulated data.  For all examples, prediction errors and average differences were strikingly similar despite differences in computational requirements for each approach.  Flow-normalized trends from each model revealed distinct differences in temporal variation in \ac{chla} from the upper to lower estuary.  Mainstem influences of the Chesapeake Bay were apparent with a slight increase in \ac{chla} trends over time in the lower estuary, whereas flow-normalized predictions for the upper estuary showed declines in \ac{chla} with an increase in recent years.  Both models had comparable abilities to remove flow effects in simulated time series of \ac{chla}, although flow-normalized predictions to actual data suggested \ac{GAM} results were more stable with minimal observations.  This study provides valuable guidance for using statistical models in trend analysis, with particular relevance for computational requirements, desired products, and future data needs.  
 
-\noindent KEY TERMS: chlorophyll, estuary, generalized additive models, Patuxent River Estuary, trend analysis, weighted regression
+\noindent KEY TERMS: chlorophyll, estuaries, additive models, nutrients, Patuxent River Estuary, statistics, time series analysis, weighted regression
 
 \clearpage
 
@@ -188,7 +188,7 @@ Thirty years of monthly \ac{chla} and salinity data from 1986 to 2014 were obtai
 
 %How, Similarities, differences, optimal smoothing
 
-\subsubsection*{\hspace*{0.5in}Weighted Regression on Time, Discharge, and Season.}
+\subsubsection*{\hspace*{0.25in}Weighted Regression on Time, Discharge, and Season.}
 
 The \ac{WRTDS} method relates a response endpoint, typically a nutrient concentration, to discharge and time to evaluate long-term trends \citep{Hirsch10,Hirsch14}. Recent adaptation of \ac{WRTDS} to tidal waters relates \ac{chla} concentration to salinity and time \citep{Beck15}, where salinity is a tracer of freshwater inputs or tidal changes.  The functional form of the model is a simple regression that relates the natural log of \ac{chla} ($Chl$) to decimal time ($T$) and salinity ($Sal$) on a sinuisoidal annual time scale (i.e., cyclical variation by year). 
 \begin{equation} \label{eqn:funform}
@@ -200,13 +200,13 @@ The \ac{WRTDS} approach obtains fitted values of the response variable by estima
 
 Predicted values are based on an interpolation matrix from the unique regressions at each time step. A sequence of salinity or flow values based on the minimum and maximum values for the data are used to predict \ac{chla} using the observed month and year based on the parameters fit to the observation. Model predictions are based on a bilinear interpolation from the grid using the salinity (flow) and date values closest to observed. Salinity- or flow-normalized values are also obtained from the prediction grid that allow an interpretation of \ac{chla} trend that is independent of variation related to freshwater inputs. Normalized predictions are obtained for each observation by collecting the sample of observed salinity or flow values that occur for the same month throughout all years in the dataset.  These values are assumed to be equally likely to occur across the time series at that particular month. A normalized value for each point in the time series is the average of the predicted values from each specific model based on the salinity or flow values that are expected to occur for each month.
 
-\subsubsection*{\hspace*{0.5in}Generalized Additive Models.}
+\subsubsection*{\hspace*{0.25in}Generalized Additive Models.}
 
 A \ac{GAM} is a statistical model that allows for a linear predictor to be represented as the sum of multiple smooth functions of covariates \citep{Hastie90}. In this application, \acp{GAM} were constructed with the same explanatory variables as the \ac{WRTDS} approach: log of \ac{chla} was modeled as a function of decimal time, salinity or flow, and day of year (i.e., to capture the annual cycle). The relationships between log-\ac{chla} and the covariates were modeled with thin plate regression splines \citep{Wood06} as the smooth functions using the `mgcv' package in R. To allow for interaction between the model covariates (e.g., seasonal differences in the long-term \ac{chla} pattern), a tensor product basis between all three covariates was constructed. The tensor product basis allows for the smooth construct to be a function of any number of covariates, without an isotropy constraint \citep{Wood06b}. The \ac{GAM} implementation in `mgcv' does not require the selection of knots for a spline basis, but instead a reasonable upper limit on the flexibility of the function is set, and a `wiggliness' penalty is added to create a penalized regression spline structure. The balance between model fit and smoothness is achieved by selecting a smoothness parameter that minimizes the generalized cross-validation score \citep{Wood06}.
 
 Model predictions with \acp{GAM} are straightforward to obtain after the model parameters are selected, and can be obtained along with standard errors which are based on the Bayesian posterior covariance matrix \citep{Wood06}. For this comparison, salinity- or flow-normalized \ac{GAM} predictions were obtained in a manner for consistency with \ac{WRTDS}. The observed salinity or flow values were compiled that occurred in the same month throughout all years in the dataset. These values were assumed to be equally likely to occur at that particular month.  A normalized \ac{GAM} estimate at each date in the record was computed as the average of the predictions obtained using all of the flow or salinity values for that month of the year throughout the record. 
 
-\subsubsection*{\hspace*{0.5in}Selection of model parameters.}
+\subsubsection*{\hspace*{0.25in}Selection of model parameters.}
 
 The selection of optimal model parameters is a challenge that represents a tradeoff between model precision and ability to generalize to novel datasets.  Weighted regression requires identifying optimal half-window widths, whereas the \ac{GAM} approach used here requires identifying an optimal value for a smoothing parameter that weights the wiggliness of the function against model fit \citep{Wood06}.  Overfitting a model with excessively small window widths or smoothing parameter will minimize prediction error but prevent extrapolation of results to different datasets. Similarly, underfitting a model with large window widths or smoothing parameter will reduce precision but will improve the ability to generalize results to different datasets. From a statistical perspective, the optimal model parameters provide a balance between over- and under-fitting.  Both models use a form of cross-validation to identify model parameters that maximize the precision of model predictions with a novel dataset.   
 
