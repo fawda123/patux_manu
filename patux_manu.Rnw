@@ -131,7 +131,7 @@ writeLines(refs, con = file('refs.bib'))
 \begin{document}
 
 \raggedbottom
-% \linenumbers
+\linenumbers
 \raggedright
 \urlstyle{same}
 \setlength{\parindent}{0.25in}
@@ -1297,7 +1297,7 @@ bestTF16_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), k = c(5, 
 data(bestTF16_wrtds)
 
 ## plots
-margs <- grid::unit(c(0, 0, 0, -4), "mm") # margins
+margs <- grid::unit(c(0, 0, 0, 0), "mm") # margins
 fac_txt <- 10 # facet text size
 ylims <- c(0.6, 4)
 col_vec <- wes_palette('Zissou', 100, 'continuous') %>% 
