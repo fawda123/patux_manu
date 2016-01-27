@@ -1373,7 +1373,7 @@ toplo2 <- select(sims_mos, date, lnchla_noQ, sim2, sim1, sim3) %>%
   tidyr::gather('variable', 'value', -date) 
 
 # factor labels as expressions
-labs <- c('Biological \\ac{chla}', 'No flow', 'Constant flow', 'Increasing flow')
+labs <- c('Biological', 'No flow', 'Constant flow', 'Increasing flow')
 levels(toplo$variable) <- levels(toplo2$variable) <- labs
 
 # y axis labels
