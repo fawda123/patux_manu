@@ -1,8 +1,12 @@
-\begin{thebibliography}{39}
+\begin{thebibliography}{42}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
 \expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+
+\bibitem[{Arlot and Celisse(2010)}]{Arlot10}
+Arlot, S. and A.~Celisse, 2010. A survey of cross-validation procedures for
+  model selection. Statistics Surveys 4:40--79.
 
 \bibitem[{Beck and {Hagy III}(2015)}]{Beck15}
 Beck, M.~W. and J.~D. {Hagy III}, 2015. Adaptation of a weighted regression
@@ -44,6 +48,10 @@ Cronin, W.~B. and D.~W. Pritchard, 1975. Additional statistics on the
   widths and segment volumes per meter depth, Technical Report 42, Reference
   75-3, Chesapeak Bay Institute, The Johns Hopkins University, Baltimore,
   Maryland.
+
+\bibitem[{Efron and Tibshirani(1993)}]{Efron93}
+Efron, B. and R.~Tibshirani, 1993. An Introduction to the Bootstrap, Chapman
+  and Hall, New York, New York, first edition.
 
 \bibitem[{Hagy(1996)}]{Hagythes}
 Hagy, J.~D., 1996. Residence times and net ecosystem processes in {P}atuxent
@@ -141,6 +149,10 @@ Murrell, M.~C., J.~D. Hagy, E.~M. Lores, and R.~M. Greene, 2007. Phytoplankton
 \bibitem[{Nixon(1995)}]{Nixon95}
 Nixon, S.~W., 1995. Coastal marine eutrophication: A definition, social causes,
   and future concerns. Ophelia 41:199--219.
+
+\bibitem[{Nocedal and Wright(2006)}]{Nocedal06}
+Nocedal, J. and S.~J. Wright, 2006. Numerical Optimization, Springer-Verlag,
+  New York, New York, 2nd edition.
 
 \bibitem[{Paerl(2006)}]{Paerl06}
 Paerl, H.~W., 2006. Assessing and managing nutrient-enhanced eutrophication in
