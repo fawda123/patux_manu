@@ -381,7 +381,7 @@ Practical applications of each model should consider alternative characteristics
 
 \section*{\centerline{ACKNOWLEDGMENTS}}
 
-We thank Jim Hagy, Bob Hirsch, Jennifer Keisman, Elgin Perry, and Jeremy Testa for valuable discussions that improved the analysis.  We thank the Chesapeake Bay Program and Maryland Department of Natural Resources for providing data.
+We thank Jim Hagy, Bob Hirsch, Jennifer Keisman, and Elgin Perry for valuable discussions that improved the analysis.  Thanks to Jeremy Testa and Jeffrey Chanat for providing valuable comments on an earlier draft.  We thank the Chesapeake Bay Program and Maryland Department of Natural Resources for providing data.
 
 %%%%%%
 % refs
@@ -967,8 +967,8 @@ p1 <- ggplot(patux_poly, aes(x = long, y = lat)) +
   geom_polygon(aes(fill = factor(id), group = group), colour = NA) +
   scale_fill_manual(values = rev(mapcols)) +
   geom_point(data = pax_meta, aes(x = LONG, y = LAT), size = 5, alpha = 0.8) +
-  geom_text(data = pax_meta, aes(x = LONG * 1.001, y = LAT, label = lab), size = 5, 
-    parse = TRUE) +
+  geom_label(data = pax_meta, aes(x = LONG * 1.001, y = LAT, label = lab), alpha = 0.5, size = 5, 
+    parse = TRUE, label.padding = grid::unit(0.15, "lines")) +
   theme_classic() + 
   theme(axis.line=element_blank(), axis.text.x=element_blank(),
           axis.text.y=element_blank(), axis.ticks=element_blank(),
