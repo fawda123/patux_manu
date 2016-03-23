@@ -1,4 +1,4 @@
-\begin{thebibliography}{42}
+\begin{thebibliography}{43}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
@@ -153,6 +153,14 @@ Nixon, S.~W., 1995. Coastal marine eutrophication: A definition, social causes,
 \bibitem[{Nocedal and Wright(2006)}]{Nocedal06}
 Nocedal, J. and S.~J. Wright, 2006. Numerical Optimization, Springer-Verlag,
   New York, New York, 2nd edition.
+
+\bibitem[{Orth \emph{et~al.}(2010)Orth, Williams, Marion, wilcox, Carruthers,
+  Moore, Kemp, Dennison, Rybicki, Bergstrom, and Batiuk}]{Orth10}
+Orth, R.~J., M.~R. Williams, S.~R. Marion, D.~J. wilcox, T.~J.~B. Carruthers,
+  K.~A. Moore, W.~M. Kemp, W.~C. Dennison, N.~Rybicki, P.~Bergstrom, and R.~A.
+  Batiuk, 2010. Long-term trends in submersed aquatic vegetation (SAV) in
+  {C}hesapeake {B}ay, {USA}, related to water quality. Estuaries and Coasts
+  33(5):1144--1163.
 
 \bibitem[{Paerl(2006)}]{Paerl06}
 Paerl, H.~W., 2006. Assessing and managing nutrient-enhanced eutrophication in
