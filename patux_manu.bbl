@@ -1,4 +1,4 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{42}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
@@ -205,10 +205,6 @@ Steward, J.~S. and W.~C. Green, 2007. Setting load limits for nutrients and
 Testa, J.~M., W.~M. Kemp, W.~R. Boynton, and J.~D. Hagy, 2008. Long-term
   changes in water quality and productivity in the {P}atuxent {R}iver
   {E}stuary: 1985 to 2003. Estuaries and Coasts 31(6):1021--1037.
-
-\bibitem[{Tobin(1958)}]{Tobin58}
-Tobin, J., 1958. Estimation of relationships for limited dependent variables.
-  Econometrica 26(1):24--36.
 
 \bibitem[{{USGS (US Geological Survey)}(2015)}]{USGS15}
 {USGS (US Geological Survey)}, 2015. {Water Quality Loads and Trends at

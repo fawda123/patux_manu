@@ -24,6 +24,7 @@
 \usepackage{array}
 \usepackage{pdflscape}
 \usepackage{bm}
+\usepackage{caption}
 % \usepackage{showlabels}
 \usepackage{outlines}
 \bibpunct{(}{)}{,}{a}{}{,}
@@ -198,7 +199,7 @@ The \ac{WRTDS} method relates a response endpoint, typically a nutrient concentr
 \begin{equation} \label{eqn:funform}
 \ln\left(Chl\right) = \beta_0 + \beta_1 T + \beta_2 Sal + \beta_3 \sin\left(2\pi T\right) + \beta_4 \cos\left(2\pi t\right) + \epsilon
 \end{equation}
-The tidal adaptation of \ac{WRTDS} uses quantile regression models \citep{Cade03} to characterize trends in different conditional distributions of \ac{chla}, e.g., the median or 90th percentile. For comparison to \acp{GAM}, the original \ac{WRTDS} model in \citet{Hirsch10} that characterizes the conditional mean of the response was used.  Mean models require an estimation of the back-transformation bias parameter for response variables in log-space. This is achieved using the standard error of residuals for each observation along the time series during back-transformation \citep{Hirsch10}.  Additionally, the \ac{WRTDS} model uses survival regression as a variation of the weighted Tobit model \citep{Tobin58} to account for censored observations beyond the detection limit \citep{Hirsch14}.
+The tidal adaptation of \ac{WRTDS} uses quantile regression models \citep{Cade03} to characterize trends in different conditional distributions of \ac{chla}, e.g., the median or 90th percentile. For comparison to \acp{GAM}, a version of \ac{WRTDS} created by the authors similar the original model in \citet{Hirsch10} was used to characterize the conditional mean of the response (see {\bf Appendix S1}).  Mean models require an estimation of the back-transformation bias parameter for response variables in log-space \citep{Hirsch10}.  Although back-transformation is developed for \ac{WRTDS}, a similar approach has not yet been implemented for \acp{GAM}.  All units for \ac{chla} are reported in log-space unless otherwise noted.
 
 The \ac{WRTDS} approach obtains fitted values of the response variable by estimating a unique regression model at each point in the time series. Each model is weighted with a three-dimensional window by month, year, and salinity (or flow) such that a unique set of regression parameters for each observation is obtained. For example, a weighted regression centered on a single observation weights other observations in the same year, month, and similar salinity with higher importance, whereas observations for different months, years, or salinities receive lower importance. This weighting approach allows estimation of regression parameters that vary in relation to observed conditions throughout the period of record \citep{Hirsch10}. Optimal window widths can be identified using cross-validation, described below, that evaluates the ability of the model to generalize results with novel datasets.
 
@@ -230,7 +231,7 @@ where the estimated \ac{chla} values for each model, $\widehat{Chl}_{i,\,WRTDS}$
 \begin{equation} \label{avediff_fun}
 \textrm{Average difference} = \left(\frac{\sum\limits_{i = 1}^n \widehat{Chl}_{WRTDS,\,i} - \sum\limits_{i = 1}^n \widehat{Chl}_{GAM,\,i}}{\sum\limits_{i = 1}^n \widehat{Chl}_{GAM,\,i}}\right) * 100
 \end{equation}
-Positive values indicate that \ac{WRTDS} provided higher predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}.  Results between models were also evaluated using regressions comparing the \ac{WRTDS} and \ac{GAM} predictions.  The regressions were compared to a null model having an intercept of zero and slope of one.  Deviation of either the intercept or slope of the regressions from the null model provided evidence of systematic differences between the models.  An intercept significantly different from zero was interpreted as an overall difference between the predictions, whereas a slope different from one was interpreted as a difference that varies with relative magnitude of the predictions.  The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow using the discharge record at Bowie, Maryland.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max).
+Positive values indicate that \ac{WRTDS} provided higher predictions than \acp{GAM} on average, whereas the opposite is true for negative values \citep{Moyer12}.  Results between models were also evaluated using regressions comparing\ac{WRTDS} (as the response) and \ac{GAM} (as the predictor).  The regressions were compared to a null model having an intercept of zero and slope of one.  Deviation of either the intercept or slope of the regressions from the null model provided evidence of systematic differences between the models.  An intercept significantly different from zero was interpreted as an overall difference between the predictions, whereas a slope different from one was interpreted as a difference that varies with relative magnitude of the predictions. Although the signs of the slope and intercept estimates for the comparisons depended on which model was used as the predictor, we were primarily concerned with magnitude of the parameter estimates in the regression comparisons as evidence of systematic differences between each model. The statistical comparisons described above were conducted for the entire time series at each station to evaluate overall performance.  Different time periods were also evaluated to identify potential temporal variation in results, which included a comparison of results by annual and seasonal aggregations and periods with different levels of flow using the discharge record at Bowie, Maryland.  Annual and seasonal aggregations shown in \cref{fig:chlyrmofl} were evaluated between the models, in addition to evaluating the models at different levels of flow defined by the quartile distributions (min--25\%, 25\%--median, median--75\%, and 75\%--max).
 
 Flow-normalized time series were compared similarly but only between models because the true flow-independent component of the observed data is not known and can only be empirically estimated.  As described below, an evaluation of flow-normalized data for each model was accomplished using simulated datasets with known components that were independent of discharge.  However, a simple comparison of flow-normalized trends by different time periods summarized long-term patterns in the Patuxent River estuary.  These comparisons evaluated percent changes of flow-normalized estimates at the beginning and end of each time period.  Percent changes within each period were based on annual mean estimates for the first and last three years of flow-normalized \ac{chla} estimates, excluding the annual aggregations that had limited annual mean data (i.e., seven years per period).  For example, percent change for the \ac{JFM} seasonal period compared an average of JFM annual means for 1986 through 1988 to an average of JFM annual means for 2012 through 2014. This approach was used to reduce the influence of abnormal years or missing data on trend estimates.   
 
@@ -259,7 +260,7 @@ Chl_{bio} = \widehat{Chl}_{seas} + \sigma\cdot\varepsilon_{Chl,\,sim}
 \end{equation}
 The estimated flow time series within the parentheses, $\widehat{Q}_{seas} + \sigma\cdot\varepsilon_{Q,\,sim}$, is floored at zero to simulate an additive effect of increasing flow on $Chl_{obs}$.  Although the actual relationship of water quality measurements with flow is more complex, we assumed that a simple addition was sufficient for the simulations where the primary objective was to create an empirical and linear link between flow and \ac{chla}. Moreover, the vector $I$ (where $0 \leq I \leq 1$) can be manually changed to represent an independent effect of flow based on the desired simulation.  For example, a flow effect that changes from non-existent to positive throughout the period of observation can be simulated by creating a vector ranging from zero to one. For the simulated $Chl_{bio}$ time series, the seasonal and error components were characterized using the daily time series at Jug Bay that likely included an effect of flow in the observed data.  For the simulated models, we assumed that the actual flow effect was part of the seasonal component to obtain an accurate estimate of the error component that was independent of both flow and season.  Methods for estimating each of the components in \cref{chlflo,chlbio} are described in detail in {\bf Appendix S2}.
 
-Three time series with monthly sampling frequencies and varying contributions of the flow component ($Chl_{flo}$ in \cref{chlobs}) were created from daily simulated time series of $Chl_{obs}$ (\cref{fig:simex}, {\bf Appendix S2}). One day in each month for each year was randomly sampled and used as the monthly time step for each time series.  Varying effects of the flow component on observed \ac{chla} were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from non-existent (vector of zeroes), constant (vector of ones), and steadily increasing (continuous vector from zero to one).  This created three monthly time series that were used to evaluate each model that were analogous to no influence, constant, and changing influence of the flow component over time (\cref{fig:simex}).  Results were evaluated by first comparing the predicted ($\widehat{Chl}_{obs}$) and observed ($Chl_{obs}$) chloropyll values for each simulation, followed by comparing the flow-normalized results ($\widehat{Chl}_{bio}$) from each model to the original biological \ac{chla} ($Chl_{bio}$) component of each simulated time series (\cref{chlobs,chlbio}).  The former comparison provided information on relative fit to validate the simulated data, whereas the latter comparison to evaluate flow-normalization was the primary focus of the analysis.
+Three time series with monthly sampling frequencies and varying contributions of the flow component ($Chl_{flo}$ in \cref{chlobs}) were created from daily simulated time series of $Chl_{obs}$ ({\bf Appendix S2}). One day in each month for each year was randomly sampled and used as the monthly time step for each time series.  Varying effects of the flow component on observed \ac{chla} were creating by multiplying $Chl_{flo}$ by different indicator vectors ($I$ in \cref{chlflo}).  The contribution of the flow component varied from non-existent (vector of zeroes), constant (vector of ones), and steadily increasing (continuous vector from zero to one).  This created three monthly time series that were used to evaluate each model that were analogous to no influence, constant, and changing influence of the flow component over time ({\bf Appendix S2}).  Results were evaluated by first comparing the predicted ($\widehat{Chl}_{obs}$) and observed ($Chl_{obs}$) chloropyll values for each simulation, followed by comparing the flow-normalized results ($\widehat{Chl}_{bio}$) from each model to the original biological \ac{chla} ($Chl_{bio}$) component of each simulated time series (\cref{chlobs,chlbio}).  The former comparison provided information on relative fit to validate the simulated data, whereas the latter comparison to evaluate flow-normalization was the primary focus of the analysis.
 
 \section*{\centerline{RESULTS}}
 
@@ -328,9 +329,9 @@ Both models described \ac{chla} response with sufficient parameterization of inp
 
 \subsection*{Flow-normalization with simulated data}
 
-\ac{WRTDS} and \acp{GAM} were fit to each of the three simulated datasets, creating six models to evaluate the general fit of observed to predicted ($Chl_{obs} \sim \widehat{Chl}_{obs}$) and biological to flow-normalized \ac{chla} ($Chl_{bio} \sim \widehat{Chl}_{bio}$).  Models were fit using identical methods as those for the Patuxent time series such that an optimal window width combination for \ac{WRTDS} and optimal degrees of freedom for smoothing parameters with \acp{GAM} were identified.  \Cref{fig:dynasim} is similar to \cref{fig:dynafig} and shows an example of the changing relationships between \ac{chla} and flow across the simulated time series using the results from three optimal \ac{WRTDS} models.  The plots confirm those in \cref{fig:simex} by showing the varying effects of flow in each simulated dataset over time (no effect, constant, increasing) and that the models appropriately characterized the relationships.  For example, a changing response of \ac{chla} to salinity is apparent in the third panel of \cref{fig:dynasim} such that no response is observed early in the time series followed by an increase in the response of \ac{chla} to flow later in the time series.  Similar patterns were observed for the \acp{GAM}.
+\ac{WRTDS} and \acp{GAM} were fit to each of the three simulated datasets, creating six models to evaluate the general fit of observed to predicted ($Chl_{obs} \sim \widehat{Chl}_{obs}$) and biological to flow-normalized \ac{chla} ($Chl_{bio} \sim \widehat{Chl}_{bio}$).  Models were fit using identical methods as those for the Patuxent time series such that an optimal window width combination for \ac{WRTDS} and optimal degrees of freedom for smoothing parameters with \acp{GAM} were identified.  \Cref{fig:dynasim} is similar to \cref{fig:dynafig} and shows an example of the changing relationships between \ac{chla} and flow across the simulated time series using the results from three optimal \ac{WRTDS} models.  The plots show the varying effects of flow in each simulated dataset over time (no effect, constant, increasing) and that the models appropriately characterized the relationships.  For example, a changing response of \ac{chla} to salinity is apparent in the third panel of \cref{fig:dynasim} such that no response is observed early in the time series followed by an increase in the response of \ac{chla} to flow later in the time series.  Similar patterns were observed for the \acp{GAM}.
 
-Comparisons of fit to the simulated time series showed no systematic differences between the models.  Overall, \ac{WRTDS} results had lower \ac{RMSE} than \acp{GAM} for all comparisons except one ($Chl_{obs} \sim \widehat{Chl}_{obs}$, constant flow simulation), although differences in performance were minor (\cref{tab:simperf}).  Visual comparison of results suggested that both models provided comparable information for predictions of observed values and flow-normalized predictions (\cref{fig:simres}).  Additionally, the varying effect of flow on each time series was apparent in comparisons of predicted with flow-normalized results, such that $\widehat{Chl}_{bio}$ was increasingly different from $\widehat{Chl}_{obs}$ from no effect to constant effect of the flow component (top row, \cref{fig:simres}).  Although both models provided similar performance for individual simulations, differences between the simulations were observed.  The different effects of flow had a negative effect on the ability of each model to remove the flow component.  Comparisons of $Chl_{bio}$ with $\widehat{Chl}_{bio}$ showed the lowest \ac{RMSE} with no flow effect and the highest with a constant flow effect (\cref{tab:simperf}).  Different flow effects did not have an influence on the relationship between predicted ($\widehat{Chl}_{obs}$) and observed ($Chl_{obs}$) \ac{chla} such that \ac{RMSE} for all models and simulations were similar and lower than those comparing the flow-normalized results.  Overall, changing the flow component primarily affected the ability of each model to reproduce the flow-normalized component ($\widehat{Chl}_{bio}$) with relatively minor differences between the models. 
+Comparisons of fit to the simulated time series showed no systematic differences between the models.  Overall, \ac{WRTDS} results had lower \ac{RMSE} than \acp{GAM} for all comparisons except one ($Chl_{obs} \sim \widehat{Chl}_{obs}$, constant flow simulation), although differences in performance were minor (\cref{tab:simperf}).  Although both models provided similar performance for individual simulations, differences between the simulations were observed.  The different effects of flow had a negative effect on the ability of each model to remove the flow component.  Comparisons of $Chl_{bio}$ with $\widehat{Chl}_{bio}$ showed the lowest \ac{RMSE} with no flow effect and the highest with a constant flow effect (\cref{tab:simperf}).  Different flow effects did not have an influence on the relationship between predicted ($\widehat{Chl}_{obs}$) and observed ($Chl_{obs}$) \ac{chla} such that \ac{RMSE} for all models and simulations were similar and lower than those comparing the flow-normalized results.  Overall, changing the flow component primarily affected the ability of each model to reproduce the flow-normalized component ($\widehat{Chl}_{bio}$) with relatively minor differences between the models. 
 
 \section*{\centerline{DISCUSSION}}
 
@@ -384,6 +385,48 @@ Chl_{seas} = \beta_0 + \beta_1 T + \beta_2 Q + \beta_3 \sin\left(2\pi T\right) +
 \varepsilon_{Chl} = Chl_{seas} - \widehat{Chl}_{seas}
 \end{equation}
 This approach was used to isolate an error structure for simulation that was independent of flow and biology, where the seasonal component (as time $T$ on a sinusoidal annual period) was assumed to be related to biological processes.  The error distribution was then estimated from the residuals (\cref{chlerr}) as before using an \ac{ARMA} estimate of the residual parameters, $p$ and $q$.  Standard error estimates from the regression used at each point in the one-year time series were also retained for each residual.  Errors were simulated ($\varepsilon_{Chl,\,sim}$, \cref{chlbio}) for the entire year using the estimated auto-regressive structure and multiplied by the corresponding standard error estimate from the regression.  The entire year was repeated for every year in the observed time series.  All simulated errors were rescaled to the range of the original residuals that were used to estimate the distribution.  Finally, the simulated flow-component, $Chl_{flo}$, was added to the simulated biological model, $Chl_{bio}$, to create the daily time series, $Chl_{obs}$, in \cref{chlobs}.  The final time series was then used to compare the relative abilities of \ac{WRTDS} and \acp{GAM} to characterize flow-normalized trends.  
+
+% examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects, named simex
+<<eval = T, echo = F, cache = T, results = 'hide'>>=
+
+# load data, from sim_dat.R in tidal_comp proj
+load('data/sims_day.RData')
+load('data/sims_mos.RData')
+
+# organize daily and monthly ts for plots
+toplo <- select(sims_day, date, lnchla_noQ, sim2, sim1, sim3) %>% 
+  tidyr::gather('variable', 'value', -date)
+toplo2 <- select(sims_mos, date, lnchla_noQ, sim2, sim1, sim3) %>% 
+  tidyr::gather('variable', 'value', -date) 
+
+# factor labels as expressions
+labs <- c('Biological', 'No flow', 'Constant flow', 'Increasing flow')
+levs <- c('lnchla_noQ', 'sim2', 'sim1', 'sim3')
+toplo$variable <- factor(toplo$variable, levels = levs, labels = labs)
+toplo2$variable <- factor(toplo2$variable, levels = levs, labels = labs)
+
+# y axis labels
+ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+
+# merge with sampled
+p <- ggplot(toplo, aes(x = date, y = value, group = variable)) + 
+  geom_point(pch = 1, size = 1, col = cols[40]) + 
+  geom_line(data = toplo2, aes(x = date, y = value, group = variable), col = cols[1]) +
+  scale_y_continuous(ylabs) + 
+  theme(axis.title.x = element_blank()) +
+  facet_wrap(~variable, ncol = 1)
+
+pdf('figs/simex.pdf', width = 6, height = 7, family = 'serif')
+print(p)
+dev.off()
+@
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/simex.pdf}
+\caption*{{\bf FIGURE}: Examples of simulated time series for evaluating flow-normalized results from \ac{WRTDS} and \acp{GAM}.  The plots show the simulated daily time series (points) and monthly samples (lines) from the daily time series used to evaluate the flow-normalized predictions from \ac{WRTDS} and \acp{GAM}.  From top to bottom, the time series show the biological \ac{chla} independent of flow and the three simulated datasets that represent different effects of flow: none, constant, and increasing effect.  The flow-normalized results for the simulated monthly time series from each model were compared to the first time series (biological \ac{chla}) that was independent of flow.}
+\end{figure}
+\clearpage
 
 \section*{\centerline{ACKNOWLEDGMENTS}}
 
@@ -458,13 +501,13 @@ data(bestLE12)
 data(bestTF16)
 
 alldat <- rbind(
-  data.frame(bestLE12, stat = 'LE12', stringsAsFactors = F), 
-  data.frame(bestTF16, stat = 'TF16', stringsAsFactors = F)
+  data.frame(bestLE12[, !names(bestLE12) %in% 'lnQ'], stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16[, !names(bestTF16) %in% 'sal'], stat = 'TF16', stringsAsFactors = F)
   ) 
 
 # summarize by categories, then combine with overall summary
 totab_sep <- select(alldat, 
-    stat, chla, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
+    stat, res, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
   ) %>% 
   mutate(
     flcat = as.character(flcat),
@@ -549,8 +592,8 @@ data(bestTF16)
 
 # combine stations, agg by year for slope ests
 alldat <- rbind(
-  data.frame(bestLE12, stat = 'LE12', stringsAsFactors = F), 
-  data.frame(bestTF16, stat = 'TF16', stringsAsFactors = F)
+  data.frame(bestLE12[, !names(bestLE12) %in% 'lnQ'], stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16[, !names(bestTF16) %in% 'sal'], stat = 'TF16', stringsAsFactors = F)
   ) %>% 
   select(stat, date, norm_wrtds, norm_gams, mocat, yrcat, flcat) %>% 
   mutate(
@@ -729,8 +772,8 @@ data(bestLE12)
 data(bestTF16)
 
 alldat <- rbind(
-  data.frame(bestLE12, stat = 'LE12', stringsAsFactors = F), 
-  data.frame(bestTF16, stat = 'TF16', stringsAsFactors = F)
+  data.frame(bestLE12[, !names(bestLE12) %in% 'lnQ'], stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16[, !names(bestTF16) %in% 'sal'], stat = 'TF16', stringsAsFactors = F)
   ) 
 
 totab <-select(alldat, 
@@ -922,7 +965,7 @@ totab <- group_by(simres, sim, mod) %>%
 # latex table
 tab <- totab[, -c(1:2)]
 rows <- totab[, 2]
-cap.val<-'Summaries of model performance comparing observed \\ac{chla} with predicted values ($Chl_{obs} \\sim \\widehat{Chl}_{obs}$) and biological \\ac{chla} with flow-normalized values ($Chl_{bio} \\sim \\widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \\ac{RMSE} values comparing results from each model (\\ac{GAM}, \\ac{WRTDS}) in the bottom two rows of panels in \\cref{fig:simres}. Deviance for each model as the sum of squared residuals is shown in parentheses.'
+cap.val<-'Summaries of model performance comparing observed \\ac{chla} with predicted values ($Chl_{obs} \\sim \\widehat{Chl}_{obs}$) and biological \\ac{chla} with flow-normalized values ($Chl_{bio} \\sim \\widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \\ac{RMSE} values comparing results from each model (\\ac{GAM}, \\ac{WRTDS}). Deviance for each model as the sum of squared residuals is shown in parentheses.'
 
 latex( 
   tab,
@@ -1094,35 +1137,6 @@ p1 <- ggplot(pax_meta, aes(x = LONG, y = LAT)) +
 p1
 @
 
-% examples of simulated datasets for eval of flow-normalization - daily, monthly, different flow effects
-<<simex, fig.width = 6, fig.height = 7, eval = T, echo = F, cache = T, fig.cap = 'Examples of simulated time series for evaluating flow-normalized results from \\ac{WRTDS} and \\acp{GAM}.  The plots show the simulated daily time series (points) and monthly samples (lines) from the daily time series used to evaluate the flow-normalized predictions from \\ac{WRTDS} and \\acp{GAM}.  From top to bottom, the time series show the biological \\ac{chla} independent of flow and the three simulated datasets that represent different effects of flow: none, constant, and increasing effect.  The flow-normalized results for the simulated monthly time series from each model were compared to the first time series (biological \\ac{chla}) that was independent of flow.'>>=
-
-# load data, from sim_dat.R in tidal_comp proj
-load('data/sims_day.RData')
-load('data/sims_mos.RData')
-
-# organize daily and monthly ts for plots
-toplo <- select(sims_day, date, lnchla_noQ, sim2, sim1, sim3) %>% 
-  tidyr::gather('variable', 'value', -date)
-toplo2 <- select(sims_mos, date, lnchla_noQ, sim2, sim1, sim3) %>% 
-  tidyr::gather('variable', 'value', -date) 
-
-# factor labels as expressions
-labs <- c('Biological', 'No flow', 'Constant flow', 'Increasing flow')
-levels(toplo$variable) <- levels(toplo2$variable) <- labs
-
-# y axis labels
-ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
-
-# merge with sampled
-ggplot(toplo, aes(x = date, y = value, group = variable)) + 
-  geom_point(pch = 1, size = 1, col = cols[40]) + 
-  geom_line(data = toplo2, aes(x = date, y = value, group = variable), col = cols[1]) +
-  scale_y_continuous(ylabs) + 
-  theme(axis.title.x = element_blank()) +
-  facet_wrap(~variable, ncol = 1)
-@
-
 % predicted trends for each mod - monthly time series of observed with predictions, RMSE in fig
 <<eval = T, echo = F, cache = T, message = F, results = 'hide'>>=
 library(dplyr)
@@ -1142,15 +1156,15 @@ names(bestTF16) <- gsub('wrtds$', 'WRTDS', names(bestTF16))
 
 ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
 
-bestLE12 <- select(bestLE12, -sal, -lnQ, -dec_time)
-bestTF16 <- select(bestTF16, -lnQ, -sal, -dec_time)
+bestLE12 <- select(bestLE12, -flo, -lnQ, -dec_time)
+bestTF16 <- select(bestTF16, -flo, -sal, -dec_time)
 toplo <- rbind(bestTF16, bestLE12) %>% 
   gather(variable, value, fits_WRTDS:res_GAM) %>% 
   separate(variable, c('output', 'model'), sep = '_') %>% 
   mutate(output = factor(output, levels = c('fits', 'norm', 'res'), labels = c('Pred', 'Norm', 'Res')))
 
 p1 <- ggplot(toplo[toplo$output != 'Res', ], aes(x = date, y = value, colour = output)) + 
-  geom_point(aes(y = chla, shape = 'Obs'), colour = 'black', size = 1.5, alpha = 0.3) +
+  geom_point(aes(y = res, shape = 'Obs'), colour = 'black', size = 1.5, alpha = 0.3) +
   geom_line(size = 0.8, alpha = 0.85) + 
   facet_wrap(site ~ model) + 
   ylab(ylabs) + 
@@ -1218,17 +1232,17 @@ data(bestTF16)
 bestLE12 <- mutate(bestLE12, stat = 'LE1.2')
 bestTF16 <- mutate(bestTF16, stat = 'TF1.6')
 
-toplo <- rbind(bestLE12, bestTF16) %>% 
-  select(date, fits_wrtds, fits_gams, chla, stat) %>% 
+toplo <- rbind(bestLE12[, !names(bestLE12) %in% 'lnQ'], bestTF16[, !names(bestTF16) %in% 'sal']) %>% 
+  select(date, fits_wrtds, fits_gams, res, stat) %>% 
   mutate(
     Year = '2014', 
     mo = as.numeric(strftime(date, '%m')),
     day = as.numeric(strftime(date, '%d')),
     fake_date = as.Date(paste(Year, mo, day, sep = '-'))
   ) %>% 
-  gather('mod', 'val', fits_wrtds:chla) %>% 
+  gather('mod', 'val', fits_wrtds:res) %>% 
   mutate(
-    mod = factor(mod, levels = c('chla', 'fits_gams', 'fits_wrtds'), 
+    mod = factor(mod, levels = c('res', 'fits_gams', 'fits_wrtds'), 
       labels = c('observed', 'GAM', 'WRTDS'))
   )
   
@@ -1307,12 +1321,12 @@ grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGro
 
 data(bestLE12)
 
-LE12_tomod <- select(bestLE12, date, dec_time, chla, sal) %>% 
+LE12_tomod <- select(bestLE12, date, dec_time, res, flo) %>% 
   mutate(
     doy = as.numeric(strftime(date, '%j'))
   )
 
-bestLE12_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), k = c(5, 8, 5), data = LE12_tomod, knots=list(doy=c(1,366)))
+bestLE12_gam <- gam(res~te(dec_time, doy, flo, bs=c("tp","cc","tp")), k = c(5, 8, 5), data = LE12_tomod, knots=list(doy=c(1,366)))
 
 data(bestLE12_wrtds)
 
@@ -1320,13 +1334,12 @@ data(bestLE12_wrtds)
 
 data(bestTF16)
 
-TF16_tomod <- select(bestTF16, date, dec_time, chla, lnQ) %>% 
+TF16_tomod <- select(bestTF16, date, dec_time, res, flo) %>% 
   mutate(
     doy = as.numeric(strftime(date, '%j'))
-  ) %>% 
-  rename(sal = lnQ)
+  )
 
-bestTF16_gam <- gam(chla~te(dec_time, doy, sal, bs=c("tp","cc","tp")), k = c(5, 10, 5), 
+bestTF16_gam <- gam(res~te(dec_time, doy, flo, bs=c("tp","cc","tp")), k = c(5, 10, 5), 
   data = TF16_tomod, 
   knots=list(doy=c(1,366)), na.action = na.pass)
 
@@ -1396,7 +1409,7 @@ grid.arrange(
 @
 
 % dynaplot examples for mods with simulated data
-<<dynasim, echo = F, cache = T, fig.height = 2.5, fig.width = 7, fig.cap = 'Examples of changing relationships between \\ac{chla} (\\mugl) and flow (as proportion of the total range) over time (2005--2015) for each simulated time series in \\cref{fig:simex}.  The plots are based on August predictions from three \\ac{WRTDS} models for each time series to illustrate the simulated relationships between flow and \\ac{chla}.', eval = T>>=
+<<dynasim, echo = F, cache = T, fig.height = 2.5, fig.width = 7, fig.cap = 'Examples of changing relationships between \\ac{chla} (\\mugl) and flow (as proportion of the total range) over time (2005--2015) for each simulated time series ({\\bf Appendix S2}).  The plots are based on August predictions from three \\ac{WRTDS} models for each time series to illustrate the simulated relationships between flow and \\ac{chla}.', eval = T>>=
 # color palette
 cols <- wes_palette('Zissou', 100, 'continuous') %>% 
   as.character %>% 
@@ -1440,75 +1453,6 @@ grid.arrange(
   textGrob('Flow'),
   heights = c(0.35, 1, 0.1)
 )
-@
-
-% results of flow-normalized data for simulations
-<<simres, echo = F, cache = T, fig.height = 6, fig.width = 6, fig.cap = 'Model predictions for three simulated datasets with different flow contributions (none, constant, increasing).  Estimated variables (e.g., $\\widehat{Chl}_{bio}$) are compared to simulated variables (e.g., $Chl_{bio}$) to evaluate the ability of each model (\\acp{GAM} and \\ac{WRTDS}) to recreate the flow-normalized time series of \\ac{chla} (i.e., bottom plot, $\\widehat{Chl}_{bio}$ vs $Chl_{bio}$) after removing a simulated flow component from the observed \\ac{chla} time series ($Chl_{obs}$).', eval = T>>=
-# color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
-  as.character %>% 
-  .[1:60]
-modcols <- cols[c(1, 50)]
-  
-data(simres)
-
-# rename factor labels for each simulation
-simres <- mutate(simres, 
-  sim = factor(sim, levels = c('sim2', 'sim1', 'sim3'), labels = c('No flow', 'Constant flow', 'Increasing flow'))
-)
-
-# plot margins
-mars <- grid::unit(c(0, 0, 0, 0), 'cm')
-
-# plot limits
-lims <- c(0, 4)
-
-# # simulated observed vs simulated norms
-# p1 <- ggplot(simres, aes(x = simval, y = lnchla_noQ)) +
-#   geom_abline(intercept = 0, slope = 1) +
-#   scale_x_continuous(quote(italic('Chl' [obs])), limits = lims) + 
-#   scale_y_continuous(quote(italic('Chl' [bio])), limits = lims) + 
-#   geom_point(colour = 'black', shape = 1) + 
-#   scale_colour_manual(values = modcols) +
-#   facet_wrap(~sim, ncol = 3) +
-#   theme(legend.position = 'none', plot.margin = mars)
-
-# fits vs norms
-p2 <- ggplot(simres, aes(x = fits, y = norm)) +
-  geom_abline(intercept = 0, slope = 1) +
-  scale_x_continuous(quote(italic(widehat('Chl') [obs])), limits = lims) + 
-  scale_y_continuous(quote(italic(widehat('Chl') [bio])), limits = lims) + 
-  geom_point(aes(colour = mod), shape = 1) + 
-  scale_colour_manual(values = modcols) +
-  facet_wrap(~sim, ncol = 3) +
-  theme(legend.position = 'none', plot.margin = mars)
-
-# fits vs simulated observed
-p3 <- ggplot(simres, aes(x = fits, y = simval)) +
-  geom_abline(intercept = 0, slope = 1) +
-  scale_x_continuous(quote(italic(widehat('Chl') [obs])), limits = lims) + 
-  scale_y_continuous(quote(italic('Chl' [obs])), limits = lims) +   
-  geom_point(aes(colour = mod), shape = 1) + 
-  scale_colour_manual(values = modcols) +
-  facet_wrap(~sim, ncol = 3) + 
-  theme(legend.position = 'none', plot.margin = mars)
-
-# norms vs simulated norms
-p4 <- ggplot(simres, aes(x = norm, y = lnchla_noQ)) +
-  geom_abline(intercept = 0, slope = 1) +
-  scale_x_continuous(quote(italic(widehat('Chl') [bio])), limits = lims) + 
-  scale_y_continuous(quote(italic('Chl' [bio])), limits = lims) + 
-  geom_point(aes(colour = mod), shape = 1) + 
-  scale_colour_manual(values = modcols) +
-  facet_wrap(~sim, ncol = 3) + 
-  theme(legend.position = 'top', legend.title = element_blank(), plot.margin = mars)
-
-pleg <- g_legend(p4)
-p4 <- p4 + theme(legend.position = 'none')
-
-# final plot
-grid.arrange(pleg, p2, p3, p4, ncol = 1, heights = c(0.15, 1, 1, 1))
-
 @
 
 \end{document}

@@ -144,24 +144,24 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
   to_plo <- dat_in
   
   # flo values to predict
-  flo_vals <- range(to_plo[, 'sal'], na.rm = TRUE)
+  flo_vals <- range(to_plo[, 'flo'], na.rm = TRUE)
   flo_vals <- seq(flo_vals[1], flo_vals[2], length = grd)
   
   # get model predictions across range of flow values
   dynadat <- rep(flo_vals, each = nrow(to_plo)) %>% 
     matrix(., nrow = nrow(to_plo), ncol = grd) %>% 
     cbind(to_plo[, c('dec_time', 'doy')], .) %>%
-    gather('split', 'sal', -dec_time, -doy) %>% 
+    gather('split', 'flo', -dec_time, -doy) %>% 
     select(-split) %>% 
-    data.frame(., chla = predict(mod_in, .)) %>% 
-    spread(sal, chla) %>% 
+    data.frame(., res = predict(mod_in, .)) %>% 
+    spread(flo, res) %>% 
     select(-dec_time, -doy)
   
   # merge predictions with year, month data, make long format
   to_plo <- select(to_plo, year, month) %>% 
     cbind(., dynadat) %>% 
-    gather('sal', 'chla', -year, -month) %>% 
-    mutate(sal = as.numeric(as.character(sal)))
+    gather('flo', 'res', -year, -month) %>% 
+    mutate(flo = as.numeric(as.character(flo)))
   
   # subset years to plot
   if(!is.null(years)){
@@ -179,11 +179,11 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
     #min, max salinity values to plot
     lim_vals <- group_by(data.frame(dat_in), month) %>% 
       summarise(
-        Low = quantile(sal, 0.05, na.rm = TRUE),
-        High = quantile(sal, 0.95, na.rm = TRUE)
+        Low = quantile(flo, 0.05, na.rm = TRUE),
+        High = quantile(flo, 0.95, na.rm = TRUE)
       )
   
-    # month sal ranges for plot
+    # month flo ranges for plot
     lim_vals <- lim_vals[lim_vals$month %in% month, ]
 
     # merge limts with months
@@ -192,8 +192,8 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
     
     # reduce data
     sel_vec <- with(to_plo, 
-      sal >= Low &
-      sal <= High
+      flo >= Low &
+      flo <= High
       )
     to_plo <- to_plo[sel_vec, !names(to_plo) %in% c('Low', 'High')]
     to_plo <- arrange(to_plo, year, month)
@@ -201,9 +201,9 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
   }
   
   # reshape data frame, average by year, month for symmetry
-  to_plo <- group_by(to_plo, year, month, sal) %>% 
+  to_plo <- group_by(to_plo, year, month, flo) %>% 
     summarise(
-      chla = mean(chla, na.rm = TRUE)
+      res = mean(res, na.rm = TRUE)
     )
   
   # months labels as text
@@ -215,7 +215,7 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
   to_plo$month <- factor(to_plo$month, levels =  mo_lab$num, labels = mo_lab$txt)
   
   # make plot
-  p <- ggplot(to_plo, aes(x = sal, y = chla, group = year)) + 
+  p <- ggplot(to_plo, aes(x = flo, y = res, group = year)) + 
     facet_wrap(~month, ncol = ncol, scales = scales)
   
   # return bare bones if FALSE
