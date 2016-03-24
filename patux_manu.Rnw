@@ -1122,7 +1122,7 @@ p1 <- ggplot(pax_meta, aes(x = LONG, y = LAT)) +
     pch = 21) +
   facet_wrap(~cat, ncol = 4) +
   theme_mine() + 
-  scale_size(range = c(1, 9)) + 
+  scale_size(range = c(0.5, 7.5)) + 
   scale_fill_gradientn(colours = cols) +
   theme(
     legend.position = 'top', 
@@ -1166,7 +1166,7 @@ toplo <- rbind(bestTF16, bestLE12) %>%
 p1 <- ggplot(toplo[toplo$output != 'Res', ], aes(x = date, y = value, colour = output)) + 
   geom_point(aes(y = res, shape = 'Obs'), colour = 'black', size = 1.5, alpha = 0.3) +
   geom_line(size = 0.8, alpha = 0.85) + 
-  facet_wrap(site ~ model) + 
+  facet_grid(site ~ model) + 
   ylab(ylabs) + 
   theme(
     axis.text.x = element_text(size = 8, angle = 90, vjust = 0.5),
@@ -1186,7 +1186,7 @@ toplo2 <- mutate(toplo, year = as.numeric(strftime(date, '%Y'))) %>%
 p2 <- ggplot(toplo2, aes(x = year, y = Pred, colour = 'Pred')) + 
   geom_line(aes(x = year, y = Norm, colour = 'Norm'), size = 1) + 
   geom_point() + 
-  facet_wrap(site ~ model) + 
+  facet_grid(site ~ model) + 
   theme(
     axis.text.x = element_text(size = 8, angle = 90, vjust = 0.5),
     axis.title.x = element_blank(), 
@@ -1285,7 +1285,7 @@ toplo <- rbind(bestTF16, bestLE12)
 toplo$res <- factor(toplo$res, levels = c('fits', 'norm'), labels = c('Pred', 'Norm'))
 
 # margins
-mars <- grid::unit(c(0, 0, 0, 0), 'cm')
+mars <- grid::unit(c(0, 0, 0.1, 0.1), 'cm')
 
 p <- ggplot(toplo, aes(x = gams, y = wrtds, colour = res, group = res)) + 
   geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
@@ -1409,7 +1409,7 @@ grid.arrange(
 @
 
 % dynaplot examples for mods with simulated data
-<<dynasim, echo = F, cache = T, fig.height = 2.5, fig.width = 7, fig.cap = 'Examples of changing relationships between \\ac{chla} (\\mugl) and flow (as proportion of the total range) over time (2005--2015) for each simulated time series ({\\bf Appendix S2}).  The plots are based on August predictions from three \\ac{WRTDS} models for each time series to illustrate the simulated relationships between flow and \\ac{chla}.', eval = T>>=
+<<dynasim, echo = F, cache = T, fig.height = 4.5, fig.width = 7, fig.cap = 'Examples of changing relationships between \\ac{chla} (\\mugl) and flow (as proportion of the total range) over time (2005--2015) for each simulated time series ({\\bf Appendix S2}).  The plots are based on August predictions from three \\ac{WRTDS} models for each time series to illustrate the simulated relationships between flow and \\ac{chla}.', eval = T>>=
 # color palette
 cols <- wes_palette('Zissou', 100, 'continuous') %>% 
   as.character %>% 
@@ -1417,41 +1417,76 @@ cols <- wes_palette('Zissou', 100, 'continuous') %>%
 modcols <- cols[c(1, 50)]
   
 data(bestsim_wrtds)
+data(bestsim_gam)
 
-lims <- c(0.85, 3)
-mars <- grid::unit(c(0, 0, 0, 0), 'cm')
+source('R/funcs.r')
+
+lims <- c(0.7, 3)
+mars <- grid::unit(c(0.1, 0.1, 0.1, 0.1), 'cm')
+
+##
+# wrtds figs
 
 # no effect
-p1 <- dynaplot(bestsim_wrtds[[2]], month = 8, col_vec = cols, fac_nms = 'No flow') + 
+p1_wrtds <- dynaplot(bestsim_wrtds[[2]], month = 8, col_vec = cols, fac_nms = 'No flow, WRTDS') + 
   scale_y_continuous(limits = lims) +
   theme_mine() +
   theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
     strip.text.x = element_text(size = NULL))
 
 # constant
-p2 <- dynaplot(bestsim_wrtds[[1]], month = 8, col_vec = cols, fac_nms = 'Constant flow') + 
+p2_wrtds <- dynaplot(bestsim_wrtds[[1]], month = 8, col_vec = cols, fac_nms = 'Constant flow, WRTDS') + 
   scale_y_continuous(limits = lims) +
   theme_mine() +
   theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars)
 
 # increasing
-p3 <- dynaplot(bestsim_wrtds[[3]], month = 8, col_vec = cols, fac_nms = 'Increasing flow') + 
+p3_wrtds <- dynaplot(bestsim_wrtds[[3]], month = 8, col_vec = cols, fac_nms = 'Increasing flow, WRTDS') + 
   scale_y_continuous(limits = lims) +
   theme_mine() +
   theme(legend.position = 'top', axis.title = element_blank(), plot.margin = mars) +
   guides(colour = guide_colourbar(barwidth = 10, barheight = 1)) 
 
-pleg <- g_legend(p3)
-p3 <- p3 + theme(legend.position = 'none')
+pleg <- g_legend(p3_wrtds)
+p3_wrtds <- p3_wrtds + theme(legend.position = 'none')
+
+##
+# gam figs
+
+# no effect
+p1_gam <- dynagam(bestsim_gam[[2]]$mod, bestsim_gam[[2]]$dat, month = 8, col_vec = cols, fac_nms = 'No flow, GAM') + 
+  scale_y_continuous(limits = lims) +
+  theme_mine() +
+  theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
+    strip.text.x = element_text(size = NULL))
+
+# constant
+p2_gam <- dynagam(bestsim_gam[[1]]$mod, bestsim_gam[[1]]$dat, month = 8, col_vec = cols, fac_nms = 'Constant flow, GAM') + 
+  scale_y_continuous(limits = lims) +
+  theme_mine() +
+  theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
+    strip.text.x = element_text(size = NULL))
+
+# increasing
+p3_gam <- dynagam(bestsim_gam[[3]]$mod, bestsim_gam[[3]]$dat, month = 8, col_vec = cols, fac_nms = 'Increasing flow, GAM') + 
+  scale_y_continuous(limits = lims) +
+  theme_mine() +
+  theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
+    strip.text.x = element_text(size = NULL))
+
+## 
+# final plots 
 
 ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
 
 grid.arrange(
-  pleg,
-  arrangeGrob( 
-    textGrob(ylabs, rot = 90), p1, p2, p3, ncol = 4, widths = c(0.1, 1, 1, 1)), 
-  textGrob('Flow'),
-  heights = c(0.35, 1, 0.1)
+  pleg, ncol = 1, heights = c(0.15, 1, 0.1),
+  arrangeGrob(
+    textGrob(ylabs, rot = 90), ncol = 2,
+    arrangeGrob(p1_gam, p2_gam, p3_gam, p1_wrtds, p2_wrtds, p3_wrtds, ncol = 3), 
+    widths = c(0.05, 1)
+  ), 
+  textGrob('Flow')
 )
 @
 

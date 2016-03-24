@@ -117,13 +117,11 @@ Line 493: Looks like the models differ in April for that site, too, but this is 
 
 Line 495: Overall, this section says that both models performed well on all three test cases. Like all your figures, I like the ones you used for this section, but am thinking maybe you don't need so many figures to make this point. Figure 7 essentially says your chl-a simulations correctly did what they were created to do, which I think we could maybe take on faith given you are reporting comparison results. I like Figure 8 the best. If you included a corresponding set of panels for the GAM simulation, and left in Table 7, I think you could get away without figs. 7 and 9.
 
-Line 536: very true.
+*Figures 7 was added to supplementary material, Figure 9 was removed.  GAM panels were added to Figure 8*
 
 Line 543: RMSE is not a rate.
 
 Line 550: I think you need to explain what this term means in this context or find another choice of words.
-
-Line 552: Cool!
 
 Line 565: I don't know of anyone who "expected" this novel insight (although feel free to provide a citation). It may simply be that GAMs provide a very similar type of information as WRTDS with less computational burden. I don't know. It might be more helpful to specifically discuss what each approach can do that the other can't, if their capabilities really are that different.
 
