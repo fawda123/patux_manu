@@ -19,7 +19,7 @@ Major points: from document body annotations, in roughly decreasing order of per
 
 * Clarify whether and how you applied a bias correction factor when back-transforming GAM results from log to arithmetic space.
 
-*Data were not back-transformed to arithmetic space except for a few instances in the text that are explicitly noted.  Although methods for back-transforming WRTDS results are available, they have not been implemented for GAMs.  The following was added to line 153 for clarification: "Mean models require an estimation of the back-transformation bias parameter for response variables in log-space (Hirsch et al. 2010).  Although back-transformation is developed for WRTDS, a similar approach has not yet been implemented for GAMs.  All units for chl-a are reported in log-space unless otherwise noted."*
+*Data were not back-transformed to arithmetic space except for a few instances in the text that are explicitly noted.  Although methods for back-transforming WRTDS results are available, they have not been implemented for GAMs.  The following was added to line 153 for clarification: "Mean models require an estimation of the back-transformation bias parameter for response variables in log-space (Hirsch et al. 2010).  Although back-transformation is developed for WRTDS, a similar approach has not yet been implemented for GAMs.  For simplicity and ease of comparison, all units for chl-a are reported in log-space unless otherwise noted."*
 
 * For regression comparison, state which model result was the "predictor" and which was the "response." Consider re-doing this analysis with results in arithmetic space instead of log.
 
@@ -41,33 +41,63 @@ In-line comments from the text:
 
 Line 9: how about "prediction performance against"?
 
+*Changed*
+
 Line 11: consider "average between-model differences were small".
+
+*Changed*
 
 Line 14: consider "... both models predicting a roughly 65 percent increase in chl-a concentration over the period of record..." (from top panels of fig 3b: > (exp(2.5)-exp(2))/exp(2) [1] 0.6487213)
 
+*Changed*
+
 Line 15: consider: "... a more dynamic pattern, with a nearly-100 percent increase in chl-a over the most recent 10 years..." from bottom panel of 3b: > (exp(2.7)-exp(2))/exp(2) [1] 1.013753
+
+*Changed*
 
 Line 16: I am assuming you're talking about the discussion of fig 6 in lines 609-621? If so, consider turning this sentence around so that it flows more naturally from preceding discussion of model fit to observed data. Maybe "Comparison of flow-normalized trends estimated from observed data suggested that GAM results were less sensitive to periods with sparse observations, although both models had comparable abilities to remove flow effects from simulated time series of chl-a."
 
+*Changed*
+
 Line 75: Most of your graphs seem to span the range 1986-2014 inclusive, so wouldn't that be 2014-1986+1=29 years. In any case, why not be specific, e.g. "Two time series of monthly observations, spanning the years 1986-2014, from two stations in the Pax R. estuary are used as a common dataset..."?
+
+*Changed* 
 
 Line 81: Good statement of objectives, and Introduction in general, but see cover comments about scope of report.
 
+*See comments above.*
+
 Line 144: I prefer "response variable"
+
+*Changed*
 
 Line 197: Presumably these were used as bias-correction factors in back-transformation from log to arithmetic space? Comparable treatment of this issue between the two models will be important for some of the comparisons you perform, so I suggest you establish that here.
 
+*No back-transformations of results were used, see comments above.*
+
 Line 199: consider different grammar: ".. in a manner consistent with that used for WRTDS."
+
+*Changed*
 
 Line 222: typo
 
+*Changed*
+
 Line 233: a little vague...
+
+*Text added for clarity: *The chosen parameters were based on a selected convergence tolerance for the error minimization of the search algorithm that balanced computation time with precision.  Specifically, the algorithm converged when the reduction in the minimization function for a given change in parameters was within an acceptable tolerance without excessive search time."*
 
 Line 233: Point mostly for thought only: Did the parameters result in a global minimum? How did you know? I really like your idea of optimizing window widths, but for the kind of messy data we see in the NTN, I wouldn't be suprised to see eqifinal results, e.g. many different window-width choices yielding "near-optimal" results.
 
+*Agreed, this is an area that needs further exploration as the error surface likely has many minima.  Rebecca and I were happy with this temporary approach but it does need additional work.*
+
 Line 253: consider: "were performed similarly, using the equation:"
 
+*Changed*
+
 Line 256: As you probably know, in the NTN we are especially interested in bias relative to the observed data, evaluated in arithmetic space, as an indication of a model's tendency to over- or under-predict aggregated e.g. annual values; see Hirsch (2014). What factors led you to choose this statistic?
+
+*Early discussions for this work focused on appropriate measures to evaluate differences between the models.  We chose this measure based on work in Moyer et al. 2012 that provided similar comparisons of trend analysis methods.*
 
 Line 259: which was the predictor and which was the response? 
 
@@ -78,6 +108,8 @@ Line 262: Note: This is true if the calculation is performed in arithmetic space
 *The interpretation that 'a non-zero slope indicates  a difference that grows exponentially with the relative magnitude of the differences' would be correct for a single variable (i.e., log to arithmetic is linear to exponential) but perhaps incorrect for a log-log regression of two variables, as was done for our analysis.  The relationships of two variable in log-space versus the same variables in arithmetic space would both be linear so I think our interpretation of differences related to slope is still correct.  Although the magnitude of results for each model change exponentially at higher values, the relative differences do not.*
 
 Line 288: Point mostly for thought: Does a "true" flow-normalized "signal" even really exist?
+
+
 
 Line 296: Point mostly for thought, further to above comment: "primary production" needs nutrients and generates waste. Wouldn't the "closed system" to which you refer soon starve or poison itself? In the non-tidal Bay community, the concept of flow-normalization is widely misinterpreted, especially when it comes to trying to identify specific factors driving flow-normalized trends; we have even bickered with Bob over its meaning. My personal advice is that you can avoid a lot of uncomfortable discussions if you are careful (and circumspect) about stating its meaning in your publications and public presentations. As widely as the term is used, I find that highly specific interpretations tend to evaporate on close inspection.
 
