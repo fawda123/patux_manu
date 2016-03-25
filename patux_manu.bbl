@@ -1,4 +1,4 @@
-\begin{thebibliography}{42}
+\begin{thebibliography}{43}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
@@ -12,6 +12,11 @@ Arlot, S. and A.~Celisse, 2010. A survey of cross-validation procedures for
 Beck, M.~W. and J.~D. {Hagy III}, 2015. Adaptation of a weighted regression
   approach to evaluate water quality trends in an estuary. Environmental
   Modelling and Assessment 20(6):637--655.
+
+\bibitem[{Beck \emph{et~al.}(2015)Beck, {Hagy III}, and Murrell}]{Beck15b}
+Beck, M.~W., J.~D. {Hagy III}, and M.~C. Murrell, 2015. Improving estimates of
+  ecosystem metabolism by reducing effects of tidal advection on dissolved
+  oxygen time series. Limnology and Oceanography: Methods .
 
 \bibitem[{Boicourt and Sanford(1998)}]{Boicourt98}
 Boicourt, W.~C. and L.~P. Sanford, 1998. A hydrodynamic study of the {P}atuxent
