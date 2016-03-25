@@ -85,7 +85,7 @@ Line 222: typo
 
 Line 233: a little vague...
 
-*Text added for clarity: *The chosen parameters were based on a selected convergence tolerance for the error minimization of the search algorithm that balanced computation time with precision.  Specifically, the algorithm converged when the reduction in the minimization function for a given change in parameters was within an acceptable tolerance without excessive search time."*
+*Text added for clarity: "The chosen parameters were based on a selected convergence tolerance for the error minimization of the search algorithm that balanced computation time with precision.  Specifically, the algorithm converged when the reduction in the minimization function for a given change in parameters was within an acceptable tolerance without excessive search time."*
 
 Line 233: Point mostly for thought only: Did the parameters result in a global minimum? How did you know? I really like your idea of optimizing window widths, but for the kind of messy data we see in the NTN, I wouldn't be suprised to see eqifinal results, e.g. many different window-width choices yielding "near-optimal" results.
 
@@ -193,11 +193,11 @@ Line 550: I think you need to explain what this term means in this context or fi
 
 Line 565: I don't know of anyone who "expected" this novel insight (although feel free to provide a citation). It may simply be that GAMs provide a very similar type of information as WRTDS with less computational burden. I don't know. It might be more helpful to specifically discuss what each approach can do that the other can't, if their capabilities really are that different.
 
-*The sentence was modified: "Additional insight into trends might be a logical expectation with the added computational time required to estimate \ac{WRTDS} interpolation grids."*
+*The sentence was modified: "Additional insight into trends might be a logical expectation with the added computational time required to estimate WRTDS interpolation grids."*
 
 Additionally, since computational time seems to be among the largest differences, how about presenting some data? As a steward of the NTN trend products, I would be delighted to see a model that can do everything WRTDS can in a lot less time.
 
-* I have a completely different opinion of GAMs after this analysis and I struggle with a solid argument for WRTDS given the reduction in computation time with GAMs.  While true that our adaptation can model quantile distributions (not used in this paper), most other products are comparable between the two methods.  I hesitate to add any more on the subject for fear of discounting one over the other but the computational time issue is one that I felt should be mentioned.*
+*I have a completely different opinion of GAMs after this analysis and I struggle with a solid argument for WRTDS given the reduction in computation time with GAMs.  While true that our adaptation can model quantile distributions (not used in this paper), most other products seem comparable between the two methods.  I hesitate to add any more on the subject for fear of discounting one over the other but the computational time issue is one that I felt should be mentioned.*
 
 Line 567: how about "predefined parameterization and fixed parameters"?
 
