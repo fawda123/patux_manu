@@ -7,9 +7,17 @@ output: pdf_document
 
 The following is our response to reviewer comments on our manuscript "Comparison of weighted regression and additive models for trend evaluation of water quality in tidal waters" to be submitted to the Journal of the American Water Resources Association (JAWRA).  The review was provied by Dr. Jeffrey Chanat (USGS).  Comments are shown (edited for brevity) followed by our response in italics.  All line numbers refer to the original manuscript.
 
-To Marcus and Rebecca: Re-visiting the work after having set aside for a while, you would probably see ways to improve clarity and presentation without any review comments at all. Most of my annotations in the document are entered to call easily-fixable issues of wording/presentation to your attention, under the assumption that you intend to submit the ms in something close to its present form; I've tried to pull out and summarize some of the "must-dos" below. (Since I’m a non-tidal WRTDS user who is also interested in GAMs, you’ll also find some "commentary" annotations not directly related to revision). 
-
 My only comment on the work that even approaches criticism is that it tends, at least in the document body, to present itself as both a methods paper and an interpretive paper in parallel. But I struggle to come up with a useful suggestion as to how to remedy that. Key features of the data for these sites are in some ways your motivation and basis for the model comparison. To that end my "knee-jerk" suggestion would be to talk about the data themselves first, point out the key features that drive the need for advanced modeling techniques, and then present and compare the models just as you have, focusing in particular at how they handle the most challenging features. Problem is, it's hard to describe, or even see the most problematic features without applying the models. Sheesh! And if you looked at another pair of sites after you finished the paper, you would likely see some different features on which you would like to run a comparison. I guess the only thing I can say is that I can personally identify with that plight, having brought WRTDS into an "operational" mode using data that's full of real-world problems. I guess in summary your choices are to gather comparative data across a wide range of conditions, and sometime "later" publish a model comparison on the most frequently-occurring "pathologies", much as Bob Hirsch did with his "flux bias" paper, or proceed with a submission such as you have here, qualifying it as the "first word, not the last". Only one practical suggestion on this matter: try taking out any interpretive content/hypotheses that isn't essential to the model comparison, just as an experiment, set it aside, and see if it improves readability/focus. You can always put it back in if it doesn't. If the paper seems too dry without that content, consider looking further into the areas where the models really differed (I'm thinking of the two areas I mentioned at the end of the first paragraph above), and try expanding your discussion of them – I found them to be fascinating. 
+
+*The above suggests we first talk about the data and their key features as rationale for how the models can be used, but the problem of course is that the challenges are not seen until the data have been evaluated.  Further, the reviewer mentions that the results and our interpretation are likely driven  by the particular dataset, which I partially agree with, and that we may likely have different conclusions if we evaluate different locations.*
+
+*Rather than restructure the layout of the manuscript to emphasize these challenges, we point out sections of the text that already describe the issue or we have added text for a better description.  For example, the methods section starts with a description of the study site, including an emphasis on how the data provide a unique opportunity for trend analysis:*
+
+*Content already on Line 120-127: "Stations TF1.6 and LE1.2 were chosen as representative time series from different salinity regions to evaluate the water quality models.  Observations at each station capture a longitudinal gradient of watershed influences at TF1.6 to mainstem influences from the Chesapeake Bay at LE1.2.  Long-term changes in chl-a have also been related to historical reductions in nutrient inputs following a statewide ban on phosphorus-based detergents in 1984 and wastewater treatment improvements in the early 1990s that reduced point sources of nitrogen (Lung and Bai 2003; Testa et al. 2008).  Therefore, the chosen stations provide unique datasets to evaluate the predictive and flow-normalization abilities of each model given the differing contributions of landward and seaward influences on water quality."*
+
+*Also, the conclusion or discussion should emphasize that the results are certainly the ‘first word, not the last’ on the topic.  I’m sure any reader could argue that we should compare the methods at different locations because it is very possible that the specific location is driving our results and, to some extent, our conclusions.  The current discussion states that similar performance of both models could suggest that both are equally good or equally bad at describing effects of water quality drivers in the Patuxent (line 572-584).  We have further elaborated the text to emphasize the need for evaluation at different locations. Line 585: "Evaluation of alternative sites with different historical contexts could provide further information to support our general conclusion of comparability between methods.". Line 675: "This analysis was the first to rigrously compare both WRTDS and GAM and further evaluations with alternative datasets should be made to verify our results herein."*  
+
+*Finally, a portion of the methods have been moved to a supplementary section in response to the reviewer's comments and those from another reviewer.  This will likely help by taking some emphasis off the methods aspects of the analysis.*
 
 Major points: from document body annotations, in roughly decreasing order of perceived need for revision:
  
@@ -36,6 +44,8 @@ Major points: from document body annotations, in roughly decreasing order of per
 *Figure 7 was moved to supplementary material, Figure 9 was removed.  See response to comments below.*
 
 * Run a spell-checker (You did this whole document in R, no? At some point I want a lesson...)
+
+*The final paper must be submitted as a Word document and we will check spelling before submission.*
 
 In-line comments from the text:
 
@@ -109,7 +119,7 @@ Line 262: Note: This is true if the calculation is performed in arithmetic space
 
 Line 288: Point mostly for thought: Does a "true" flow-normalized "signal" even really exist?
 
-*I have revised the text to remove any suggestion that a 'true' signal is observed in the raw data, not because it may or may not exist, but because it deserves more discussion than is needed at this point in the manuscript*
+*I have revised the text to remove any suggestion that a 'true' signal is observed in the raw data, not because it may or may not exist, but because it deserves more discussion than is needed at this point in the manuscript.*
 
 Line 296: Point mostly for thought, further to above comment: "primary production" needs nutrients and generates waste. Wouldn't the "closed system" to which you refer soon starve or poison itself? In the non-tidal Bay community, the concept of flow-normalization is widely misinterpreted, especially when it comes to trying to identify specific factors driving flow-normalized trends; we have even bickered with Bob over its meaning. My personal advice is that you can avoid a lot of uncomfortable discussions if you are careful (and circumspect) about stating its meaning in your publications and public presentations. As widely as the term is used, I find that highly specific interpretations tend to evaporate on close inspection.
 
@@ -137,7 +147,7 @@ Line 341: From this I assume that the errors did not have a seasonal component?
 
 Line 359: Clarify. Did you repeat the exact error series every year, or did you use the estimated ARMA model with a new white noise series to generate unique error series for each year?
 
-*The ARMA model was estimated for one year and the parameters from the model were used to simulate the entire time series.  The seasonal chlorophyll component without error was estimated for one year and then repeated.  The text was modified for clarity: "The single year estimate for $Chl_{seas}$ was repeated for every year and added to error component that covered the entire time series."*
+*The ARMA model was estimated for one year and the parameters from the model were used to simulate the entire time series.  The seasonal chlorophyll component without error was estimated for one year and then repeated.  The text was modified for clarity: "The single year estimate for $Chl_{seas}$ was repeated for every year and added to the error component that covered the entire time series."*
 
 Line 366: Clarify - you chose a random day-of-month (e.g., 16) and used it as the basis for a systematic random sample (3/16/2000, 4/16/2000, 5/16/2000, ...)? Was that day-of-month used for each year or the entire POR? Or, was a new random day-of-month generated for each monthly sample?
 
@@ -145,7 +155,7 @@ Line 366: Clarify - you chose a random day-of-month (e.g., 16) and used it as th
 
 Line 405: I know what you're saying, but "observed predictions" is a little confusing. I have the terms "absolute predictions" and "non-flow-normalized" predictions applied in this context - maybe consider one of those.
 
-*Non-flow-normalized was used.*
+*'Non-flow-normalized' was used.*
 
 Line 406: Can you be more specific? "More variable than"? "Out of phase with"?
 
@@ -177,7 +187,7 @@ Line 481: this seems a little vague. Do you mean "simulations conducted with co-
 
 Line 493: Looks like the models differ in April for that site, too, but this is obscured a little by the plotting scheme.
 
-*Agreed but the text is meant to emphasize that some differences were observed.  January seemed the most obvious.  Text was modified: "However, some differences between the models were observed.  For example, WRTDS results for January at LE1.2 provided a wider range, or potentially less stable fit of chl-a to salinity changes in the earlier years."*
+*Agreed but the text is meant to emphasize that some differences were observed, the exact location being unimportant.  January seemed the most obvious to describe.  Text was modified: "However, some differences between the models were observed.  For example, WRTDS results for January at LE1.2 provided a wider range, or potentially less stable fit of chl-a to salinity changes in the earlier years."*
 
 Line 495: Overall, this section says that both models performed well on all three test cases. Like all your figures, I like the ones you used for this section, but am thinking maybe you don't need so many figures to make this point. Figure 7 essentially says your chl-a simulations correctly did what they were created to do, which I think we could maybe take on faith given you are reporting comparison results. I like Figure 8 the best. If you included a corresponding set of panels for the GAM simulation, and left in Table 7, I think you could get away without figs. 7 and 9.
 
@@ -213,7 +223,7 @@ Line 637: typo
 
 Table 2: RMSE = sqrt(SSE/(12*(2014-1986+1)(, no? I can't get these numbers to balance.
 
-*Yes that is the equation used but some data were missing for some months???*
+*Nutrients are sampled at an approximate monthly interval with some months having two samples.  The denominator for RMSE was larger than 12x29.  Sample sizes were added to make this clear: Line 129 "Thirty years of chl-a and salinity data from 1986 to 2014 were obtained for stations TF1.6 (n = 522) and LE1.2 (n = 530, ..."*
 
 Table 3: Clarify in document body - there are trends over the period-of-record if only the selected set of months are considered, correct?
 
