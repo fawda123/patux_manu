@@ -14,7 +14,7 @@ library(WRTDStidal)
 source('R/funcs.R')
 
 # color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+cols <- grey_pal()(100) %>% 
   as.character %>% 
   .[1:60]
   
@@ -37,9 +37,6 @@ theme_mine <- function (base_size = 12, base_family = "") {
     )   
 }
 theme_set(theme_mine())
-
-######
-# Appendix S2, simulated data figure
 
 # load data, from sim_dat.R in tidal_comp proj
 load('data/sims_day.RData')
@@ -68,7 +65,7 @@ p <- ggplot(toplo, aes(x = date, y = value, group = variable)) +
   theme(axis.title.x = element_blank()) +
   facet_wrap(~variable, ncol = 1)
 
-tiff('word/FIGURES2.tif', width = 6, height = 7, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURES2_bw.tif', width = 6, height = 7, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 print(p)
 dev.off()
 
@@ -84,7 +81,7 @@ data(pax_meta)
 # lims <- bbox(patux_poly)
 
 # color palette
-mapcols <- wes_palette('Zissou', 100, 'continuous') %>% 
+mapcols <- grey_pal()(100) %>% 
   as.character %>% 
   .[1:60]
 mapcols <- mapcols[round(seq(1, length(mapcols), length = 3))]
@@ -101,7 +98,7 @@ pax_meta$lab[c(4, 8)] <- paste0('bold(', pax_meta$lab[c(4, 8)], ')')
 # base map
 p1 <- ggplot(patux_poly, aes(x = long, y = lat)) + 
   geom_polygon(data = cb_poly, aes(x = long, y = lat, group = group), 
-    fill = 'grey90', colour = 'grey50') +
+    fill = 'grey95', colour = 'grey50') +
   geom_polygon(aes(fill = factor(id), group = group), colour = NA) +
   scale_fill_manual(values = rev(mapcols)) +
   geom_point(data = pax_meta, aes(x = LONG, y = LAT), size = 5, alpha = 0.8) +
@@ -128,7 +125,7 @@ p2 <- ggplot(patux_poly, aes(x = long, y = lat)) +
   theme(axis.title =element_blank(), 
           axis.text.y = element_text(colour = 'black'), 
           axis.text.x = element_text(colour = 'black', angle = 90, vjust = 0.5), 
-          panel.background=element_rect(fill = 'grey90'),
+          panel.background=element_rect(fill = 'grey95'),
           panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),
           plot.background=element_blank(),
@@ -136,7 +133,7 @@ p2 <- ggplot(patux_poly, aes(x = long, y = lat)) +
     ) +
   coord_fixed(ratio = 1, xlim = c(-77.5, -75.5), ylim = c(36.7, 39.7))
 
-tiff('word/FIGURE1.tif', width = 5, height = 7, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE1_bw.tif', width = 5, height = 7, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.newpage()
 v1 <- viewport(width = 1, height = 1, x = 0.5, y = 0.5) 
 v2 <- viewport(width = 0.55, height = 0.55, x = 0.7275, y = 0.64)
@@ -152,8 +149,8 @@ load(file = 'data/pax_meta.RData')
 load(file = 'data/pax_clip.RData')
 
 # color for water for continuity with last fig
-wt_col <- wes_palette('Zissou', 100, 'continuous')[10] %>% 
-  alpha(0.6)
+wt_col <- grey_pal()(100)[10] %>% 
+  alpha(0.3)
 
 # format pax_meta for mrg with pax_plo
 pax_meta <- select(pax_meta, STATION, LONG, LAT) %>% 
@@ -224,7 +221,7 @@ p1 <- ggplot(pax_meta, aes(x = LONG, y = LAT)) +
     size = guide_legend(title = ylabs)
     )
 
-tiff('word/FIGURE2.tif', width = 5, height = 7.75, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE2_bw.tif', width = 5, height = 7.75, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 print(p1)
 dev.off()
   
@@ -256,7 +253,7 @@ toplo <- rbind(bestTF16, bestLE12) %>%
   mutate(output = factor(output, levels = c('fits', 'norm', 'res'), labels = c('Pred', 'Norm', 'Res')))
 
 p1 <- ggplot(toplo[toplo$output != 'Res', ], aes(x = date, y = value, colour = output)) + 
-  geom_point(aes(y = res, shape = 'Obs'), colour = 'black', size = 1.5, alpha = 0.3) +
+  geom_point(aes(y = res, shape = 'Obs'), colour = 'black', size = 1.5, alpha = 0.15) +
   geom_line(size = 0.8, alpha = 0.85) + 
   facet_grid(site ~ model) + 
   ylab(ylabs) + 
@@ -291,7 +288,7 @@ p2 <- ggplot(toplo2, aes(x = year, y = Pred, colour = 'Pred')) +
   guides(color=guide_legend(override.aes=list(shape=c(NA,16),linetype=c(1,0)))) + 
   ggtitle('(b) Annual')
 
-tiff('word/FIGURE3.tif', width = 8, height = 9, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE3_bw.tif', width = 8, height = 9, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.arrange(p1, p2, ncol = 1)
 dev.off()
 
@@ -330,7 +327,7 @@ p <- ggplot(toplo, aes(x = fake_date, y = val, group = mod)) +
   theme_mine() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 8))
 
-tiff('word/FIGURE4.tif', width = 9, height = 5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE4_bw.tif', width = 9, height = 5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 print(p)
 dev.off()
 
@@ -384,7 +381,7 @@ p3 <- p + facet_grid(stat ~ flcat) + theme(plot.margin = mars)
 ylab <- expression(paste('WRTDS, ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
 xlab <- expression(paste('GAM, ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
 
-tiff('word/FIGURE5.tif', width = 6, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE5_bw.tif', width = 6, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGrob(xlab),
   heights = c(0.12, 1, 1, 1))
 dev.off()
@@ -424,7 +421,7 @@ data(bestTF16_wrtds)
 margs <- grid::unit(c(0, 0, 0, 0), "mm") # margins
 fac_txt <- 10 # facet text size
 ylims <- c(0.6, 4)
-col_vec <- wes_palette('Zissou', 100, 'continuous') %>% 
+col_vec <- grey_pal()(100) %>% 
   as.character %>% 
   .[1:100] %>% 
   rev
@@ -468,7 +465,7 @@ ylab <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'
 grobwidths <- c(1, 1, 1, 1)
 library(grid)
 
-tiff('word/FIGURE6.tif', width = 7.5, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE6_bw.tif', width = 7.5, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.arrange(
   arrangeGrob(textGrob(ylab, rot = 90)), 
   arrangeGrob(
@@ -487,9 +484,9 @@ dev.off()
 # dynaplot examples for mods with simulated data
 
 # color palette
-cols <- wes_palette('Zissou', 100, 'continuous') %>% 
+cols <- grey_pal()(100) %>% 
   as.character %>% 
-  .[1:60]
+  .[1:75]
 modcols <- cols[c(1, 50)]
   
 data(bestsim_wrtds)
@@ -555,7 +552,7 @@ p3_gam <- dynagam(bestsim_gam[[3]]$mod, bestsim_gam[[3]]$dat, month = 8, col_vec
 
 ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
 
-tiff('word/FIGURE7.tif', width = 7, height = 4.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE7_bw.tif', width = 7, height = 4.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.arrange(
   pleg, ncol = 1, heights = c(0.15, 1, 0.1),
   arrangeGrob(
