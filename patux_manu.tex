@@ -50,7 +50,7 @@
 \usepackage{alltt}
 \usepackage[paperwidth=8.5in,paperheight=11in,top=1in,bottom=1in,left=1in,right=1in]{geometry}
 \usepackage{setspace}
-\usepackage[colorlinks=true,allcolors=Blue]{hyperref}
+\usepackage[colorlinks=true,allcolors=Black]{hyperref}
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{indentfirst}
 \usepackage{titlesec}
@@ -131,14 +131,14 @@
 \begin{document}
 
 \raggedbottom
-\linenumbers
+% \linenumbers
 \raggedright
 \urlstyle{same}
 \setlength{\parindent}{0.25in}
 \renewcommand\refname{\centerline{LITERATURE CITED} \vspace{12pt}}
 
 \begin{singlespace}
-\title{{\bf {\Large Comparison of weighted regression and additive models for trend evaluation of water quality in tidal waters\footnote{Version Date:   Fri Mar 25 18:07:44 2016 -0500}}}}
+\title{{\bf {\Large Comparison of weighted regression and additive models for trend evaluation of water quality in tidal waters\footnote{Version Date:   Sun Mar 27 10:31:22 2016 -0500}}}}
 \author{{\bf {\normalsize Marcus W. Beck, Rebecca R. Murphy\textsuperscript{1}}}}
 \date{}
 \footnotetext[1]{Post-doctorate researcher (Beck), USEPA National Health and Environmental Effects Research Laboratory, Gulf Ecology Division, 1 Sabine Island Drive, Gulf Breeze, FL 32561, Estuarine Data Analyst (Murphy), UMCES at Chesapeake Bay Program, 410 Severn Avenue, Suite 112, Annapolis, MD 21403 (Email/Beck: \href{mailto:beck.marcus@epa.gov}{beck.marcus@epa.gov})}
@@ -274,7 +274,7 @@ Quantitative summaries of model fit by site indicated that performance between s
 
 
 
-Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:predann}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl (arithmetic) from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed. By 2014, \ac{chla} returned to values similar to those prior to the initial decrease.  Flow-normalized predictions that were annually averaged at each site allowed an interpretation of trends that were independent of variation in discharge or salinity (\cref{tab:trendsLE12,tab:trendsTF16}).  Overall percent change of ln-transformed \ac{chla} concentration from the beginning to the end of the time series at LE1.2 was approximately 20\% (\cref{tab:trendsLE12}).  A slight decrease in \ac{chla} at TF1.6 was observed from 1986 to 2014 (\cref{tab:trendsTF16}).  Changes by annual, seasonal, and flow time periods at LE1.2 were comparable for each time period and model type, although some differences were observed.  For example, both models had maximum increases in \ac{chla} for the different flow periods for high levels of flow at LE1.2 (25.1\% for \acp{GAM}, 22.3\% for \ac{WRTDS}).  Trends by different time periods were more apparent for TF1.6, particularly as an overall decrease in \ac{chla} for both models during the 2001--2007 period and an overall increase during the 2008--2014 period (\cref{tab:trendsTF16}).  Seasonal changes were especially pronounced during the \acl{JFM} (\acs{JFM}) and \ac{OND} periods where both models showed an increase and decrease, respectively, with differences between the two (\ac{JFM} period, 9\% for \acp{GAM}, 32.7\% for \ac{WRTDS}; \ac{OND} period, \ensuremath{-18.2}\% for \acp{GAM}, \ensuremath{-17.5}\% for \ac{WRTDS}).  Percent changes by flow quantile were also observed at TF1.6, with the most noticeable difference from LE1.2 being a decrease in \ac{chla} during both high and low flow (both models) and relatively larger increases in \ac{chla} during moderate flow.  
+Results as annual aggregations suggested that \ac{chla} patterns between years have not been constant and are considerably different between sites (\cref{fig:predann}).  Both models showed a gradual and consistent increase in \ac{chla} at LE1.2, with values increasing by approximately 1.5 \mugl (arithmetic) from 1986 to 2014.  Predictions at TF1.6 did not show a similar increase from the beginning to the end of the time series, although a dramatic decrease from approximately 12 \mugl to 6 \mugl from 2000 to 2006 was observed. By 2014, \ac{chla} returned to values similar to those prior to the initial decrease.  Flow-normalized predictions that were annually averaged at each site allowed an interpretation of trends that were independent of variation in discharge or salinity (\cref{tab:trendsLE12,tab:trendsTF16}).  Overall percent change of ln-transformed \ac{chla} concentration from the beginning to the end of the time series at LE1.2 was approximately 20\% (\cref{tab:trendsLE12}).  A slight decrease in \ac{chla} at TF1.6 was observed from 1986 to 2014 (\cref{tab:trendsTF16}).  Changes by annual, seasonal, and flow time periods at LE1.2 were comparable for each time period and model type, although some differences were observed.  For example, both models had maximum increases in \ac{chla} for the different flow periods for high levels of flow at LE1.2 (\% for \acp{GAM}, \% for \ac{WRTDS}).  Trends by different time periods were more apparent for TF1.6, particularly as an overall decrease in \ac{chla} for both models during the 2001--2007 period and an overall increase during the 2008--2014 period (\cref{tab:trendsTF16}).  Seasonal changes were especially pronounced during the \acl{JFM} (\acs{JFM}) and \ac{OND} periods where both models showed an increase and decrease, respectively, with differences between the two (\ac{JFM} period, 9\% for \acp{GAM}, 32.7\% for \ac{WRTDS}; \ac{OND} period, \ensuremath{-18.2}\% for \acp{GAM}, \ensuremath{-17.5}\% for \ac{WRTDS}).  Percent changes by flow quantile were also observed at TF1.6, with the most noticeable difference from LE1.2 being a decrease in \ac{chla} during both high and low flow (both models) and relatively larger increases in \ac{chla} during moderate flow.  
 
 \subsection*{Comparison of model predictions}
 
@@ -464,10 +464,10 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 ~~OND&1.82&25.29&&1.83&15.14\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~Flow 1 (Low)&1.90&20.86&&1.93&16.77\tabularnewline
-~~Flow 2&2.10&13.71&&2.11& 7.73\tabularnewline
-~~Flow 3&2.28&15.66&&2.29& 9.24\tabularnewline
-~~Flow 4 (High)&2.34&25.09&&2.33&22.29\tabularnewline
+~~1 (Low)&1.90&20.86&&1.93&16.77\tabularnewline
+~~2&2.10&13.71&&2.11& 7.73\tabularnewline
+~~3&2.28&15.66&&2.29& 9.24\tabularnewline
+~~4 (High)&2.34&25.09&&2.33&22.29\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -498,10 +498,10 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 ~~OND&2.17&-18.16&&2.20&-17.55\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~Flow 1 (Low)&2.89& -4.78&&2.93& -0.42\tabularnewline
-~~Flow 2&2.41& 16.71&&2.43& 20.31\tabularnewline
-~~Flow 3&2.28&  6.53&&2.27& 15.20\tabularnewline
-~~Flow 4 (High)&2.22&-11.58&&2.21&-11.27\tabularnewline
+~~1 (Low)&2.89& -4.78&&2.93& -0.42\tabularnewline
+~~2&2.41& 16.71&&2.43& 20.31\tabularnewline
+~~3&2.28&  6.53&&2.27& 15.20\tabularnewline
+~~4 (High)&2.22&-11.58&&2.21&-11.27\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -535,10 +535,10 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 ~~OND&-0.46&0.05&& 1.04&0.15\tabularnewline
 \hline
 {\bfseries Flow}&&&&&\tabularnewline
-~~Flow 1 (Low)&-0.27&0.07&&-0.15&0.10\tabularnewline
-~~Flow 2&-0.14&0.09&& 0.70&0.13\tabularnewline
-~~Flow 3& 0.49&0.11&& 1.07&0.14\tabularnewline
-~~Flow 4 (High)&-0.53&0.09&&-1.75&0.15\tabularnewline
+~~1 (Low)&-0.27&0.07&&-0.15&0.10\tabularnewline
+~~2&-0.14&0.09&& 0.70&0.13\tabularnewline
+~~3& 0.49&0.11&& 1.07&0.14\tabularnewline
+~~4 (High)&-0.53&0.09&&-1.75&0.15\tabularnewline
 \hline
 \end{tabular}\end{center}
 
@@ -572,10 +572,10 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 ~~OND&0.02&0.98&&{\bf \textit{0.13}}&{\bf \textit{0.95}}&&{\bf \textit{0.38}}&{\bf \textit{0.80}}&&0.03&1.00\tabularnewline
 \hline
 {\bfseries Flow}&&&&&&&&&&&\tabularnewline
-~~Flow 1 (Low)&{\bf \textit{0.14}}&{\bf \textit{0.92}}&&-0.03&1.01&&{\bf \textit{0.46}}&{\bf \textit{0.77}}&&{\bf \textit{0.16}}&{\bf \textit{0.95}}\tabularnewline
-~~Flow 2&0.00&1.00&&{\bf \textit{0.12}}&{\bf \textit{0.96}}&&{\bf \textit{0.14}}&{\bf \textit{0.94}}&&0.01&1.00\tabularnewline
-~~Flow 3&0.09&0.96&&{\bf \textit{0.21}}&{\bf \textit{0.91}}&&{\bf \textit{0.12}}&{\bf \textit{0.96}}&&-0.02&1.00\tabularnewline
-~~Flow 4 (High)&0.09&{\bf \textit{0.96}}&&0.03&{\bf \textit{0.97}}&&{\bf \textit{0.09}}&{\bf \textit{0.96}}&&{\bf \textit{0.09}}&{\bf \textit{0.95}}\tabularnewline
+~~1 (Low)&{\bf \textit{0.14}}&{\bf \textit{0.92}}&&-0.03&1.01&&{\bf \textit{0.46}}&{\bf \textit{0.77}}&&{\bf \textit{0.16}}&{\bf \textit{0.95}}\tabularnewline
+~~2&0.00&1.00&&{\bf \textit{0.12}}&{\bf \textit{0.96}}&&{\bf \textit{0.14}}&{\bf \textit{0.94}}&&0.01&1.00\tabularnewline
+~~3&0.09&0.96&&{\bf \textit{0.21}}&{\bf \textit{0.91}}&&{\bf \textit{0.12}}&{\bf \textit{0.96}}&&-0.02&1.00\tabularnewline
+~~4 (High)&0.09&{\bf \textit{0.96}}&&0.03&{\bf \textit{0.97}}&&{\bf \textit{0.09}}&{\bf \textit{0.96}}&&{\bf \textit{0.09}}&{\bf \textit{0.95}}\tabularnewline
 \hline
 \end{tabular}\end{center}
 

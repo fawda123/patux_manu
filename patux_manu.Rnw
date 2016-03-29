@@ -1,7 +1,7 @@
 \documentclass[letterpaper,12pt,oneside]{article}
 \usepackage[paperwidth=8.5in,paperheight=11in,top=1in,bottom=1in,left=1in,right=1in]{geometry}
 \usepackage{setspace}
-\usepackage[colorlinks=true,allcolors=Blue]{hyperref}
+\usepackage[colorlinks=true,allcolors=Black]{hyperref}
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{indentfirst}
 \usepackage{titlesec}
@@ -132,7 +132,7 @@ writeLines(refs, con = file('refs.bib'))
 \begin{document}
 
 \raggedbottom
-\linenumbers
+% \linenumbers
 \raggedright
 \urlstyle{same}
 \setlength{\parindent}{0.25in}
@@ -719,7 +719,10 @@ allsum <- gather(alldat, 'mod', 'val', norm_wrtds:norm_gams) %>%
 
 totab <- rbind(allsum, yrdat, modat, fldat) %>% 
   ungroup %>% 
-  mutate(cat = factor(cat, levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'))) %>% 
+  mutate(cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )) %>% 
   arrange(stat, cat) %>% 
   data.frame(.)
 
@@ -790,14 +793,16 @@ totab <-select(alldat,
     yrcat = as.character(yrcat)
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'))
+  mutate(cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )
   ) %>% 
   group_by(cat, stat) %>% 
   summarise(
     rmse = rmse.fun(fits_wrtds, fits_gams),
     ave = ave.fun(fits_wrtds, fits_gams)
   )
-
 # get comparisons for all obs
 totaball <- group_by(alldat, stat) %>% 
   summarise(
@@ -853,7 +858,11 @@ diffLE12 <- select(bestLE12,
     yrcat = as.character(yrcat)
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+  mutate(
+    cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    ),
     stat = 'LE1.2'
   )
 
@@ -866,7 +875,11 @@ diffTF16 <- select(bestTF16,
     yrcat = as.character(yrcat)
   ) %>% 
   gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
-  mutate(cat = factor(cat, levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)')),
+  mutate(
+    cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    ),
     stat = 'TF1.6'
   )
 

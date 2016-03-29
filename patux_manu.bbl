@@ -16,7 +16,7 @@ Beck, M.~W. and J.~D. {Hagy III}, 2015. Adaptation of a weighted regression
 \bibitem[{Beck \emph{et~al.}(2015)Beck, {Hagy III}, and Murrell}]{Beck15b}
 Beck, M.~W., J.~D. {Hagy III}, and M.~C. Murrell, 2015. Improving estimates of
   ecosystem metabolism by reducing effects of tidal advection on dissolved
-  oxygen time series. Limnology and Oceanography: Methods .
+  oxygen time series. Limnology and Oceanography: Methods 13(12):731--745.
 
 \bibitem[{Boicourt and Sanford(1998)}]{Boicourt98}
 Boicourt, W.~C. and L.~P. Sanford, 1998. A hydrodynamic study of the {P}atuxent
@@ -28,9 +28,9 @@ Borsuk, M.~E., C.~A. Stow, and K.~H. Reckhow, 2004. Confounding effect of flow
   on estuarine response to nitrogen loading. Journal of Environmental
   Engineering-ASCE 130(6):605--614.
 
-\bibitem[{Byrd \emph{et~al.}(1995)Byrd, Lu, and adn C.~Zhu}]{Byrd95}
-Byrd, R.~H., P.~Lu, and J.~N. adn C.~Zhu, 1995. A limited memory algorithm for
-  bound constrained optimization. SIAM Journal on Scientific Computing
+\bibitem[{Byrd \emph{et~al.}(1995)Byrd, Lu, Nocedal, and Zhu}]{Byrd95}
+Byrd, R.~H., P.~Lu, J.~Nocedal, and C.~Zhu, 1995. A limited memory algorithm
+  for bound constrained optimization. SIAM Journal on Scientific Computing
   16(5):1190--1208.
 
 \bibitem[{Cade and Noon(2003)}]{Cade03}
@@ -51,7 +51,7 @@ Cloern, J.~E. and A.~D. Jassby, 2010. Patterns and scales of phytoplankton
 Cronin, W.~B. and D.~W. Pritchard, 1975. Additional statistics on the
   dimensions of the {C}hesapeake {B}ay and its tributaries: Cross-section
   widths and segment volumes per meter depth, Technical Report 42, Reference
-  75-3, Chesapeak Bay Institute, The Johns Hopkins University, Baltimore,
+  75-3, Chesapeake Bay Institute, The Johns Hopkins University, Baltimore,
   Maryland.
 
 \bibitem[{Efron and Tibshirani(1993)}]{Efron93}
@@ -116,7 +116,7 @@ Hirsch, R.~M., D.~L. Moyer, and S.~A. Archfield, 2010. Weighted regressions on
 
 \bibitem[{Hyndman and Khandakar(2008)}]{Hyndman08}
 Hyndman, R.~J. and Y.~Khandakar, 2008. Automatic time series forecasting: The
-  forecast package for R. JOurnal of Statistical Software 26(3):1--22.
+  forecast package for R. Journal of Statistical Software 26(3):1--22.
 
 \bibitem[{Jordan \emph{et~al.}(2003)Jordan, Weller, and Correll}]{Jordan03}
 Jordan, T.~E., D.~E. Weller, and D.~L. Correll, 2003. Sources of nutrient
@@ -159,9 +159,9 @@ Nixon, S.~W., 1995. Coastal marine eutrophication: A definition, social causes,
 Nocedal, J. and S.~J. Wright, 2006. Numerical Optimization, Springer-Verlag,
   New York, New York, 2nd edition.
 
-\bibitem[{Orth \emph{et~al.}(2010)Orth, Williams, Marion, wilcox, Carruthers,
+\bibitem[{Orth \emph{et~al.}(2010)Orth, Williams, Marion, Wilcox, Carruthers,
   Moore, Kemp, Dennison, Rybicki, Bergstrom, and Batiuk}]{Orth10}
-Orth, R.~J., M.~R. Williams, S.~R. Marion, D.~J. wilcox, T.~J.~B. Carruthers,
+Orth, R.~J., M.~R. Williams, S.~R. Marion, D.~J. Wilcox, T.~J.~B. Carruthers,
   K.~A. Moore, W.~M. Kemp, W.~C. Dennison, N.~Rybicki, P.~Bergstrom, and R.~A.
   Batiuk, 2010. Long-term trends in submersed aquatic vegetation (SAV) in
   {C}hesapeake {B}ay, {USA}, related to water quality. Estuaries and Coasts
