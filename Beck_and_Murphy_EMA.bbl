@@ -1,0 +1,250 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem{Arlot10}
+Arlot, S., Celisse, A.: A survey of cross-validation procedures for model
+  selection.
+\newblock Statistics Surveys \textbf{4}, 40--79 (2010)
+
+\bibitem{Beck15}
+Beck, M.W., {Hagy III}, J.D.: Adaptation of a weighted regression approach to
+  evaluate water quality trends in an estuary.
+\newblock Environmental Modelling and Assessment \textbf{20}(6), 637--655
+  (2015)
+
+\bibitem{Beck15b}
+Beck, M.W., {Hagy III}, J.D., Murrell, M.C.: Improving estimates of ecosystem
+  metabolism by reducing effects of tidal advection on dissolved oxygen time
+  series.
+\newblock Limnology and Oceanography: Methods \textbf{13}(12), 731--745 (2015)
+
+\bibitem{Boicourt98}
+Boicourt, W.C., Sanford, L.P.: A hydrodynamic study of the {P}atuxent {R}iver
+  estuary.
+\newblock Tech. rep., Maryland Department of the Environment, Baltimore,
+  Maryland (1998)
+
+\bibitem{Borsuk04b}
+Borsuk, M.E., Stow, C.A., Reckhow, K.H.: Confounding effect of flow on
+  estuarine response to nitrogen loading.
+\newblock Journal of Environmental Engineering-ASCE \textbf{130}(6), 605--614
+  (2004)
+
+\bibitem{Byrd95}
+Byrd, R.H., Lu, P., Nocedal, J., Zhu, C.: A limited memory algorithm for bound
+  constrained optimization.
+\newblock SIAM Journal on Scientific Computing \textbf{16}(5), 1190--1208
+  (1995)
+
+\bibitem{Cade03}
+Cade, B.S., Noon, B.R.: A gentle introduction to quantile regression for
+  ecologists.
+\newblock Frontiers in Ecology and the Environment \textbf{1}(8), 412--420
+  (2003)
+
+\bibitem{Cloern96}
+Cloern, J.E.: Phytoplankton bloom dynamics in coastal ecosystems: {A} review
+  with some general lessons from sustained investigation of {S}an {F}rancisco
+  {B}ay, {C}alifornia.
+\newblock Review of Geophysics \textbf{34}(2), 127--168 (1996)
+
+\bibitem{Cloern10}
+Cloern, J.E., Jassby, A.D.: Patterns and scales of phytoplankton variability in
+  estuarine-coastal ecosystems.
+\newblock Estuaries and Coasts \textbf{33}(2), 230--241 (2010)
+
+\bibitem{Cronin75}
+Cronin, W.B., Pritchard, D.W.: Additional statistics on the dimensions of the
+  {C}hesapeake {B}ay and its tributaries: Cross-section widths and segment
+  volumes per meter depth.
+\newblock Tech. Rep. 42, Reference 75-3, Chesapeake Bay Institute, The Johns
+  Hopkins University, Baltimore, Maryland (1975)
+
+\bibitem{Efron93}
+Efron, B., Tibshirani, R.: An Introduction to the Bootstrap, first edn.
+\newblock Chapman and Hall, New York, New York (1993)
+
+\bibitem{Hagythes}
+Hagy, J.D.: Residence times and net ecosystem processes in {P}atuxent {R}iver
+  estuary.
+\newblock Master's thesis, University of Maryland, College Park, Maryland
+  (1996)
+
+\bibitem{Hagy06}
+Hagy, J.D., Lehrter, J.C., Murrell, M.C.: Effects of hurricanee {I}van on water
+  quality in {P}ensacola {B}ay, {F}lorida.
+\newblock Estuaries and Coasts \textbf{29}(6A), 919--925 (2006)
+
+\bibitem{Haraguchi15}
+Haraguchi, L., Carstensen, J., Abreu, P.C., Odebrecht, C.: Long-term changes of
+  the phytoplankton community and biomass in the subtropical shallow {P}atos
+  {L}agoon {E}stuary, {B}razil.
+\newblock Estuarine, Coastal and Shelf Science \textbf{162}(SI), 76--87 (2015)
+
+\bibitem{Harding94}
+Harding, L.W.: Long-term trends in the distribution of phytoplankton in
+  {C}hesapeake {B}ay - roles of light, nutrients, and streamflow.
+\newblock Marine Ecology Progress Series \textbf{104}, 267--291 (1994)
+
+\bibitem{Harding15}
+Harding, L.W., Gallegos, C.L., Perry, E.S., Miller, W.D., Adolf, J.E.,
+  Mallonee, M.E., Paerl, H.W.: Long-term trends of nutrients and phytoplankton
+  in {C}hesapeake {B}ay.
+\newblock Estuaries and Coasts  (2015)
+
+\bibitem{Hastie90}
+Hastie, T., Tibshirani, R.: Generalized Additive Models.
+\newblock Chapman and Hall, London, New York (1990)
+
+\bibitem{Hirsch14b}
+Hirsch, R.M.: Large biases in regression-based constituent flux estimates:
+  causes and diagnostic tools.
+\newblock Journal of the American Water Resources Association \textbf{50}(6),
+  1401--1424 (2014)
+
+\bibitem{Hirsch15}
+Hirsch, R.M., Archfield, S.A., {De Cicco}, L.A.: A bootstrap method for
+  estimating uncertainty of water quality trends.
+\newblock Environmental Modelling and Software \textbf{73}, 148--166 (2015)
+
+\bibitem{Hirsch14}
+Hirsch, R.M., {De Cicco}, L.: User guide to {E}xploration and {G}raphics for
+  {R}iv{E}r {T}rends ({EGRET}) and data{R}etrieval: {R} packages for hydrologic
+  data.
+\newblock Tech. Rep. Techniques and Methods book 4, ch. A10, US Geological
+  Survey, Reston, Virginia (2014).
+\newblock \url{http://pubs.usgs.gov/tm/04/a10/}
+
+\bibitem{Hirsch10}
+Hirsch, R.M., Moyer, D.L., Archfield, S.A.: Weighted regressions on time,
+  discharge, and season ({WRTDS}), with an application to {C}hesapeake {B}ay
+  river inputs.
+\newblock Journal of the American Water Resources Association \textbf{46}(5),
+  857--880 (2010)
+
+\bibitem{Hyndman08}
+Hyndman, R.J., Khandakar, Y.: Automatic time series forecasting: The forecast
+  package for r.
+\newblock Journal of Statistical Software \textbf{26}(3), 1--22 (2008)
+
+\bibitem{Jordan03}
+Jordan, T.E., Weller, D.E., Correll, D.L.: Sources of nutrient inputs to the
+  {P}atuxent {R}iver estuary.
+\newblock Estuaries and Coasts \textbf{26}(2A), 226--243 (2003)
+
+\bibitem{Lung03}
+Lung, W., Bai, S.: A water quality model for the {P}atuxent estuary: Current
+  conditions and predictions under changing land-use scenarios.
+\newblock Estuaries \textbf{26}(2A), 267--279 (2003)
+
+\bibitem{Medalie12}
+Medalie, L., Hirsch, R.M., Archfield, S.A.: Use of flow-normalization to
+  evaluate nutrient concentration and flux changes in {L}ake {C}hamplain
+  tributaries, 1990-2009.
+\newblock Journal of Great Lakes Research \textbf{38}(SI), 58--67 (2012)
+
+\bibitem{Monbet92}
+Monbet, Y.: Control of phytoplankton biomass in estuaries: A comparative
+  analysis of microtidal and macrotidal estuaries.
+\newblock Estuaries \textbf{15}(4), 563--571 (1992)
+
+\bibitem{Moyer12}
+Moyer, D.L., Hirsch, R.M., Hyer, K.E.: Comparison of two regression-based
+  approaches for determining nutrient and sediment fluxes and trends in the
+  {C}hesapeake {B}ay watershed.
+\newblock Tech. Rep. Scientific Investigations Report 2012-544, US Geological
+  Survey, US Department of the Interior, Reston, Virginia (2012)
+
+\bibitem{Murrell07}
+Murrell, M.C., Hagy, J.D., Lores, E.M., Greene, R.M.: Phytoplankton production
+  and nutrient distributions in a subtropical esuary: Importance of freshwater
+  flow.
+\newblock Estuaries and Coasts \textbf{30}(3), 390--402 (2007)
+
+\bibitem{Nixon95}
+Nixon, S.W.: Coastal marine eutrophication: A definition, social causes, and
+  future concerns.
+\newblock Ophelia \textbf{41}, 199--219 (1995)
+
+\bibitem{Nocedal06}
+Nocedal, J., Wright, S.J.: Numerical Optimization, 2nd edn.
+\newblock Springer-Verlag, New York, New York (2006)
+
+\bibitem{Orth10}
+Orth, R.J., Williams, M.R., Marion, S.R., Wilcox, D.J., Carruthers, T.J.B.,
+  Moore, K.A., Kemp, W.M., Dennison, W.C., Rybicki, N., Bergstrom, P., Batiuk,
+  R.A.: Long-term trends in submersed aquatic vegetation (sav) in {C}hesapeake
+  {B}ay, {USA}, related to water quality.
+\newblock Estuaries and Coasts \textbf{33}(5), 1144--1163 (2010)
+
+\bibitem{Paerl06}
+Paerl, H.W.: Assessing and managing nutrient-enhanced eutrophication in
+  estuarine and coastal waters: Interacive effects of human and climatic
+  perturbations.
+\newblock Ecological Engineering \textbf{26}(1), 40--54 (2006)
+
+\bibitem{Paerl14}
+Paerl, H.W., Hall, N.S., Peierls, B.L., Rossignol, K.L.: Evolving paradigms and
+  challenges in estuarine and coastal eutrophication dynamics in a culturally
+  and climatically stressed world.
+\newblock Estuaries and Coasts \textbf{37}(2), 243--258 (2014)
+
+\bibitem{Powers05}
+Powers, S.P., Peterson, C.H., Christian, R.R., Sullivan, E., Powers, M.J.,
+  Bishop, M.J., Buzzelli, C.P.: Effects of eutrophication on bottom habitat and
+  prey resources of demersal fishes.
+\newblock Marine Ecology Progress Series \textbf{302}, 233--243 (2005)
+
+\bibitem{RDCT15}
+{RDCT (R Development Core Team)}: {R: A language and environment for
+  statistical computing, v3.2.0. R Foundation for Statistical Computing,
+  Vienna, Austria} (2015).
+\newblock \url{http://www.R-project.org}
+
+\bibitem{Sprague11}
+Sprague, L.A., Hirsch, R.M., Aulenbach, B.T.: Nitrate in the {M}ississippi
+  {R}iver and its tributaries, 1980 to 2008: Are we making progress?
+\newblock Environmental Science and Technology \textbf{45}(17), 7209--7216
+  (2011)
+
+\bibitem{Steward07}
+Steward, J.S., Green, W.C.: Setting load limits for nutrients and suspended
+  solids based upon seagrass depth-limit targets.
+\newblock Estuaries and Coasts \textbf{30}(4), 657--670 (2007)
+
+\bibitem{TBEP11}
+{TBEP (Tampa Bay Estuary Program)}: {Tampa Bay Water Atlas} (2011).
+\newblock \url{http://www.tampabay.wateratlas.usf.edu/}. (Accessed October,
+  2013)
+
+\bibitem{Testa08a}
+Testa, J.M., Kemp, W.M., Boynton, W.R., Hagy, J.D.: Long-term changes in water
+  quality and productivity in the {P}atuxent {R}iver {E}stuary: 1985 to 2003.
+\newblock Estuaries and Coasts \textbf{31}(6), 1021--1037 (2008)
+
+\bibitem{USGS15}
+{USGS (US Geological Survey)}: {Water Quality Loads and Trends at Nontidal
+  Monitoring Stations in the Chesapeake Bay Watershed} (2015).
+\newblock \url{http://cbrim.er.usgs.gov/}. (Accessed November, 2015)
+
+\bibitem{Wood06}
+Wood, S.N.: Generalized Additive Models: An Introduction with R.
+\newblock Chapman and Hall, CRC Press, London, United Kingdom (2006)
+
+\bibitem{Wood06b}
+Wood, S.N.: Low-rank scale-invariant tensor product smooths for generalized
+  additive mixed models.
+\newblock Biometrics \textbf{62}(4), 1025--1036 (2006)
+
+\bibitem{Zhang13}
+Zhang, Q., Brady, D.C., Ball, W.P.: Long-term seasonal trends of nitrogen,
+  phosphorus, and suspended sediment load from the non-tidal {S}usquehanna
+  {R}iver {B}asin to {C}hesapeake {B}ay.
+\newblock Science of the Total Environment \textbf{452-453}, 208--221 (2013)
+
+\end{thebibliography}
