@@ -140,7 +140,7 @@
 \renewcommand\refname{\centerline{LITERATURE CITED} \vspace{12pt}}
 
 \begin{singlespace}
-\title{{\bf {\Large Numerical contrasts and recommendations for use of two statistical models of water quality in tidal waters\footnote{Version Date:   Mon Jun 20 15:54:22 2016 -0500}}}}
+\title{{\bf {\Large Numerical contrasts and recommendations for use of two statistical models of water quality in tidal waters\footnote{Version Date:   Mon Jun 20 18:02:53 2016 -0500}}}}
 \author{{\bf {\normalsize Marcus W. Beck, Rebecca R. Murphy\textsuperscript{1}}}}
 \date{}
 \footnotetext[1]{Post-doctorate researcher (Beck), USEPA National Health and Environmental Effects Research Laboratory, Gulf Ecology Division, 1 Sabine Island Drive, Gulf Breeze, FL 32561, Estuarine Data Analyst (Murphy), UMCES at Chesapeake Bay Program, 410 Severn Avenue, Suite 112, Annapolis, MD 21403 (Email/Beck: \href{mailto:beck.marcus@epa.gov}{beck.marcus@epa.gov})}
@@ -307,6 +307,8 @@ Comparisons of fit to the simulated time series showed no systematic differences
 \section*{\centerline{DISCUSSION}}
 
 \subsection*{Model comparisons and considerations}
+
+\Cref{tab:qualcomp} shows...
 
 Both \ac{WRTDS} and \acp{GAM} have similar objectives of describing trends from long-term monitoring datasets, whereas more specific applications for each model (e.g., hypothesis testing, assessment of management actions, etc.) will be defined by future needs or research goals.  Accordingly, our comparison methods were chosen based on the exploratory needs of the analysis and by considering that each technique provides a potentially novel approach to trend assessment in future applications.  The variety of methods for comparing models can provide different information depending on the desired application.  An improvement in predictive performance using \ac{RMSE}, for example, may suggest one model is more advantageous over another if the goal is to reproduce trends, whereas this information may be much less relevant for hypothesis testing. Inferior performance for one metric does not necessarily invalidate an analysis method for all potential applications.  An interpretation of the results should consider that the analysis provides an overview with several techiques, given that the purpose of each model will be better defined by future applications. 
 
@@ -619,7 +621,7 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 % qualitative comparison
 %latex.default(tab, file = "", rowlabel = "Quality", caption = cap_val,     caption.loc = "top", rgroup = categ, n.rgroup = c(4, 5),     rowname = qualt, colheads = c("Consideration\\textsuperscript{1}",         "\\ac{GAM}", "\\ac{WRTDS}"), label = "tab:qualcomp",     insert.bottom = foots)%
 \begin{table}[!tbp]
-\caption{Qualitative comparisons of generalized additive models and WRTDS.  Qualities are grouped by ease of use and statistical considerations.  Ease of use qualities are described as good, moderate, or poor and statistical qualitas as yes/no.  The consideration column further describes how the qualities relate to each model.  Qualities were considered as a product provided by each model (or supporting material) or if data characteristics are handled by each model.\label{tab:qualcomp}} 
+\caption{Qualitative comparisons of generalized additive models and WRTDS.  Qualities are grouped by ease of use and statistical considerations.  Ease of use qualities are described as good, moderate, or poor and statistical qualities as yes/no.  The consideration column further describes how the qualities relate to each model.  Qualities were considered as a product provided by each model (or supporting material) or if data characteristics are handled by each model.\label{tab:qualcomp}} 
 \begin{center}
 \begin{tabular}{llll}
 \hline\hline
