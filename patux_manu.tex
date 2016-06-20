@@ -140,7 +140,7 @@
 \renewcommand\refname{\centerline{LITERATURE CITED} \vspace{12pt}}
 
 \begin{singlespace}
-\title{{\bf {\Large Comparison of weighted regression and additive models for trend evaluation of water quality in tidal waters\footnote{Version Date:   Wed Mar 30 14:07:17 2016 -0500}}}}
+\title{{\bf {\Large Numerical contrasts and recommendations for use of two statistical models of water quality in tidal waters\footnote{Version Date:   Mon Jun 20 15:54:22 2016 -0500}}}}
 \author{{\bf {\normalsize Marcus W. Beck, Rebecca R. Murphy\textsuperscript{1}}}}
 \date{}
 \footnotetext[1]{Post-doctorate researcher (Beck), USEPA National Health and Environmental Effects Research Laboratory, Gulf Ecology Division, 1 Sabine Island Drive, Gulf Breeze, FL 32561, Estuarine Data Analyst (Murphy), UMCES at Chesapeake Bay Program, 410 Severn Avenue, Suite 112, Annapolis, MD 21403 (Email/Beck: \href{mailto:beck.marcus@epa.gov}{beck.marcus@epa.gov})}
@@ -150,7 +150,7 @@
 
 \section*{\centerline{ABSTRACT}}
 
-\noindent Two similar statistical approaches, \ac{WRTDS} and \aclu{GAM} (\acp{GAM}), have recently been used to evaluate long-term trends in \ac{chla} in estuarine systems. We evaluated \ac{WRTDS} and \acp{GAM} using thirty years of data for a discrete time series of \ac{chla} in the Patuxent River Estuary, a well-studied tributary to Chesapeake Bay.  Each model was evaluated based on predictive performance against the observed data and ability to reproduce flow-normalized trends with simulated data.  For all examples, prediction errors and average between-model differences were small despite differences in computational requirements for each approach.  Flow-normalized trends from each model revealed distinct differences in temporal variation in \ac{chla} from the upper to lower estuary.  Mainstem influences of the Chesapeake Bay were apparent with both models predicting a roughly 65\% increase in \ac{chla} over time in the lower estuary, whereas flow-normalized predictions for the upper estuary showed a more dynamic pattern, with a nearly 100\% increase in \ac{chla} in the last 10 years.  Comparison of flow-normalized trends estimated from observed data suggested that \acp{GAM} were less sensitive to periods with sparse observations, although both models had comparable abilities to remove flow effects from simulated time series of \ac{chla}.  This study provides valuable guidance for using statistical models in trend analysis, with particular relevance for computational requirements, desired products, and future data needs.  
+\noindent Two statistical approaches, \ac{WRTDS} and \aclu{GAM} (\acp{GAM}), have recently been used to evaluate long-term water quality trends in estuarine systems. Both models have been used in similar contexts despite differences in statistical foundations and products. This study provided an empirical and qualitative comparison of both models using thirty years of data for a discrete time series of \ac{chla} in the Patuxent River Estuary, a well-studied tributary to Chesapeake Bay.  Empirical descriptions of each model were based on predictive performance against the observed data and ability to reproduce flow-normalized trends with simulated data.  For all examples, between-model differences were apparent but statistically insignificant.  Comparison of flow-normalized trends estimated from observed data suggested that \acp{GAM} were less sensitive to periods with sparse observations, although both models had comparable abilities to remove flow effects from simulated time series of \ac{chla}.  Trends from each model revealed distinct differences in temporal variation in \ac{chla} from the upper to lower estuary.  Mainstem influences of the Chesapeake Bay were apparent with both models predicting a roughly 65\% increase in \ac{chla} over time in the lower estuary, whereas flow-normalized predictions for the upper estuary showed a more dynamic pattern, with a nearly 100\% increase in \ac{chla} in the last 10 years.  Despite similar predictive abilities and conclusions from each model, qualitative differences between the models suggests that use of either should be guided by the desired products and specific characteristics of the data.  We conclude with a qualitative comparison of both models as guidance for use of each.  
 
 \noindent KEY TERMS: chlorophyll, estuaries, additive models, nutrients, Patuxent River Estuary, statistics, time series analysis, weighted regression
 
@@ -166,13 +166,13 @@ The interpretation of enviromental trends can have widespread implications for t
 Recent applications of statistical methods to describe water quality dynamics have shown promise in estuaries, specifically \ac{WRTDS} and \acp{GAM}.  The \ac{WRTDS} method was initially developed to describe water quality trends in rivers \citep{Hirsch10,Hirsch14} and has recently been adapted to describe \ac{chla} trends in tidal waters \citep{Beck15}.  A defining characteristic of \ac{WRTDS} is a weighting scheme that fits a continuous set of parameters to the time series by considering the influence of location in the record and flow values relative to the period of interest.  The \ac{WRTDS} model has been used to model pollutant delivery from tributary sources to Chesapeake Bay \citep{Hirsch10,Moyer12,Zhang13}, Lake Champlain \citep{Medalie12}, the Mississippi River \citep{Sprague11}, and is now being used operationally at the \ac{USGS} to produce nutrient load and concentration trend results annually for tributaries of the Chesapeake Bay \citep{USGS15}.  A comparison to an alternative regression-based model for evaluating nutrient flux, ESTIMATOR, suggested that \ac{WRTDS} can produce more accurate trend estimates \citep{Moyer12}. As opposed to \ac{WRTDS}, \acp{GAM} were initially developed in a more general context as a modification to generalized linear models to model a response variable as the sum of smoothing functions of different predictors \citep{Hastie90,Wood06}.  \acp{GAM} have recently been used to describe eutrophication endpoints in tidal waters \citep{Haraguchi15,Harding16}, and exploratory analyses are underway to use \acp{GAM} for long-term trend analysis in Chesapeake Bay tidal waters at the Chesapeake Bay Program. Although the approach was not developed specifically for application to water quality problems, \acp{GAM} are particularly appealing because they are less computationally intense and provide more accessible estimates of model uncertainty than \ac{WRTDS}. Both approaches appear to have similar potential to characterize system dynamics, but the relative merits of each have not been evaluated. Quantitative comparisons that describe the accuracy of empirical descriptions and the desired products could inform the use of each model to describe long-term changes in ecosystem characteristics.
 
 % goals/objectives
-The goal of this study is to provide an empirical description of the relative abilities of \ac{WRTDS} and \acp{GAM} to describe long-term changes in time series of eutrophication response endpoints in tidal waters.  Two discrete time series covering 1986-2014 from two stations in the Patuxent River estuary are used as a common dataset for evaluating each model.  The Patuxent Estuary is a well-studied tributary of the Chesapeake Bay system that has been monitored for several decades with fixed stations along the longitudinal axis.  Two stations were chosen as representative time series that differed in the relative contributions of watershed inputs and influences from the mainstem of the Chesapeake, in addition to known historical events that have impacted water quality in the estuary.  The specific objectives of the analysis were to \begin{inparaenum}[1\upshape)]
+The goal of this study is to provide an empirical and qualitative description of the relative abilities of \ac{WRTDS} and \acp{GAM} to describe long-term changes in time series of eutrophication response endpoints in tidal waters.  Two discrete time series covering 1986-2014 from two stations in the Patuxent River estuary are used as a common dataset for evaluating each model.  The Patuxent Estuary is a well-studied tributary of the Chesapeake Bay system that has been monitored for several decades with fixed stations along the longitudinal axis.  Two stations were chosen as representative time series that differed in the relative contributions of watershed inputs and influences from the mainstem of the Chesapeake, in addition to known historical events that have impacted water quality in the estuary.  The specific objectives of the analysis were to \begin{inparaenum}[1\upshape)]
 \item provide a narrative comparison of the statistical foundation of each model, both as a general description and as a means to evaluate water quality time series,
 \item use each model to develop an empirical description of water quality changes at each monitoring station given known historical changes in water quality drivers,
 \item evaluate each models's ability to reproduce flow-normalized trends as known components of simulated time series, and
 \item compare each technique's ability to describe changes, as well as the differences in the information provided by each. 
 \end{inparaenum}
-We conclude with recommendations on the most appropriate use of each method, with particular attention given to computational requirements, uncertainty assessment, and potential needs for additional monitoring data.
+We conclude with recommendations on the most appropriate use of each method, with particular attention given to the desired products and characteristics of a dataset that could influence interpretation of model results.
 
 \section*{\centerline{METHODS}}
 
@@ -614,6 +614,34 @@ LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
 \end{tabular}\end{center}
 
 \end{table}
+
+
+% qualitative comparison
+%latex.default(tab, file = "", rowlabel = "Quality", caption = cap_val,     caption.loc = "top", rgroup = categ, n.rgroup = c(4, 5),     rowname = qualt, colheads = c("Consideration\\textsuperscript{1}",         "\\ac{GAM}", "\\ac{WRTDS}"), label = "tab:qualcomp",     insert.bottom = foots)%
+\begin{table}[!tbp]
+\caption{Qualitative comparisons of generalized additive models and WRTDS.  Qualities are grouped by ease of use and statistical considerations.  Ease of use qualities are described as good, moderate, or poor and statistical qualitas as yes/no.  The consideration column further describes how the qualities relate to each model.  Qualities were considered as a product provided by each model (or supporting material) or if data characteristics are handled by each model.\label{tab:qualcomp}} 
+\begin{center}
+\begin{tabular}{llll}
+\hline\hline
+\multicolumn{1}{l}{Quality}&\multicolumn{1}{c}{Consideration\textsuperscript{1}}&\multicolumn{1}{c}{\ac{GAM}}&\multicolumn{1}{c}{\ac{WRTDS}}\tabularnewline
+\hline
+{\bfseries ease of use}&&&\tabularnewline
+~~computational requirements&p&good&poor\tabularnewline
+~~interpretation\textsuperscript{2}&p&good&moderate\tabularnewline
+~~software&p&moderate&good\tabularnewline
+~~visualization&p&moderate&good\tabularnewline
+\hline
+{\bfseries statistical}&&&\tabularnewline
+~~additional variables&dc/p&y&n\tabularnewline
+~~censored data&dc/p&n&y\tabularnewline
+~~confidence intervals&p&y&y\tabularnewline
+~~quantile fits&p&n&y\tabularnewline
+~~sparse data&dc&n&y\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\textsuperscript{1}\footnotesize{product (p) or data characteristics (dc)}\\\textsuperscript{2}\footnotesize{Relates to statistical foundation, not results}\end{table}
+
 
 
 %%%%%%
