@@ -127,11 +127,6 @@ Hirsch, R.~M., D.~L. Moyer, and S.~A. Archfield, 2010. Weighted regressions on
 Hyndman, R.~J. and Y.~Khandakar, 2008. Automatic time series forecasting: The
   forecast package for R. Journal of Statistical Software 26(3):1--22.
 
-\bibitem[{Jordan \emph{et~al.}(2003)Jordan, Weller, and Correll}]{Jordan03}
-Jordan, T.~E., D.~E. Weller, and D.~L. Correll, 2003. Sources of nutrient
-  inputs to the {P}atuxent {R}iver estuary. Estuaries and Coasts
-  26(2A):226--243.
-
 \bibitem[{Koenker(2008)}]{Koenker08}
 Koenker, R., 2008. Censored quantile regression redux. Journal of Statistical
   Software 27(6):1--25.
@@ -239,6 +234,12 @@ Testa, J.~M., W.~M. Kemp, W.~R. Boynton, and J.~D. Hagy, 2008. Long-term
   changes in water quality and productivity in the {P}atuxent {R}iver
   {E}stuary: 1985 to 2003. Estuaries and Coasts 31(6):1021--1037.
 
+\bibitem[{{USEPA (US Environmental Protection Agency)}(2010)}]{USEPA10}
+{USEPA (US Environmental Protection Agency)}, 2010. {C}hesapeake {B}ay phase
+  5.3 community watershed model, Technical Report EPA903S10002 -
+  CBP/TRS-303-10, US Environmental Protection Agency, Chesapeake Bay Program
+  Office, Annapolis, MD.
+
 \bibitem[{{USGS (US Geological Survey)}(2015)}]{USGS15}
 {USGS (US Geological Survey)}, 2015. {Water Quality Loads and Trends at
   Nontidal Monitoring Stations in the Chesapeake Bay Watershed}.
@@ -252,10 +253,10 @@ Wood, S.~N., 2006{\natexlab{a}}. Generalized Additive Models: An Introduction
 ---, 2006{\natexlab{b}}. Low-rank scale-invariant tensor product smooths for
   generalized additive mixed models. Biometrics 62(4):1025--1036.
 
-\bibitem[{Zhang \emph{et~al.}(2013)Zhang, Brady, and Ball}]{Zhang13}
-Zhang, Q., D.~C. Brady, and W.~P. Ball, 2013. Long-term seasonal trends of
-  nitrogen, phosphorus, and suspended sediment load from the non-tidal
-  {S}usquehanna {R}iver {B}asin to {C}hesapeake {B}ay. Science of the Total
-  Environment 452-453:208--221.
+\bibitem[{Zhang \emph{et~al.}(2015)Zhang, Brady, Boynton, and Ball}]{Zhang15}
+Zhang, Q., D.~C. Brady, W.~R. Boynton, and W.~P. Ball, 2015. Long-term trends
+  of nutrients and sediment from the nontidal {C}hesapeake watershed: An
+  assessment of progress by river and season. Journal of the American Water
+  Resources Association 51(6):1534--1555.
 
 \end{thebibliography}
