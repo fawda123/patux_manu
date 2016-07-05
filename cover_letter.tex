@@ -1,0 +1,63 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage{times}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in,nohead]{geometry}
+\usepackage{graphics}
+\usepackage[colorlinks=true,allcolors=Blue]{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\begin{document}
+\renewcommand{\rmdefault}{ptm}
+\pagestyle{empty} 
+
+\setlength{\parindent}{0mm} 
+\setlength{\parskip}{5mm}
+
+\begin{flushright}
+\today
+\end{flushright}
+
+\emph{To:}\newline
+Dr. Parker J. Wigington, Jr.\newline
+Editor-in-Chief\newline
+JAWRA, Wiley
+
+\emph{From:}\newline
+Dr. Marcus W. Beck\newline
+US Environmental Protection Agency\newline
+\href{mailto:beck.marcus@epa.gov}{beck.marcus@epa.gov}, +18509342480
+
+Dr. Rebecca R. Murphy\newline
+UMCES at Chesapeake Bay Program\newline
+\href{mailto:rmurphy@chesapeakebay.net}{rmurphy@chesapeakebay.net}, +14102679837 \vspace{14.5pt}
+
+Enclosed please find our manuscript, entitled ``Numerical and qualitative contrasts of two statistical models for water quality change in tidal waters'', to be reconsidered as an original research article in the Journal of the American Water Resources Association.  
+
+This resubmission is a major revision to address earlier comments provided by an associate editor (Dr. E. Ashley Steel, attached below). Our initial submission was not sent for review and we agree that it did not provide sufficient guidance or distinctions between the models to be a useful contribution.  We are hopeful that the revision provides a more satisfactory approach to address the study objectives.  In particular, this revision includes the following:
+\begin{itemize}
+\item More detailed description of differences in the statistical foundations of each model, in particular the section `Methodological contrasts of WRTDS and GAMs' was added to the methods as a preface to the analysis.  
+\item Detailed qualitative comparisons of the models, including a discussion of the products and use across a range of situations.  In particular, table 8 compares each model to supplement the empirical comparisons in the earlier draft.  A discussion of specific elements of the table is also included in the section `Qualitative comparisons' to assist readers with choosing an appropriate method.
+\item Information on k-fold cross-validation was shortened in the section `Selection of model parameters'.  Additionally, the first paragraph of the discussion that describes use of performance metrics for model comparisons was removed.  We agree with the editor that this information was too general and not helpful for choosing a technique.
+\end{itemize}
+\hspace{4.5in}Respectfully,
+
+\hspace{4.5in}Marcus W. Beck
+\clearpage
+
+Associate Editor
+
+Comments to the Author:
+
+This manuscript has the potential to provide statistical guidance on selection of modeling approaches for data commonly encountered by JAWRA readers.  As such, it would provide valuable information and has the potential to be well-cited.  As written however, the manucript does not meet this goal.
+
+I recommend that the manuscript be significantly revised before formal review.  The revisions would need to include the following:
+
+1) Clear information about the statistical relationship between the two methods.  A quick search in the statistical literature, for example, finds the following statement. ``In the development of generalized linear models, we use the link function g to relate the conditional mean $\mu\left(x\right)$ to the linear predictor $\eta\left(x\right)$. But really nothing in what we were doing required η to be linear in x. In particular, it all works perfectly well if η is an additive function of x. We form the effective responses zi as before, and the weights wi , but now instead of doing a linear regression on xi we do an additive regression, using backfitting (or whatever). This gives us a generalized additive model (GAM). Essentially everything we know about the relationship between linear models and additive models carries over. GAMs converge somewhat more slowly as n grows than do GLMs, but the former have less bias, and strictly include GLMs as special cases. The transformed (mean) response is related to the predictor variables not just through coefficients, but through whole partial response functions. If we want to test whether a GLM is well-specified, we can do so by comparing it to a GAM, and so forth.''
+The underlying statistical relationship suggests that it should not be surprising that the results for this dataset did not differ much by approach and yet the authors conclude ``A general conclusion from our results is that both models provide similar information, both in predictive performance and trends over time in the Patuxent.''
+
+2) There are important differences in products available with each technique - e.g., how easily can confidence intervals be calculated.  If the goal of the paper is to help readers choose a method for their situation, this information is important and is only casually mentioned in the discussion.
+
+I also note that there is quite a bit of discussion / education on what the leave-one-out approach is and on what models can be used for in a general sense (hypothesis generation etc) which is not new information and which doesn't help the reader choose a technique.
+
+I suggest that the authors reframe the manuscript with the goal of providing explicit guidance on which modeling technique to use across a range of situations, pros and cons of each, and the underlying relationship between the two (for this last topic - a short summary will do as it is well known and well-understood in other scientific communities).
+
+\end{document}

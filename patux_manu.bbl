@@ -1,4 +1,4 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{49}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
@@ -36,6 +36,15 @@ Byrd, R.~H., P.~Lu, J.~Nocedal, and C.~Zhu, 1995. A limited memory algorithm
 \bibitem[{Cade and Noon(2003)}]{Cade03}
 Cade, B.~S. and B.~R. Noon, 2003. A gentle introduction to quantile regression
   for ecologists. Frontiers in Ecology and the Environment 1(8):412--420.
+
+\bibitem[{Carpenter(1995)}]{Carpenter95}
+Carpenter, D.~O., 1995. Communicating with the public on issues of science and
+  public health. Environmental Health Perspectives 103(S6):127--130.
+
+\bibitem[{Cleveland(1979)}]{Cleveland79}
+Cleveland, W.~S., 1979. Robust locally weighted regression and smoothing
+  scatterplots. Journal of the American Statistical Association
+  74(368):829--836.
 
 \bibitem[{Cloern(1996)}]{Cloern96}
 Cloern, J.~E., 1996. Phytoplankton bloom dynamics in coastal ecosystems: {A}
@@ -80,11 +89,11 @@ Harding, L.~W., 1994. Long-term trends in the distribution of phytoplankton in
   {C}hesapeake {B}ay - roles of light, nutrients, and streamflow. Marine
   Ecology Progress Series 104:267--291.
 
-\bibitem[{Harding \emph{et~al.}(2015)Harding, Gallegos, Perry, Miller, Adolf,
-  Mallonee, and Paerl}]{Harding15}
+\bibitem[{Harding \emph{et~al.}(2016)Harding, Gallegos, Perry, Miller, Adolf,
+  Mallonee, and Paerl}]{Harding16}
 Harding, L.~W., C.~L. Gallegos, E.~S. Perry, W.~D. Miller, J.~E. Adolf, M.~E.
-  Mallonee, and H.~W. Paerl, 2015. Long-term trends of nutrients and
-  phytoplankton in {C}hesapeake {B}ay. Estuaries and Coasts .
+  Mallonee, and H.~W. Paerl, 2016. Long-term trends of nutrients and
+  phytoplankton in {C}hesapeake {B}ay. Estuaries and Coasts 39:664--681.
 
 \bibitem[{Hastie and Tibshirani(1990)}]{Hastie90}
 Hastie, T. and R.~Tibshirani, 1990. Generalized Additive Models, Chapman and
@@ -122,6 +131,14 @@ Hyndman, R.~J. and Y.~Khandakar, 2008. Automatic time series forecasting: The
 Jordan, T.~E., D.~E. Weller, and D.~L. Correll, 2003. Sources of nutrient
   inputs to the {P}atuxent {R}iver estuary. Estuaries and Coasts
   26(2A):226--243.
+
+\bibitem[{Koenker(2008)}]{Koenker08}
+Koenker, R., 2008. Censored quantile regression redux. Journal of Statistical
+  Software 27(6):1--25.
+
+\bibitem[{Koenker(2013)}]{Koenker13}
+---, 2013. quantreg: {Q}uantile Regression {R} package 5.05.
+  \url{http://CRAN.R-project.org/package=quantreg}.
 
 \bibitem[{Lung and Bai(2003)}]{Lung03}
 Lung, W. and S.~Bai, 2003. A water quality model for the {P}atuxent estuary:
@@ -179,6 +196,10 @@ Paerl, H.~W., N.~S. Hall, B.~L. Peierls, and K.~L. Rossignol, 2014. Evolving
   a culturally and climatically stressed world. Estuaries and Coasts
   37(2):243--258.
 
+\bibitem[{Portnoy(2003)}]{Portnoy03}
+Portnoy, S., 2003. Censored regression quantiles. Journal of the American
+  Statistical Association 98(464):1001--1012.
+
 \bibitem[{Powers \emph{et~al.}(2005)Powers, Peterson, Christian, Sullivan,
   Powers, Bishop, and Buzzelli}]{Powers05}
 Powers, S.~P., C.~H. Peterson, R.~R. Christian, E.~Sullivan, M.~J. Powers,
@@ -190,6 +211,13 @@ Powers, S.~P., C.~H. Peterson, R.~R. Christian, E.~Sullivan, M.~J. Powers,
 {RDCT (R Development Core Team)}, 2015. {R: A language and environment for
   statistical computing, v3.2.0. R Foundation for Statistical Computing,
   Vienna, Austria}. \url{http://www.R-project.org}.
+
+\bibitem[{Schaeffer \emph{et~al.}(2013)Schaeffer, III, and
+  Stumpf}]{Schaeffer13}
+Schaeffer, B.~A., J.~D.~H. III, and R.~P. Stumpf, 2013. Approach to developing
+  numeric water quality criteria for coastal waters: transition from {SeaWiFS}
+  to {MODIS} and {MERIS} satellites. Journal of Applied Remote Sensing
+  7(1):073544.
 
 \bibitem[{Sprague \emph{et~al.}(2011)Sprague, Hirsch, and
   Aulenbach}]{Sprague11}
