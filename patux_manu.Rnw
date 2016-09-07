@@ -84,9 +84,7 @@ raw <- paste('Version', raw)
 % R libs, set ggplot theme
 <<echo = FALSE>>=
 library(httr)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 library(scales)
 library(wesanderson)
 library(grid)
