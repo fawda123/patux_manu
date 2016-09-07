@@ -198,6 +198,10 @@ dynagam <- function(mod_in, dat_in, grd = 30, years = NULL, alpha = 1,
     to_plo <- to_plo[sel_vec, !names(to_plo) %in% c('Low', 'High')]
     to_plo <- arrange(to_plo, year, month)
     
+  } else {
+    
+    to_plo <- to_plo[to_plo$month %in% month, ]
+    
   }
   
   # reshape data frame, average by year, month for symmetry

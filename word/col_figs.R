@@ -1,8 +1,6 @@
 
 library(httr)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 library(scales)
 library(wesanderson)
 library(grid)
@@ -39,7 +37,7 @@ theme_mine <- function (base_size = 12, base_family = "") {
 theme_set(theme_mine())
 
 ######
-# Appendix S2, simulated data figure
+# Appendix B, simulated data figure
 
 # load data, from sim_dat.R in tidal_comp proj
 load('data/sims_day.RData')
@@ -68,8 +66,63 @@ p <- ggplot(toplo, aes(x = date, y = value, group = variable)) +
   theme(axis.title.x = element_blank()) +
   facet_wrap(~variable, ncol = 1)
 
-tiff('word/FIGURES2.tif', width = 6, height = 7, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGUREB1.tif', width = 6, height = 7, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 print(p)
+dev.off()
+
+######
+# Appendix C, wrtds v gam predictions by periods
+
+data(bestLE12)
+data(bestTF16)
+
+bestLE12 <- select(bestLE12, 
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat, dec_time
+  ) %>% 
+  gather(., 'var', 'val', fits_wrtds:norm_gams) %>% 
+  separate(., var, c('res', 'mod'), by = '_') %>% 
+  spread(mod, val) %>% 
+  mutate(stat = 'LE1.2')
+
+bestTF16 <- select(bestTF16, 
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat, dec_time
+  ) %>% 
+  gather(., 'var', 'val', fits_wrtds:norm_gams) %>% 
+  separate(., var, c('res', 'mod'), by = '_') %>% 
+  spread(mod, val) %>% 
+  mutate(stat = 'TF1.6')
+
+toplo <- rbind(bestTF16, bestLE12)
+toplo$res <- factor(toplo$res, levels = c('fits', 'norm'), labels = c('Pred', 'Norm'))
+
+# margins
+mars <- grid::unit(c(0, 0, 0.1, 0.1), 'cm')
+
+p <- ggplot(toplo, aes(x = gams, y = wrtds, colour = res, group = res)) + 
+  geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
+  geom_point(aes(shape = res), alpha = 0.6, size = 1) + 
+  scale_colour_manual(values = cols[c(1, 50)]) +
+  scale_shape_manual(values = c(1, 1)) + 
+  scale_x_continuous(limits = c(0, 4)) + 
+  scale_y_continuous(limits = c(0, 4)) + 
+  geom_smooth(method = 'lm', se = F, size = 0.7, fullrange = TRUE, alpha = 0.7)  + 
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = 'top', 
+    legend.title = element_blank()) 
+
+pleg <- g_legend(p)
+p <- p + 
+  theme(legend.position = 'none')
+
+p1 <- p + facet_grid(stat ~ yrcat) + theme(plot.margin = mars)
+p2 <- p + facet_grid(stat ~ mocat) + theme(plot.margin = mars)
+p3 <- p + facet_grid(stat ~ flcat) + theme(plot.margin = mars)
+
+ylab <- expression(paste('WRTDS, ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+xlab <- expression(paste('GAM, ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+
+tiff('word/FIGUREC1.tif', width = 6, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGrob(xlab),
+  heights = c(0.12, 1, 1, 1))
 dev.off()
 
 ######
@@ -335,61 +388,6 @@ print(p)
 dev.off()
 
 ######
-# wrtds v gam predictions by periods
-
-data(bestLE12)
-data(bestTF16)
-
-bestLE12 <- select(bestLE12, 
-    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat, dec_time
-  ) %>% 
-  gather(., 'var', 'val', fits_wrtds:norm_gams) %>% 
-  separate(., var, c('res', 'mod'), by = '_') %>% 
-  spread(mod, val) %>% 
-  mutate(stat = 'LE1.2')
-
-bestTF16 <- select(bestTF16, 
-    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat, dec_time
-  ) %>% 
-  gather(., 'var', 'val', fits_wrtds:norm_gams) %>% 
-  separate(., var, c('res', 'mod'), by = '_') %>% 
-  spread(mod, val) %>% 
-  mutate(stat = 'TF1.6')
-
-toplo <- rbind(bestTF16, bestLE12)
-toplo$res <- factor(toplo$res, levels = c('fits', 'norm'), labels = c('Pred', 'Norm'))
-
-# margins
-mars <- grid::unit(c(0, 0, 0.1, 0.1), 'cm')
-
-p <- ggplot(toplo, aes(x = gams, y = wrtds, colour = res, group = res)) + 
-  geom_abline(intercept = 0, slope = 1, colour = 'grey') + 
-  geom_point(aes(shape = res), alpha = 0.6, size = 1) + 
-  scale_colour_manual(values = cols[c(1, 50)]) +
-  scale_shape_manual(values = c(1, 1)) + 
-  scale_x_continuous(limits = c(0, 4)) + 
-  scale_y_continuous(limits = c(0, 4)) + 
-  geom_smooth(method = 'lm', se = F, size = 0.7, fullrange = TRUE, alpha = 0.7)  + 
-  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = 'top', 
-    legend.title = element_blank()) 
-
-pleg <- g_legend(p)
-p <- p + 
-  theme(legend.position = 'none')
-
-p1 <- p + facet_grid(stat ~ yrcat) + theme(plot.margin = mars)
-p2 <- p + facet_grid(stat ~ mocat) + theme(plot.margin = mars)
-p3 <- p + facet_grid(stat ~ flcat) + theme(plot.margin = mars)
-
-ylab <- expression(paste('WRTDS, ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
-xlab <- expression(paste('GAM, ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
-
-tiff('word/FIGURE5.tif', width = 6, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
-grid.arrange(pleg, p1, p2, p3, left = textGrob(ylab, rot = 90), bottom = textGrob(xlab),
-  heights = c(0.12, 1, 1, 1))
-dev.off()
-
-######
 # dynaplots for each mod (as in Fig. 8 Beck and Hagy 2015)
 
 ## LE12 models
@@ -468,7 +466,7 @@ ylab <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'
 grobwidths <- c(1, 1, 1, 1)
 library(grid)
 
-tiff('word/FIGURE6.tif', width = 7.5, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE5.tif', width = 7.5, height = 6.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.arrange(
   arrangeGrob(textGrob(ylab, rot = 90)), 
   arrangeGrob(
@@ -497,28 +495,32 @@ data(bestsim_gam)
 
 source('R/funcs.r')
 
-lims <- c(0.7, 3)
+ylims <- c(0.7, 3)
+xlims <- c(2, 3.5)
 mars <- grid::unit(c(0.1, 0.1, 0.1, 0.1), 'cm')
 
 ##
 # wrtds figs
 
 # no effect
-p1_wrtds <- dynaplot(bestsim_wrtds[[2]], month = 8, col_vec = cols, fac_nms = 'No flow, WRTDS') + 
-  scale_y_continuous(limits = lims) +
+p1_wrtds <- dynaplot(bestsim_wrtds[[2]], month = 8, col_vec = cols, fac_nms = 'No influence, WRTDS', floscl = F) + 
+  scale_y_continuous(limits = ylims) +
+  scale_x_continuous(limits = xlims) +
   theme_mine() +
   theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
     strip.text.x = element_text(size = NULL))
 
 # constant
-p2_wrtds <- dynaplot(bestsim_wrtds[[1]], month = 8, col_vec = cols, fac_nms = 'Constant flow, WRTDS') + 
-  scale_y_continuous(limits = lims) +
+p2_wrtds <- dynaplot(bestsim_wrtds[[1]], month = 8, col_vec = cols, fac_nms = 'Constant flow, WRTDS', floscl = F) + 
+  scale_y_continuous(limits = ylims) +
+  scale_x_continuous(limits = xlims) +
   theme_mine() +
   theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars)
 
 # increasing
-p3_wrtds <- dynaplot(bestsim_wrtds[[3]], month = 8, col_vec = cols, fac_nms = 'Increasing flow, WRTDS') + 
-  scale_y_continuous(limits = lims) +
+p3_wrtds <- dynaplot(bestsim_wrtds[[3]], month = 8, col_vec = cols, fac_nms = 'Increasing flow, WRTDS', floscl = F) + 
+  scale_y_continuous(limits = ylims) +
+  scale_x_continuous(limits = xlims) +
   theme_mine() +
   theme(legend.position = 'top', axis.title = element_blank(), plot.margin = mars) +
   guides(colour = guide_colourbar(barwidth = 10, barheight = 1)) 
@@ -530,22 +532,25 @@ p3_wrtds <- p3_wrtds + theme(legend.position = 'none')
 # gam figs
 
 # no effect
-p1_gam <- dynagam(bestsim_gam[[2]]$mod, bestsim_gam[[2]]$dat, month = 8, col_vec = cols, fac_nms = 'No flow, GAM') + 
-  scale_y_continuous(limits = lims) +
+p1_gam <- dynagam(bestsim_gam[[2]]$mod, bestsim_gam[[2]]$dat, month = 8, col_vec = cols, fac_nms = 'No influence, GAM') + 
+  scale_y_continuous(limits = ylims) +
+  scale_x_continuous(limits = xlims) +
   theme_mine() +
   theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
     strip.text.x = element_text(size = NULL))
 
 # constant
 p2_gam <- dynagam(bestsim_gam[[1]]$mod, bestsim_gam[[1]]$dat, month = 8, col_vec = cols, fac_nms = 'Constant flow, GAM') + 
-  scale_y_continuous(limits = lims) +
+  scale_y_continuous(limits = ylims) +
+  scale_x_continuous(limits = xlims) +
   theme_mine() +
   theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
     strip.text.x = element_text(size = NULL))
 
 # increasing
 p3_gam <- dynagam(bestsim_gam[[3]]$mod, bestsim_gam[[3]]$dat, month = 8, col_vec = cols, fac_nms = 'Increasing flow, GAM') + 
-  scale_y_continuous(limits = lims) +
+  scale_y_continuous(limits = ylims) +
+  scale_x_continuous(limits = xlims) +
   theme_mine() +
   theme(legend.position = 'none', axis.title = element_blank(), plot.margin = mars, 
     strip.text.x = element_text(size = NULL))
@@ -555,7 +560,7 @@ p3_gam <- dynagam(bestsim_gam[[3]]$mod, bestsim_gam[[3]]$dat, month = 8, col_vec
 
 ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
 
-tiff('word/FIGURE7.tif', width = 7, height = 4.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+tiff('word/FIGURE6.tif', width = 7, height = 4.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.arrange(
   pleg, ncol = 1, heights = c(0.15, 1, 0.1),
   arrangeGrob(
