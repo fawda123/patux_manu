@@ -15,3 +15,7 @@ nlme
 mgcv
 WRTDStidal
 sp
+tidyverse
+tibble
+readr
+purrr

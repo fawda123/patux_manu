@@ -1,0 +1,679 @@
+\documentclass[letterpaper,12pt,oneside]{article}
+\usepackage[paperwidth=8.5in,paperheight=11in,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{setspace}
+\usepackage[colorlinks=true,allcolors=Black]{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{rotating}
+\usepackage{tabularx}
+\usepackage{outlines}
+\usepackage{lineno}
+\usepackage{array}
+\usepackage{times}
+\usepackage{cleveref}
+\usepackage{acronym}
+\usepackage[position=t]{subfig}
+\usepackage{paralist}
+\usepackage[noae]{Sweave}
+\usepackage{natbib}
+\usepackage{array}
+\usepackage{pdflscape}
+\usepackage{bm}
+\usepackage{caption}
+% \usepackage{showlabels}
+\usepackage{outlines}
+\bibpunct{(}{)}{,}{a}{}{,}
+
+% page margins and section title formatting
+\linespread{1.5}
+% \setlength{\footskip}{0.25in}
+\titleformat*{\section}{\singlespace}
+\titleformat*{\subsection}{\singlespace\it}
+\titleformat*{\subsubsection}{\singlespace\bf}
+\titlespacing{\section}{0in}{0in}{0in}
+\titlespacing{\subsection}{0in}{0in}{0in}
+\titlespacing{\subsubsection}{0in}{0in}{0in}
+
+% cleveref options
+\crefname{table}{Table}{Tables}
+\crefname{figure}{Figure}{Figures}
+\renewcommand{\figurename}{FIGURE}
+\renewcommand{\tablename}{TABLE}
+
+% aliased citations
+% \defcitealias{FLDEP12}{FLDEP 2012}
+
+% acronyms
+\acrodef{AIC}{Akaike Information Criterion}
+\acrodef{AMJ}{April-May-June}
+\acrodef{ARMA}{Autoregressive Moving Average}
+\acrodef{chla}[chl-\textit{a}]{chlorophyll \textit{a}}
+\acrodef{GAM}{generalized additive models}
+\acrodef{JAS}{July-August-September}
+\acrodef{JFM}{January-February-March}
+\acrodef{LOESS}{locally-estimated}
+\acrodef{MDDNR}{Maryland Department of Natural Resources}
+\acrodef{OND}{October-November-December}
+\acrodef{RMSE}{root mean square error}
+\acrodef{USGS}{US Geological Survey}
+\acrodef{WRTDS}{weighted regression on time, discharge, and season}
+
+% macros
+% for micrograms per litre
+\newcommand{\mugl}{$\mu$g/L }
+
+%knitr options
+<<setup,include=F,cache=F>>=
+library(knitr)
+opts_chunk$set(fig.path = 'figs/', fig.align = 'center', fig.show = 'hold', message = F, echo = F, results = 'asis', dev = 'pdf', dev.args = list(family = 'serif'), fig.pos = '!ht', warning = F)
+options(replace.assign = TRUE, width = 90)
+@
+
+% R libs, set ggplot theme
+<<echo = FALSE>>=
+library(httr)
+library(tidyverse)
+library(scales)
+library(wesanderson)
+library(grid)
+library(gridExtra)
+library(Hmisc)
+library(mgcv)
+library(WRTDStidal)
+
+source('R/funcs.R')
+@
+
+\begin{document}
+
+%%%%%%
+% tables
+
+% site characteristics of TF16, LE12, tab:statsum
+<<eval = T, echo = F, cache = T>>=
+data(pax_meta)
+data(pax_data)
+
+# summarize pax_data
+totab <- group_by(pax_data, STATION) %>% 
+  summarise(
+    lnchla = mean(lnchla, na.rm = TRUE), 
+    sal = mean(sal, na.rm = TRUE)
+  ) %>% 
+  left_join(pax_meta, ., by = 'STATION') %>% 
+  rename(
+    Station = STATION, 
+    Lat = LAT, 
+    Long = LONG,
+    Segment = CBSEG_2003_DESCRIPTION, 
+    `Distance (km)` = dist_km, 
+    `Depth (m)` = depth_m, 
+    `ln-Chl (\\mugl)` = lnchla, 
+    `Sal (ppt)` = sal
+  ) %>% 
+  mutate(Segment = tolower(gsub('^PATUXENT RIVER-|[[:space:]]REGION$', '', Segment))) %>% 
+  select(-CBSEG_2003) %>% 
+  mutate(
+    Lat = form_fun(Lat), 
+    Long = form_fun(Long),
+    `Distance (km)` = form_fun(`Distance (km)`, 1),
+    `ln-Chl (\\mugl)` = form_fun(`ln-Chl (\\mugl)`), 
+    `Sal (ppt)` = form_fun(`Sal (ppt)`), 
+    Segment = factor(Segment, levels = c('tidal fresh', 'oligohaline', 'mesohaline'), labels = c('TF', 'OH', 'MH')),
+    Station = gsub('LE1.2', '{\\\\bf LE1.2}', Station),
+    Station = gsub('TF1.6', '{\\\\bf TF1.6}', Station)
+  )
+    
+cap.val <- 'Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll-\\textit{a} and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).'
+
+# table
+latex(
+  totab[, -1],
+  file = '',
+  caption.loc = 'top',
+  caption = cap.val,
+  rowname = totab[, 1],
+  rowlabel = 'Station',
+  label = 'tab:statsum',
+  col.just = rep('l', ncol(totab[, -1]))
+  )
+  
+@
+
+% performance summary of predictions to observed, tab:perftoobs
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+data(bestTF16)
+
+alldat <- rbind(
+  data.frame(bestLE12[, !names(bestLE12) %in% 'lnQ'], stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16[, !names(bestTF16) %in% 'sal'], stat = 'TF16', stringsAsFactors = F)
+  ) 
+
+# summarize by categories, then combine with overall summary
+totab_sep <- select(alldat, 
+    stat, res, fits_wrtds, fits_gams, res_wrtds, res_gams, flcat, mocat, yrcat
+  ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, 
+    levels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )
+  ) %>% 
+  group_by(cat, stat) %>% 
+  summarise(
+    wrtds_rmse = rmse.fun(res_wrtds),
+    wrtds_dev = sum(res_wrtds^2, na.rm = TRUE),
+    gam_rmse = rmse.fun(res_gams),
+    gam_dev = sum(res_gams^2, na.rm = TRUE)
+  )
+
+# get comparisons for all obs
+totaball <- group_by(alldat, stat) %>% 
+  summarise(
+    wrtds_rmse = rmse.fun(res_wrtds), 
+    wrtds_dev = sum(res_wrtds^2, na.rm = TRUE), 
+    gam_rmse = rmse.fun(res_gams),
+    gam_dev = sum(res_gams^2, na.rm = TRUE)
+  )
+
+# add all obs to period comparisons, combine rmse and dev in same column, make long format
+totab <- rbind(
+  data.frame(cat = '', totaball), 
+  data.frame(totab_sep)
+  ) %>%
+  mutate(
+    wrtds = paste0(form_fun(wrtds_rmse), ' (', form_fun(wrtds_dev, 1, 1, 1, trim = TRUE), ')'),
+    gam = paste0(form_fun(gam_rmse), ' (', form_fun(gam_dev, 1, 1, 1, trim = TRUE), ')')
+  ) %>% 
+  select(-matches('_dev$|_rmse$')) %>%  
+  gather('mod', 'rmse', wrtds:gam) %>% 
+  unite('res', stat, mod) %>% 
+  spread(res, rmse)
+
+# for inline S expressions
+perftoobs <- rbind(
+  data.frame(cat = '', totaball), 
+  data.frame(totab_sep)
+  ) %>%
+  select(-wrtds_dev, - gam_dev) %>% 
+  rename(wrtds = wrtds_rmse, gam = gam_rmse) %>% 
+  gather('mod', 'rmse', wrtds:gam) %>% 
+  unite('res', stat, mod) %>% 
+  spread(res, rmse)
+# save(perftoobs, file = 'data/perftoobs.RData')
+
+# latex table
+tab <- totab[, -1]
+rows <- totab[, 1]
+cap.val<-'Summaries of model performance using \\ac{RMSE} (deviance in parentheses) of observed to predicted ln-\\ac{chla} for each station (LE1.2 and TF1.6).  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge.'
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('LE1.2', 'TF1.6'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('GAM', 'WRTDS'), 2),
+  label = 'tab:perftoobs'
+  )
+
+@
+
+% trend summary of flo-norm results for WRTDS/GAMs, two tables each station, tab:trendsLE12, tab:trendsTF16
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+data(bestTF16)
+
+# combine stations, agg by year for slope ests
+alldat <- rbind(
+  data.frame(bestLE12[, !names(bestLE12) %in% 'lnQ'], stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16[, !names(bestTF16) %in% 'sal'], stat = 'TF16', stringsAsFactors = F)
+  ) %>% 
+  select(stat, date, norm_wrtds, norm_gams, mocat, yrcat, flcat) %>% 
+  mutate(
+    date = as.numeric(strftime(date, '%Y'))
+  )
+  
+# these need to be aggregated separately
+
+# annual aggs
+yrdat <- group_by(alldat, stat, date, yrcat) %>% 
+  summarise(
+    norm_wrtds = mean(norm_wrtds, na.rm = T), 
+    norm_gams = mean(norm_gams, na.rm = T)
+  ) 
+
+# monthly aggs
+modat <- group_by(alldat, stat, date, mocat) %>% 
+  summarise(
+    norm_wrtds = mean(norm_wrtds, na.rm = T), 
+    norm_gams = mean(norm_gams, na.rm = T)
+  )
+
+# flo aggs
+fldat <- group_by(alldat, stat, date, flcat) %>% 
+  summarise(
+    norm_wrtds = mean(norm_wrtds, na.rm = T), 
+    norm_gams = mean(norm_gams, na.rm = T)
+  )
+
+# get summary stats for each agg period
+
+# percent change across period
+# based on differences between average of earliest three and latest three years
+# to minimize outliers
+# use single = T to use only one year for first and last comparisons
+chn_fun <- function(x, y, single = F){
+
+  tomod <- data.frame(x, y)
+  tomod <- tomod[order(tomod$x), ]
+  
+  # get only first and last year's data
+  if(single){
+  
+    srt <- tomod[which.min(tomod$x), 'y']
+    stp <- tomod[which.max(tomod$x), 'y']
+  
+  # otherwise get average of first and last three years of data
+  } else {
+    
+    srt <- which.min(tomod$x)
+    srt <- seq(srt, srt + 2)
+    srt <- mean(tomod[srt, 'y'], na.rm = TRUE)
+    stp <- which.max(tomod$x)
+    stp <- seq(stp - 2, stp)
+    stp <- mean(tomod[stp, 'y'], na.rm = TRUE)
+      
+  }
+  
+  # get percent change from beginning to end
+  out <- 100 * (stp - srt)/srt
+  return(out)
+  
+}
+
+yrdat <- gather(yrdat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, yrcat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val, single = T) # important!
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  rename(cat = yrcat)
+
+modat <- gather(modat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, mocat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val)
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  rename(cat = mocat)
+
+fldat <- gather(fldat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, flcat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val)
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  rename(cat = flcat)
+
+# summary across all years
+allsum <- gather(alldat, 'mod', 'val', norm_wrtds:norm_gams) %>% 
+  mutate(mod = gsub('^norm_', '', mod)) %>% 
+  group_by(stat, date, mod) %>% 
+  summarise(
+    val = mean(val, na.rm = TRUE)
+  ) %>% 
+  group_by(stat, mod) %>% 
+  summarise(
+    ave = mean(val, na.rm = TRUE),
+    chg = chn_fun(date, val)
+  ) %>% 
+  gather('met', 'val', ave:chg) %>% 
+  unite('modmet', mod, met) %>% 
+  spread(modmet, val) %>% 
+  mutate(cat = '') %>% 
+  select(stat, cat, gams_ave, gams_chg, wrtds_ave, wrtds_chg)
+
+totab <- rbind(allsum, yrdat, modat, fldat) %>% 
+  ungroup %>% 
+  mutate(cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )) %>% 
+  arrange(stat, cat) %>% 
+  data.frame(.)
+
+# for inline expressions
+trendsLE12 <- totab[totab$stat %in% 'LE12', ]
+trendsTF16 <- totab[totab$stat %in% 'TF16', ]
+save(trendsLE12, file = 'data/trendsLE12.RData')
+save(trendsTF16, file = 'data/trendsTF16.RData')
+
+# latex table, LE12
+tabLE12 <- form_fun(totab[totab$stat %in% 'LE12', -c(1:2)])
+rows <- totab[totab$stat %in% 'LE12', 2]
+cap.val <- 'Summaries of flow-normalized trends from each model at LE1.2 for different time periods.  Summaries are averages and percentage changes of ln-\\ac{chla} (\\mugl) based on annual means within each category.  Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge.'
+
+latex( 
+  tabLE12,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('GAM', 'WRTDS'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('Ave.', '\\% Change'), 2),
+  label = 'tab:trendsLE12'
+)
+
+# latex table, TF1.6
+tabTF16 <- form_fun(totab[totab$stat %in% 'TF16', -c(1:2)])
+rows <- totab[totab$stat %in% 'TF16', 2]
+cap.val <- 'Summaries of flow-normalized trends from each model at TF1.6 for different time periods.  Summaries are averages and percentage changes of ln-\\ac{chla} (\\mugl) based on annual means within each category. Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge.'
+
+latex( 
+  tabTF16,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('GAM', 'WRTDS'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('Ave.', '\\% Change'), 2),
+  label = 'tab:trendsTF16'
+)
+    
+@
+
+% performance summary of models to each other, tab:perfbtw
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+data(bestTF16)
+
+alldat <- rbind(
+  data.frame(bestLE12[, !names(bestLE12) %in% 'lnQ'], stat = 'LE12', stringsAsFactors = F), 
+  data.frame(bestTF16[, !names(bestTF16) %in% 'sal'], stat = 'TF16', stringsAsFactors = F)
+  ) 
+
+totab <-select(alldat, 
+    stat, fits_wrtds, fits_gams, flcat, mocat, yrcat
+  ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    )
+  ) %>% 
+  group_by(cat, stat) %>% 
+  summarise(
+    rmse = rmse.fun(fits_wrtds, fits_gams),
+    ave = ave.fun(fits_wrtds, fits_gams)
+  )
+# get comparisons for all obs
+totaball <- group_by(alldat, stat) %>% 
+  summarise(
+    rmse = rmse.fun(fits_wrtds, fits_gams), 
+    ave = ave.fun(fits_wrtds, fits_gams)
+  )
+
+# add all obs to period comparisons, make long format
+totab <- rbind(
+  data.frame(cat = '', totaball), 
+  data.frame(totab)
+  ) %>% 
+  gather('met', 'val', rmse:ave) %>% 
+  unite('res', stat, met) %>% 
+  spread(res, val)
+
+# perfbtw <- totab
+# save(perfbtw, file = 'data/perfbtw.RData')
+
+# latex table
+tab <- form_fun(totab[, -1])
+rows <- totab[, 1]
+cap.val <- 'Comparison of predicted results between \\ac{WRTDS} and \\acp{GAM} using average differences (\\%) and \\ac{RMSE}.  Overall comparisons for the entire time series are shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge. Negative percentages indicate \\ac{WRTDS} predictions were lower than \\ac{GAM} predictions (\\cref{avediff_fun}).'
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = c('LE1.2', 'TF1.6'),
+  n.cgroup = c(2, 2),
+  rowname = rows,
+  colheads = rep(c('Ave. diff.', '\\ac{RMSE}'), 2),
+  label = 'tab:perfbtw'
+)
+
+@
+
+% regression fit between WRTDS, GAMs, predictions and norms, tab:regprdnrm
+<<eval = T, echo = F, cache = T>>=
+data(bestLE12)
+data(bestTF16)
+
+diffLE12 <- select(bestLE12, 
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
+  ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(
+    cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    ),
+    stat = 'LE1.2'
+  )
+
+diffTF16 <- select(bestTF16, 
+    fits_wrtds, fits_gams, norm_wrtds, norm_gams, flcat, mocat, yrcat
+  ) %>% 
+  mutate(
+    flcat = as.character(flcat),
+    mocat = as.character(mocat),
+    yrcat = as.character(yrcat)
+  ) %>% 
+  gather(key = 'cats', value = 'cat', flcat:yrcat) %>% 
+  mutate(
+    cat = factor(cat, 
+    levels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', 'Flow 1 (Low)', 'Flow 2', 'Flow 3', 'Flow 4 (High)'), 
+    labels = c('', '1986-1993', '1994-2000', '2001-2007', '2008-2014', 'JFM', 'AMJ', 'JAS', 'OND', '1 (Low)', '2', '3', '4 (High)')
+    ),
+    stat = 'TF1.6'
+  )
+
+# summmarize by categories, predictions
+dat <- rbind(diffTF16, diffLE12) %>% 
+  group_by(cat, stat)
+
+intpred <- summarise(dat,
+    pint = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[1]
+  ) %>%
+  mutate(stat = paste0('pint', stat)) %>% 
+  spread('stat', 'pint')
+
+slopred <- summarise(dat,
+    pslo = lm.fun(fits_wrtds, fits_gams, origin = FALSE)[2]
+  ) %>%
+  mutate(stat = paste0('pslo', stat)) %>% 
+  spread('stat', 'pslo')
+
+intnorm <- summarise(dat,
+    nint = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[1]
+  ) %>%
+  mutate(stat = paste0('nint', stat)) %>% 
+  spread('stat', 'nint')
+
+slonorm <- summarise(dat,
+    nslo = lm.fun(norm_wrtds, norm_gams, origin = FALSE)[2]
+  ) %>%
+  mutate(stat = paste0('nslo', stat)) %>% 
+  spread('stat', 'nslo')
+
+
+dat <- left_join(intpred, slopred, by = 'cat') %>% 
+  left_join(., intnorm, by = 'cat') %>% 
+  left_join(., slonorm, by = 'cat')
+
+# add summary for whole time series, predictions, reorder columns
+totab <- rbind(
+  data.frame(
+    cat = '', 
+    pintLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1], 
+    pintTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[1],
+    psloLE1.2 = with(bestLE12, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2], 
+    psloTF1.6 = with(bestTF16, lm.fun(fits_wrtds, fits_gams, origin = FALSE))[2],
+    nintLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1], 
+    nintTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[1],
+    nsloLE1.2 = with(bestLE12, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2], 
+    nsloTF1.6 = with(bestTF16, lm.fun(norm_wrtds, norm_gams, origin = FALSE))[2]
+    ),
+  data.frame(dat)
+) %>% 
+  select(cat, pintLE1.2, psloLE1.2, pintTF1.6, psloTF1.6, nintLE1.2, nsloLE1.2, nintTF1.6, nsloTF1.6)
+
+# latex table
+tab <- totab[, -1]
+rows <- totab[, 1]
+cap.val <- "Regression fits comparing predicted ({\\it pred}) and flow-normalized ({\\it norm}) results for \\ac{WRTDS} and \\acp{GAM}.  Values in bold-italic are those where the intercept ($\\beta_0$) estimate was significantly different from zero or the slope ($\\beta_{1}$) estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge."
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Period',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('All', 'Annual', 'Seasonal', 'Flow'),
+  n.rgroup = c(1, rep(4, 3)),
+  cgroup = rep(c('LE1.2', 'TF1.6'), 2),
+  n.cgroup = rep(2, 3, 4),
+  rowname = rows,
+  colheads = c(rep(c('$\\beta_{0,\\,pred}$', '$\\beta_{1,\\,pred}$'), 2), rep(c('$\\beta_{0,\\,norm}$', '$\\beta_{1,\\,norm}$'), 2)),
+  label = 'tab:regprdnrm'
+  )
+
+@
+
+% comparison of flow-normalized results for simulated datasets, tab:simperf
+<<eval = T, echo = F, cache = T>>=
+data(simres)
+
+# rename factor labels for each simulation
+simres <- mutate(simres, 
+  sim = factor(sim, levels = c('sim2', 'sim1', 'sim3'), labels = c('No flow', 'Constant flow', 'Increasing flow'))
+)
+
+# compare predicted to simulated obs chl and norm bio to actual bio
+totab <- group_by(simres, sim, mod) %>% 
+  summarise(
+    obs_rmse = rmse.fun(simval, fits), 
+    obs_dev = sum((simval - fits)^2, na.rm = TRUE),
+    bio_rmse = rmse.fun(lnchla_noQ, norm),
+    bio_dev = sum((lnchla_noQ - norm)^2, na.rm = TRUE)
+  ) %>% 
+  ungroup %>% 
+  mutate(
+    obs = paste0(form_fun(obs_rmse), ' (', form_fun(obs_dev, 1, 1, 1, trim = TRUE), ')'),
+    bio = paste0(form_fun(bio_rmse), ' (', form_fun(bio_dev, 1, 1, 1, trim = TRUE), ')')
+  ) %>% 
+  select(-matches('_dev$|_rmse$')) %>%  
+  data.frame
+
+# latex table
+tab <- totab[, -c(1:2)]
+rows <- totab[, 2]
+cap.val<-'Summaries of model performance comparing observed \\ac{chla} with predicted values ($Chl_{obs} \\sim \\widehat{Chl}_{obs}$) and biological \\ac{chla} with flow-normalized values ($Chl_{bio} \\sim \\widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \\ac{RMSE} values (deviance in parentheses) comparing results from each model (\\ac{GAM}, \\ac{WRTDS}).'
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Simulations',
+  caption = cap.val,
+  caption.loc = 'top',
+  rgroup = c('No flow', 'Constant flow', 'Increasing flow'),
+  n.rgroup = rep(2, 3),
+  rowname = rows,
+  colheads = c('$Chl_{obs} \\sim \\widehat{Chl}_{obs}$', '$Chl_{bio} \\sim \\widehat{Chl}_{bio}$'),
+  label = 'tab:simperf'
+  )
+@
+
+% qualitative comparison
+<<eval = T, echo = F, cache = T>>=
+
+categ <- c('ease of use', 'statistical')
+qualt <- c('computational requirements', 'interpretation\\textsuperscript{1}', 'software and documentation\\textsuperscript{2}', 'visualization', 'additional variables', 'censored data', 'confidence intervals', 'quantile fits')
+gamql <- c('good', 'poor', 'moderate', 'moderate', 'y', 'n', 'y', 'n')
+wtdql <- c('poor', 'moderate', 'good', 'good', 'n', 'y', 'y', 'y')
+
+tab <- data.frame(gamql, wtdql)
+
+foots <- c('\\textsuperscript{1}\\footnotesize{Relates to statistical foundation, not results}\\\\\\textsuperscript{2}\\footnotesize{In reference to analysis of water quality trends}')
+
+# latex table
+
+cap_val <- 'Qualitative comparisons of generalized additive models and \\ac{WRTDS}.  Qualities are grouped by ease of use and statistical considerations.  Ease of use qualities are described as good, moderate, or poor and statistical qualities as yes/no.'
+
+latex( 
+  tab,
+  file = '',
+  rowlabel = 'Quality',
+  caption = cap_val,
+  caption.loc = 'top',
+  rgroup = categ,
+  n.rgroup = c(4, 4),
+  rowname = qualt,
+  colheads = c('\\ac{GAM}', '\\ac{WRTDS}'),
+  label = 'tab:qualcomp', 
+  insert.bottom = foots
+  )
+@
+
+
+\end{document}

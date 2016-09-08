@@ -1,0 +1,391 @@
+\documentclass[letterpaper,12pt,oneside]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[paperwidth=8.5in,paperheight=11in,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{setspace}
+\usepackage[colorlinks=true,allcolors=Black]{hyperref}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{rotating}
+\usepackage{tabularx}
+\usepackage{outlines}
+\usepackage{lineno}
+\usepackage{array}
+\usepackage{times}
+\usepackage{cleveref}
+\usepackage{acronym}
+\usepackage[position=t]{subfig}
+\usepackage{paralist}
+\usepackage[noae]{Sweave}
+\usepackage{natbib}
+\usepackage{array}
+\usepackage{pdflscape}
+\usepackage{bm}
+\usepackage{caption}
+% \usepackage{showlabels}
+\usepackage{outlines}
+\bibpunct{(}{)}{,}{a}{}{,}
+
+% page margins and section title formatting
+\linespread{1.5}
+% \setlength{\footskip}{0.25in}
+\titleformat*{\section}{\singlespace}
+\titleformat*{\subsection}{\singlespace\it}
+\titleformat*{\subsubsection}{\singlespace\bf}
+\titlespacing{\section}{0in}{0in}{0in}
+\titlespacing{\subsection}{0in}{0in}{0in}
+\titlespacing{\subsubsection}{0in}{0in}{0in}
+
+% cleveref options
+\crefname{table}{Table}{Tables}
+\crefname{figure}{Figure}{Figures}
+\renewcommand{\figurename}{FIGURE}
+\renewcommand{\tablename}{TABLE}
+
+% aliased citations
+% \defcitealias{FLDEP12}{FLDEP 2012}
+
+% acronyms
+\acrodef{AIC}{Akaike Information Criterion}
+\acrodef{AMJ}{April-May-June}
+\acrodef{ARMA}{Autoregressive Moving Average}
+\acrodef{chla}[chl-\textit{a}]{chlorophyll \textit{a}}
+\acrodef{GAM}{generalized additive models}
+\acrodef{JAS}{July-August-September}
+\acrodef{JFM}{January-February-March}
+\acrodef{LOESS}{locally-estimated}
+\acrodef{MDDNR}{Maryland Department of Natural Resources}
+\acrodef{OND}{October-November-December}
+\acrodef{RMSE}{root mean square error}
+\acrodef{USGS}{US Geological Survey}
+\acrodef{WRTDS}{weighted regression on time, discharge, and season}
+
+% macros
+% for micrograms per litre
+\newcommand{\mugl}{$\mu$g/L }
+
+%knitr options
+
+
+% R libs, set ggplot theme
+
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+%%%%%%
+% tables
+
+% site characteristics of TF16, LE12, tab:statsum
+%latex.default(totab[, -1], file = "", caption.loc = "top", caption = cap.val,     rowname = totab[, 1], rowlabel = "Station", label = "tab:statsum",     col.just = rep("l", ncol(totab[, -1])))%
+\begin{table}[!tbp]
+\caption{Summary characteristics of monitoring stations on the Patuxent River estuary.  Chlorophyll-\textit{a} and salinity values are based on averages from 1986 to 2014.  Stations used for the analysis are in bold.  Segments are salinity regions in the Patuxent for the larger Chesapeake Bay area (TF = tidal fresh, OH = oligohaline, MH = mesohaline).\label{tab:statsum}} 
+\begin{center}
+\begin{tabular}{llllllll}
+\hline\hline
+\multicolumn{1}{l}{Station}&\multicolumn{1}{c}{Lat}&\multicolumn{1}{c}{Long}&\multicolumn{1}{c}{Segment}&\multicolumn{1}{c}{Distance (km)}&\multicolumn{1}{c}{Depth (m)}&\multicolumn{1}{c}{ln-Chl (\mugl)}&\multicolumn{1}{c}{Sal (ppt)}\tabularnewline
+\hline
+TF1.3&38.81&-76.71&TF&74.90&$ 2.9$&1.52& 0.00\tabularnewline
+TF1.4&38.77&-76.71&TF&69.50&$ 2.0$&2.31& 0.02\tabularnewline
+TF1.5&38.71&-76.70&TF&60.30&$10.6$&2.88& 0.27\tabularnewline
+{\bf TF1.6}&38.66&-76.68&OH&52.20&$ 6.2$&2.44& 0.90\tabularnewline
+TF1.7&38.58&-76.68&OH&42.50&$ 3.0$&2.09& 4.09\tabularnewline
+RET1.1&38.49&-76.66&MH&32.20&$11.2$&2.47&10.25\tabularnewline
+LE1.1&38.43&-76.60&MH&22.90&$12.1$&2.31&12.04\tabularnewline
+{\bf LE1.2}&38.38&-76.51&MH&13.40&$17.1$&2.16&12.73\tabularnewline
+LE1.3&38.34&-76.48&MH& 8.30&$23.4$&2.12&12.89\tabularnewline
+LE1.4&38.31&-76.42&MH& 0.00&$15.4$&2.21&13.46\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% performance summary of predictions to observed, tab:perftoobs
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("GAM",         "WRTDS"), 2), label = "tab:perftoobs")%
+\begin{table}[!tbp]
+\caption{Summaries of model performance using \ac{RMSE} (deviance in parentheses) of observed to predicted ln-\ac{chla} for each station (LE1.2 and TF1.6).  Overall performance for the entire time series is shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge.\label{tab:perftoobs}} 
+\begin{center}
+\begin{tabular}{lllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries LE1.2}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries TF1.6}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{WRTDS}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{GAM}&\multicolumn{1}{c}{WRTDS}\tabularnewline
+\hline
+{\bfseries All}&&&&&\tabularnewline
+~~&0.51 (139.5)&0.51 (135.1)&&0.50 (128.4)&0.52 (138.6)\tabularnewline
+\hline
+{\bfseries Annual}&&&&&\tabularnewline
+~~1986-1993&0.50 (41.1)&0.50 (40.9)&&0.48 (37.2)&0.49 (39.1)\tabularnewline
+~~1994-2000&0.51 (34.7)&0.50 (33.2)&&0.55 (39.3)&0.58 (44.9)\tabularnewline
+~~2001-2007&0.61 (51.5)&0.60 (49.6)&&0.50 (33.7)&0.53 (37.5)\tabularnewline
+~~2008-2014&0.37 (12.1)&0.36 (11.4)&&0.45 (18.2)&0.44 (17.1)\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&\tabularnewline
+~~JFM&0.60 (38.1)&0.58 (35.3)&&0.49 (24.4)&0.49 (23.8)\tabularnewline
+~~AMJ&0.64 (65.2)&0.64 (65.3)&&0.54 (45.7)&0.58 (51.9)\tabularnewline
+~~JAS&0.35 (19.3)&0.35 (18.6)&&0.45 (30.4)&0.46 (32.2)\tabularnewline
+~~OND&0.39 (16.8)&0.38 (15.9)&&0.52 (27.9)&0.54 (30.7)\tabularnewline
+\hline
+{\bfseries Flow}&&&&&\tabularnewline
+~~1 (Low)&0.36 (17.4)&0.36 (16.7)&&0.45 (26.5)&0.46 (27.7)\tabularnewline
+~~2&0.43 (24.4)&0.42 (23.5)&&0.53 (36.6)&0.54 (37.8)\tabularnewline
+~~3&0.58 (43.8)&0.57 (42.9)&&0.49 (31.3)&0.52 (35.4)\tabularnewline
+~~4 (High)&0.64 (53.9)&0.63 (52.0)&&0.51 (34.0)&0.54 (37.7)\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% trend summary of flo-norm results for WRTDS/GAMs, two tables each station, tab:trendsLE12, tab:trendsTF16
+%latex.default(tabLE12, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("GAM",         "WRTDS"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Ave.",         "\\% Change"), 2), label = "tab:trendsLE12")%
+\begin{table}[!tbp]
+\caption{Summaries of flow-normalized trends from each model at LE1.2 for different time periods.  Summaries are averages and percentage changes of ln-\ac{chla} (\mugl) based on annual means within each category.  Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge.\label{tab:trendsLE12}} 
+\begin{center}
+\begin{tabular}{lllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries GAM}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries WRTDS}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}\tabularnewline
+\hline
+{\bfseries All}&&&&&\tabularnewline
+~~&2.17&24.28&&2.18&18.85\tabularnewline
+\hline
+{\bfseries Annual}&&&&&\tabularnewline
+~~1986-1993&1.99& 9.60&&2.03& 1.75\tabularnewline
+~~1994-2000&2.12& 5.49&&2.12& 5.50\tabularnewline
+~~2001-2007&2.24& 5.50&&2.24& 5.35\tabularnewline
+~~2008-2014&2.37& 3.20&&2.37& 6.07\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&\tabularnewline
+~~JFM&2.57&20.06&&2.58&14.04\tabularnewline
+~~AMJ&2.32&31.20&&2.33&22.47\tabularnewline
+~~JAS&2.01&18.48&&2.01&19.91\tabularnewline
+~~OND&1.82&25.29&&1.83&15.14\tabularnewline
+\hline
+{\bfseries Flow}&&&&&\tabularnewline
+~~1 (Low)&1.90&20.86&&1.93&16.77\tabularnewline
+~~2&2.10&13.71&&2.11& 7.73\tabularnewline
+~~3&2.28&15.66&&2.29& 9.24\tabularnewline
+~~4 (High)&2.34&25.09&&2.33&22.29\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+%latex.default(tabTF16, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("GAM",         "WRTDS"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Ave.",         "\\% Change"), 2), label = "tab:trendsTF16")%
+\begin{table}[!tbp]
+\caption{Summaries of flow-normalized trends from each model at TF1.6 for different time periods.  Summaries are averages and percentage changes of ln-\ac{chla} (\mugl) based on annual means within each category. Percentage changes are the differences between the last and first years in the periods.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge.\label{tab:trendsTF16}} 
+\begin{center}
+\begin{tabular}{lllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries GAM}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries WRTDS}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave.}&\multicolumn{1}{c}{\% Change}\tabularnewline
+\hline
+{\bfseries All}&&&&&\tabularnewline
+~~&2.43& -4.81&&2.44& -2.28\tabularnewline
+\hline
+{\bfseries Annual}&&&&&\tabularnewline
+~~1986-1993&2.62& -4.93&&2.60& -3.06\tabularnewline
+~~1994-2000&2.69& -5.05&&2.65& -3.55\tabularnewline
+~~2001-2007&2.15&-22.42&&2.19&-21.51\tabularnewline
+~~2008-2014&2.24& 47.10&&2.30& 38.35\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&\tabularnewline
+~~JFM&1.52&  9.03&&1.48& 32.72\tabularnewline
+~~AMJ&2.63&  5.47&&2.62&  5.14\tabularnewline
+~~JAS&3.06&  0.04&&3.08&  0.79\tabularnewline
+~~OND&2.17&-18.16&&2.20&-17.55\tabularnewline
+\hline
+{\bfseries Flow}&&&&&\tabularnewline
+~~1 (Low)&2.89& -4.78&&2.93& -0.42\tabularnewline
+~~2&2.41& 16.71&&2.43& 20.31\tabularnewline
+~~3&2.28&  6.53&&2.27& 15.20\tabularnewline
+~~4 (High)&2.22&-11.58&&2.21&-11.27\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% performance summary of models to each other, tab:perfbtw
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = c("LE1.2",         "TF1.6"), n.cgroup = c(2, 2), rowname = rows, colheads = rep(c("Ave. diff.",         "\\ac{RMSE}"), 2), label = "tab:perfbtw")%
+\begin{table}[!tbp]
+\caption{Comparison of predicted results between \ac{WRTDS} and \acp{GAM} using average differences (\%) and \ac{RMSE}.  Overall comparisons for the entire time series are shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge. Negative percentages indicate \ac{WRTDS} predictions were lower than \ac{GAM} predictions (\cref{avediff_fun}).\label{tab:perfbtw}} 
+\begin{center}
+\begin{tabular}{lllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries LE1.2}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries TF1.6}\tabularnewline
+\cline{2-3} \cline{5-6}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{Ave. diff.}&\multicolumn{1}{c}{\ac{RMSE}}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{Ave. diff.}&\multicolumn{1}{c}{\ac{RMSE}}\tabularnewline
+\hline
+{\bfseries All}&&&&&\tabularnewline
+~~&-0.11&0.09&& 0.01&0.13\tabularnewline
+\hline
+{\bfseries Annual}&&&&&\tabularnewline
+~~1986-1993& 0.20&0.10&&-0.74&0.11\tabularnewline
+~~1994-2000& 0.34&0.09&&-1.29&0.15\tabularnewline
+~~2001-2007&-0.55&0.07&& 0.68&0.13\tabularnewline
+~~2008-2014&-0.53&0.08&& 3.10&0.14\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&\tabularnewline
+~~JFM& 0.39&0.12&&-2.00&0.14\tabularnewline
+~~AMJ& 0.22&0.10&&-0.66&0.14\tabularnewline
+~~JAS&-0.71&0.06&& 0.76&0.10\tabularnewline
+~~OND&-0.46&0.05&& 1.04&0.15\tabularnewline
+\hline
+{\bfseries Flow}&&&&&\tabularnewline
+~~1 (Low)&-0.27&0.07&&-0.15&0.10\tabularnewline
+~~2&-0.14&0.09&& 0.70&0.13\tabularnewline
+~~3& 0.49&0.11&& 1.07&0.14\tabularnewline
+~~4 (High)&-0.53&0.09&&-1.75&0.15\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% regression fit between WRTDS, GAMs, predictions and norms, tab:regprdnrm
+%latex.default(tab, file = "", rowlabel = "Period", caption = cap.val,     caption.loc = "top", rgroup = c("All", "Annual", "Seasonal",         "Flow"), n.rgroup = c(1, rep(4, 3)), cgroup = rep(c("LE1.2",         "TF1.6"), 2), n.cgroup = rep(2, 3, 4), rowname = rows,     colheads = c(rep(c("$\\beta_{0,\\,pred}$", "$\\beta_{1,\\,pred}$"),         2), rep(c("$\\beta_{0,\\,norm}$", "$\\beta_{1,\\,norm}$"),         2)), label = "tab:regprdnrm")%
+\begin{table}[!tbp]
+\caption{Regression fits comparing predicted ({\it pred}) and flow-normalized ({\it norm}) results for \ac{WRTDS} and \acp{GAM}.  Values in bold-italic are those where the intercept ($\beta_0$) estimate was significantly different from zero or the slope ($\beta_{1}$) estimate was significantly different from one. Fits for the entire time series are shown at the top.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge.\label{tab:regprdnrm}} 
+\begin{center}
+\begin{tabular}{lllcllcllcll}
+\hline\hline
+\multicolumn{1}{l}{\bfseries Period}&\multicolumn{2}{c}{\bfseries LE1.2}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries TF1.6}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries LE1.2}&\multicolumn{1}{c}{\bfseries }&\multicolumn{2}{c}{\bfseries TF1.6}\tabularnewline
+\cline{2-3} \cline{5-6} \cline{8-9} \cline{11-12}
+\multicolumn{1}{l}{}&\multicolumn{1}{c}{$\beta_{0,\,pred}$}&\multicolumn{1}{c}{$\beta_{1,\,pred}$}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{$\beta_{0,\,pred}$}&\multicolumn{1}{c}{$\beta_{1,\,pred}$}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{$\beta_{0,\,norm}$}&\multicolumn{1}{c}{$\beta_{1,\,norm}$}&\multicolumn{1}{c}{}&\multicolumn{1}{c}{$\beta_{0,\,norm}$}&\multicolumn{1}{c}{$\beta_{1,\,norm}$}\tabularnewline
+\hline
+{\bfseries All}&&&&&&&&&&&\tabularnewline
+~~&{\bf \textit{0.05}}&{\bf \textit{0.97}}&&{\bf \textit{0.08}}&{\bf \textit{0.97}}&&{\bf \textit{0.15}}&{\bf \textit{0.94}}&&0.02&0.99\tabularnewline
+\hline
+{\bfseries Annual}&&&&&&&&&&&\tabularnewline
+~~1986-1993&0.02&0.99&&-0.02&1.00&&{\bf \textit{0.20}}&{\bf \textit{0.92}}&&{\bf \textit{-0.12}}&{\bf \textit{1.03}}\tabularnewline
+~~1994-2000&{\bf \textit{0.16}}&{\bf \textit{0.93}}&&-0.03&0.99&&{\bf \textit{0.17}}&{\bf \textit{0.92}}&&{\bf \textit{-0.12}}&{\bf \textit{1.02}}\tabularnewline
+~~2001-2007&0.02&0.99&&{\bf \textit{0.13}}&{\bf \textit{0.95}}&&{\bf \textit{0.06}}&{\bf \textit{0.98}}&&{\bf \textit{0.11}}&{\bf \textit{0.97}}\tabularnewline
+~~2008-2014&0.00&1.00&&{\bf \textit{0.12}}&0.97&&0.01&0.99&&{\bf \textit{0.08}}&0.99\tabularnewline
+\hline
+{\bfseries Seasonal}&&&&&&&&&&&\tabularnewline
+~~JFM&-0.01&1.01&&0.09&{\bf \textit{0.92}}&&0.01&1.00&&{\bf \textit{0.20}}&{\bf \textit{0.84}}\tabularnewline
+~~AMJ&{\bf \textit{0.28}}&{\bf \textit{0.88}}&&{\bf \textit{0.27}}&{\bf \textit{0.89}}&&{\bf \textit{0.38}}&{\bf \textit{0.84}}&&{\bf \textit{0.34}}&{\bf \textit{0.87}}\tabularnewline
+~~JAS&-0.08&1.03&&{\bf \textit{0.34}}&{\bf \textit{0.89}}&&{\bf \textit{0.30}}&{\bf \textit{0.85}}&&{\bf \textit{0.39}}&{\bf \textit{0.88}}\tabularnewline
+~~OND&0.02&0.98&&{\bf \textit{0.13}}&{\bf \textit{0.95}}&&{\bf \textit{0.38}}&{\bf \textit{0.80}}&&0.03&1.00\tabularnewline
+\hline
+{\bfseries Flow}&&&&&&&&&&&\tabularnewline
+~~1 (Low)&{\bf \textit{0.14}}&{\bf \textit{0.92}}&&-0.03&1.01&&{\bf \textit{0.46}}&{\bf \textit{0.77}}&&{\bf \textit{0.16}}&{\bf \textit{0.95}}\tabularnewline
+~~2&0.00&1.00&&{\bf \textit{0.12}}&{\bf \textit{0.96}}&&{\bf \textit{0.14}}&{\bf \textit{0.94}}&&0.01&1.00\tabularnewline
+~~3&0.09&0.96&&{\bf \textit{0.21}}&{\bf \textit{0.91}}&&{\bf \textit{0.12}}&{\bf \textit{0.96}}&&-0.02&1.00\tabularnewline
+~~4 (High)&0.09&{\bf \textit{0.96}}&&0.03&{\bf \textit{0.97}}&&{\bf \textit{0.09}}&{\bf \textit{0.96}}&&{\bf \textit{0.09}}&{\bf \textit{0.95}}\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% comparison of flow-normalized results for simulated datasets, tab:simperf
+%latex.default(tab, file = "", rowlabel = "Simulations", caption = cap.val,     caption.loc = "top", rgroup = c("No flow", "Constant flow",         "Increasing flow"), n.rgroup = rep(2, 3), rowname = rows,     colheads = c("$Chl_{obs} \\sim \\widehat{Chl}_{obs}$", "$Chl_{bio} \\sim \\widehat{Chl}_{bio}$"),     label = "tab:simperf")%
+\begin{table}[!tbp]
+\caption{Summaries of model performance comparing observed \ac{chla} with predicted values ($Chl_{obs} \sim \widehat{Chl}_{obs}$) and biological \ac{chla} with flow-normalized values ($Chl_{bio} \sim \widehat{Chl}_{bio}$) for the three simulated time series (no flow, constant flow, and increasing flow effect).  Summaries are \ac{RMSE} values (deviance in parentheses) comparing results from each model (\ac{GAM}, \ac{WRTDS}).\label{tab:simperf}} 
+\begin{center}
+\begin{tabular}{lll}
+\hline\hline
+\multicolumn{1}{l}{Simulations}&\multicolumn{1}{c}{$Chl_{obs} \sim \widehat{Chl}_{obs}$}&\multicolumn{1}{c}{$Chl_{bio} \sim \widehat{Chl}_{bio}$}\tabularnewline
+\hline
+{\bfseries No flow}&&\tabularnewline
+~~GAM&0.51 (31.2)&0.53 (33.2)\tabularnewline
+~~WRTDS&0.50 (29.4)&0.52 (31.7)\tabularnewline
+\hline
+{\bfseries Constant flow}&&\tabularnewline
+~~GAM&0.51 (31.2)&0.58 (39.8)\tabularnewline
+~~WRTDS&0.53 (32.8)&0.57 (38.9)\tabularnewline
+\hline
+{\bfseries Increasing flow}&&\tabularnewline
+~~GAM&0.51 (31.2)&0.54 (35.0)\tabularnewline
+~~WRTDS&0.50 (29.7)&0.52 (31.9)\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\end{table}
+
+
+% qualitative comparison
+%latex.default(tab, file = "", rowlabel = "Quality", caption = cap_val,     caption.loc = "top", rgroup = categ, n.rgroup = c(4, 4),     rowname = qualt, colheads = c("\\ac{GAM}", "\\ac{WRTDS}"),     label = "tab:qualcomp", insert.bottom = foots)%
+\begin{table}[!tbp]
+\caption{Qualitative comparisons of generalized additive models and \ac{WRTDS}.  Qualities are grouped by ease of use and statistical considerations.  Ease of use qualities are described as good, moderate, or poor and statistical qualities as yes/no.\label{tab:qualcomp}} 
+\begin{center}
+\begin{tabular}{lll}
+\hline\hline
+\multicolumn{1}{l}{Quality}&\multicolumn{1}{c}{\ac{GAM}}&\multicolumn{1}{c}{\ac{WRTDS}}\tabularnewline
+\hline
+{\bfseries ease of use}&&\tabularnewline
+~~computational requirements&good&poor\tabularnewline
+~~interpretation\textsuperscript{1}&poor&moderate\tabularnewline
+~~software and documentation\textsuperscript{2}&moderate&good\tabularnewline
+~~visualization&moderate&good\tabularnewline
+\hline
+{\bfseries statistical}&&\tabularnewline
+~~additional variables&y&n\tabularnewline
+~~censored data&n&y\tabularnewline
+~~confidence intervals&y&y\tabularnewline
+~~quantile fits&n&y\tabularnewline
+\hline
+\end{tabular}\end{center}
+
+\textsuperscript{1}\footnotesize{Relates to statistical foundation, not results}\\\textsuperscript{2}\footnotesize{In reference to analysis of water quality trends}\end{table}
+
+
+
+\end{document}
