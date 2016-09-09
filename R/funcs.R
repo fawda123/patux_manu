@@ -41,7 +41,7 @@ ave.fun <- function(ts1, ts2){
   ts1 <- sum(ts1, na.rm = TRUE)
   ts2 <- sum(ts2, na.rm = TRUE)
   
-  out <- 100 * (ts1 - ts2)/ts2 
+  out <- 100 * (ts1 - ts2)/((ts1 + ts2)/2)
   
   return(out)
   

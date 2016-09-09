@@ -60,6 +60,7 @@
 \acrodef{MDDNR}{Maryland Department of Natural Resources}
 \acrodef{OND}{October-November-December}
 \acrodef{RMSE}{root mean square error}
+\acrodef{RMSD}{root mean square difference}
 \acrodef{USGS}{US Geological Survey}
 \acrodef{WRTDS}{weighted regression on time, discharge, and season}
 
@@ -420,7 +421,7 @@ latex(
 @
 
 % performance summary of models to each other, tab:perfbtw
-<<eval = T, echo = F, cache = T>>=
+<<eval = T, echo = F, cache = F>>=
 data(bestLE12)
 data(bestTF16)
 
@@ -470,7 +471,7 @@ totab <- rbind(
 # latex table
 tab <- form_fun(totab[, -1])
 rows <- totab[, 1]
-cap.val <- 'Comparison of predicted results between \\ac{WRTDS} and \\acp{GAM} using average differences (\\%) and \\ac{RMSE}.  Overall comparisons for the entire time series are shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge. Negative percentages indicate \\ac{WRTDS} predictions were lower than \\ac{GAM} predictions (\\cref{avediff_fun}).'
+cap.val <- 'Comparison of predicted results between \\ac{WRTDS} and \\acp{GAM} using average differences (\\%) and \\ac{RMSD}.  Overall comparisons for the entire time series are shown at the top with groupings by different time periods below.  Time periods are annual groupings every seven years (top), seasonal groupings (middle), and flow periods based on quantile distributions of discharge. Negative percentages indicate \\ac{WRTDS} predictions were lower than \\ac{GAM} predictions (\\cref{avediff_fun}).'
 
 latex( 
   tab,
@@ -483,7 +484,7 @@ latex(
   cgroup = c('LE1.2', 'TF1.6'),
   n.cgroup = c(2, 2),
   rowname = rows,
-  colheads = rep(c('Ave. diff.', '\\ac{RMSE}'), 2),
+  colheads = rep(c('Ave. diff.', '\\ac{RMSD}'), 2),
   label = 'tab:perfbtw'
 )
 
