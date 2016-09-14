@@ -559,6 +559,7 @@ p3_gam <- dynagam(bestsim_gam[[3]]$mod, bestsim_gam[[3]]$dat, month = 8, col_vec
 # final plots 
 
 ylabs <- expression(paste('ln-Chl-',italic(a),' (',italic('\u03bc'),'g ',L^-1,')'))
+xlabs <- expression(paste('ln-Flow (', m^3, ' ', s^-1, ')'))
 
 tiff('word/FIGURE6.tif', width = 7, height = 4.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
 grid.arrange(
@@ -568,6 +569,6 @@ grid.arrange(
     arrangeGrob(p1_gam, p2_gam, p3_gam, p1_wrtds, p2_wrtds, p3_wrtds, ncol = 3), 
     widths = c(0.05, 1)
   ), 
-  textGrob('Flow')
+  textGrob(xlabs)
 )
 dev.off()
