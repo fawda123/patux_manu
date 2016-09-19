@@ -572,3 +572,75 @@ grid.arrange(
   textGrob(xlabs)
 )
 dev.off()
+
+######
+# validation datasets
+
+col_vec <- wes_palette('Zissou', 100, 'continuous') %>% 
+  as.character %>% 
+  .[1:100] %>% 
+  rev
+
+load(file = 'data/gams_val.RData')
+load(file = 'data/wrtds_val.RData')
+
+# # for the text, do not need for the figure
+# tmp <- rbind(gams_val, wrtds_val) %>% 
+#   mutate(
+#     blckper = ifelse(blckper, 'prop', 'rand')
+#   ) %>% 
+#   unite('blck', blck, blckper) %>% 
+#   gather('var', 'val', rmse_trn:rmse_val) %>% 
+#   group_by(mod, var, blck) %>% 
+#   summarise(med_val = median(val, na.rm = T))
+toplo <- rbind(gams_val, wrtds_val) %>% 
+  mutate(
+    blckper = ifelse(blckper, 'prop', 'rand')
+  ) %>%
+  unite('blck', blck, blckper) %>% 
+  mutate(
+    blck = factor(blck, 
+      levels = c('1_rand', '0.1_prop', '0.5_prop', '1_prop'), 
+      labels = c('no blocks', '10% of missing', '50% of missing', '100% of missing')
+    ), 
+    mper = factor(mper), 
+    unts = factor(unts, 
+      levels = c('week'),
+      labels = c('Weeks')
+    ), 
+    mod = factor(mod, 
+      labels = c('GAM', 'WRTDS'), 
+      levels = c('gams', 'wrtds')
+    )
+  ) %>%
+  rename(
+    Training = rmse_trn, 
+    Validation = rmse_val
+  ) %>% 
+  gather('var', 'val', Training:Validation) %>% 
+  group_by(mod, blck, unts, var, mper) %>% 
+  summarise(
+    mean_val = median(val, na.rm = TRUE), 
+    max_val = quantile(val, 0.95, na.rm = TRUE), #max(val, na.rm = TRUE), 
+    min_val = quantile(val, 0.05, na.rm = TRUE)#min(val, na.rm = TRUE)
+  ) %>% 
+  rename(
+    `Block sizes` = blck
+  )
+
+ddge_wd <- 0.3
+p <- ggplot(toplo, aes(x = mper, y = mean_val, group = `Block sizes`, colour = `Block sizes`, shape = `Block sizes`)) + 
+  geom_point(position = position_dodge(width = ddge_wd), size = 2.5) +
+  geom_line(position = position_dodge(width = ddge_wd)) +
+  geom_errorbar(aes(ymin = min_val, ymax = max_val), width = 0, position = position_dodge(width = ddge_wd)) +
+  facet_grid(var ~ mod, scales = 'free_y') +
+  theme_mine() + 
+  theme(legend.position = 'top') + 
+  scale_x_discrete('Proportion of observations used as validation') +
+  scale_y_continuous('RMSE') + 
+  scale_colour_manual(values = col_vec[c(1, 33, 66, 100)]) + 
+  scale_shape_manual(values = c(19, 18, 15, 17))
+
+tiff('word/FIGURE7.tif', width = 7, height = 4.5, units = 'in', compression = 'lzw', res = 500, family = 'serif')
+print(p)
+dev.off()
