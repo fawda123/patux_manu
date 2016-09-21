@@ -585,6 +585,10 @@ load(file = 'data/gams_val.RData')
 load(file = 'data/wrtds_val.RData')
 
 # # for the text, do not need for the figure
+# mean(gams_val$rmse_trn)
+# mean(gams_val$rmse_val)
+# mean(wrtds_val$rmse_trn)
+# mean(wrtds_val$rmse_val)
 # tmp <- rbind(gams_val, wrtds_val) %>% 
 #   mutate(
 #     blckper = ifelse(blckper, 'prop', 'rand')
@@ -593,6 +597,7 @@ load(file = 'data/wrtds_val.RData')
 #   gather('var', 'val', rmse_trn:rmse_val) %>% 
 #   group_by(mod, var, blck) %>% 
 #   summarise(med_val = median(val, na.rm = T))
+
 toplo <- rbind(gams_val, wrtds_val) %>% 
   mutate(
     blckper = ifelse(blckper, 'prop', 'rand')

@@ -576,7 +576,7 @@ dev.off()
 ######
 # validation datasets
 
-cols <- grey_pal()(100) %>% 
+col_vec <- grey_pal()(100) %>% 
   as.character %>% 
   .[1:100] %>% 
   rev
